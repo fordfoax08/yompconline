@@ -1,5 +1,6 @@
 <?php
 session_start();
+/* Comment Added for git practice */
 !isset($_SESSION['visited_count']) ? $_SESSION['visited_count'] = 1 : $_SESSION['visited_count']++;
 
 
