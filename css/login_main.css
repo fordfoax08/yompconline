@@ -1,0 +1,155 @@
+*{
+  margin: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,body{
+  width: 100%;
+  margin: 0;
+}
+body{
+  background-color: rgb(102, 102, 102);
+}
+
+.f-jl{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.f-jc{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+header{
+  height: 100px;
+  background-color: rgb(41, 41, 41);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+header div{
+  height: 100%;
+}
+.h-logo{
+  margin-left: 10%;
+}
+.h-logo div{
+  height: 50%;
+  width: 50%;
+}
+.logo-container{
+  position: relative;
+  display: flex;
+  color: rgb(161, 159, 159);
+}
+.logo-container img{
+  /* position: absolute; */
+  height: 40px;
+}
+
+
+
+.main-content{
+  display: grid;
+  grid-template: auto;
+  
+  /* height: 100vh; */
+}
+
+
+/* Section 1********** */
+.section1{
+  padding: 10px;
+  margin: 0 10%;
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: rgb(82, 82, 82);
+  box-shadow: 0px 0px 8px 0px black;
+}
+
+.msg{
+  margin-top: 20px;
+  border: 2px solid green;
+  background-color: yellowgreen;
+  border-radius: 5px;
+  padding: 10px 0;
+  display: none;
+  justify-content: center;
+}.msg.open{
+  display: flex;
+}
+/* .section1 form{
+  border: 1px solid red;
+  position: relative;
+} */
+.section1 form h3{
+  margin: 5px;
+  color: white;
+  margin-left: 10%;
+}
+.field-container{
+  position: relative;
+  padding: 0 10%;
+}
+.field-container input{
+  width: 100%;
+  margin: 3px 0;
+  font-size: 1.2em;
+  padding: 8px;
+}
+
+.create-container{
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.create-container pre a{
+  color: whitesmoke;
+  text-decoration: none;
+ /*  margin: 0 10%; */
+}
+
+.section1 form button{
+  border: none;
+  border: 2px solid rgb(240, 130, 90);
+  border-radius: 5px;
+  background-color: rgb(251, 200, 105);
+  width: 50%;
+  padding: 15px;
+  /* position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0); */
+  margin-left: 50%;
+  transform: translate(-50%, 0);
+}
+
+
+
+
+
+@media screen and (min-width: 768px){
+  .section1{
+    transform: translate(0, 10%);
+  }
+
+  .field-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .section1{
+    margin: 0 20%;
+  }
+}
+
+@media screen and (min-width: 992px){
+  .section1{
+    margin: 0 32%;
+  }
+}
