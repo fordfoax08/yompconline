@@ -1,11 +1,7 @@
 <?php
 session_start();
-require_once('../class/input_filter.class.php');
+require_once 'autoload.inc.php';
 
-
-/* echo '<pre>';
-var_dump($_POST);
-echo '</pre>'; */
 $user_first_name = getPostData('user_first_name');
 $user_last_name = getPostData('user_last_name');
 $user_email = getPostData('user_email');
@@ -29,6 +25,9 @@ $seller_address_sanitized = $filter->sanitizeString(html_entity_decode($seller_a
 $seller_contact_sanitized = $filter->sanitizeString(html_entity_decode($seller_contact));
 $seller_details_sanitized = $filter->sanitizeString(html_entity_decode($seller_details));
 $password_sanitized = password_hash($user_password, PASSWORD_DEFAULT);
+$user_id = generateId();
+
+
 
 
 /* Validation
@@ -71,21 +70,35 @@ if(!$filter->isStringCountValid($seller_details_sanitized)){
 echo '<pre>';
 var_dump($_FILES['user_image']);
 echo '</pre>';
+$file = $_FILES['user_image'];
+$image_name = $file['name'];
+$image_tmp = $file['tmp_name'];
+$image_size = $file['size'];
+$newImageName = 'dp.jpg';
+$destination = '../multimedia/image/users/';
+
+if($image_name !== '' || strlen($image_name) !== 0){
+
+  $img = new FilterImage;
+  $newImageName = $img->imageNewName($image_name,$user_id);
+  
+  if(!$img->imageSizeValid($image_size)){
+    errReport('Invalid Image size');
+  }
+  if(!$img->isImageFileValid($image_name)){
+    errReport('Invalid Image file');
+  }
+
+  move_uploaded_file($image_tmp, $destination.$newImageName);
+
+
+}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+/* echo '<pre>';
+var_dump($newImageName);
+echo '</pre>'; */
 
 
 /* getting POST Data */
@@ -100,4 +113,17 @@ function errReport($str){
   echo '<script>window.history.back();</script>';
 }
 
+/* User ID Generator
+  *date(Ym) + rand(1000, 9999) + rand(100, 999) + date(dms);
+*/
+function generateId(){
+  $a = date('Ymd');
+  $b = rand(1000, 9999);
+  $c = rand(100, 999);
+  $d = $a.$b.$c;
+  if(strlen($d) !== 15){
+    return str_pad($d, 15, '0', STR_PAD_RIGHT);
+  }
+  return $d;
+}
 ?>
