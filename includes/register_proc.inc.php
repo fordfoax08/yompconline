@@ -27,9 +27,6 @@ $seller_details_sanitized = $filter->sanitizeString(html_entity_decode($seller_d
 $password_sanitized = password_hash($user_password, PASSWORD_DEFAULT);
 $user_id = generateId();
 
-
-
-
 /* Validation
 String validation through string count
 -each string should not exceed to 250 char exept for Store details
@@ -67,9 +64,6 @@ if(!$filter->isStringCountValid($seller_details_sanitized)){
 
 
 /* IMAGE FILE */
-echo '<pre>';
-var_dump($_FILES['user_image']);
-echo '</pre>';
 $file = $_FILES['user_image'];
 $image_name = $file['name'];
 $image_tmp = $file['tmp_name'];
@@ -88,17 +82,63 @@ if($image_name !== '' || strlen($image_name) !== 0){
   if(!$img->isImageFileValid($image_name)){
     errReport('Invalid Image file');
   }
-
-  move_uploaded_file($image_tmp, $destination.$newImageName);
-
-
 }
 
 
 
+
+/* Prepare Assoc Array for DB insert 
+*  dataInfo and dataAccount is named after its table
+*/
+$dataInfo = [
+  'user_id' => $user_id,
+  'user_first_name' => $user_first_name_sanitized,
+  'user_last_name' => $user_last_name_sanitized,
+  'user_email' => $user_email,
+  'user_contact' => $user_contact_sanitized,
+  'user_name' => $user_name_sanitized,
+  'user_image' => $newImageName,
+  'seller_name' => $seller_name_sanitized,
+  'seller_address' => $seller_address_sanitized,
+  'seller_contact' => $seller_contact_sanitized,
+  'seller_details' => $seller_details_sanitized
+];
+$dataAccount = [
+  'user_id' => $user_id,
+  'user_name' => $user_name_sanitized,
+  'user_password' => $user_password
+];
+
+
+/* UPLOADING TO DATABASE~! */
+$crud = new CrudRegister;
+if($crud->insertIntoAccount($dataAccount)){
+  $crud->insertIntoInfo($dataInfo);
+  move_uploaded_file($image_tmp, $destination.$newImageName);
+  echo 'Registered!';
+}else{
+  // errReport('Something wen\'t wrong in server');
+  echo 'Registration Failed!';
+}
+
+
 /* echo '<pre>';
-var_dump($newImageName);
-echo '</pre>'; */
+var_dump();
+echo '</pre>';
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* getting POST Data */
