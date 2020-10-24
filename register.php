@@ -63,7 +63,7 @@ if(isset($_SESSION['err'])){
               &nbsp;&nbsp;Email
             </span>
           </div>
-          <input type="email" name="user_email" placeholder="Email Address" class="required-field p-email">
+          <input type="email" name="user_email" placeholder="Email Address" class="required-field p-email" id="input_email">
         </div>
         <!-- Contact number -->
         <div class="input-group">

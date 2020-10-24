@@ -1,3 +1,5 @@
+
+
 /* Seller field Expand */
 const checkSellExpand = document.querySelector('.chck1');
 function sellExpand(){
@@ -169,6 +171,73 @@ function isPasswordMatched(){
     return false;
   }
 }
+
+
+/* DUPLICATE CHECKING using AJAX fetch */
+const inputUsername = document.querySelector('#input_username');
+inputUsername.addEventListener('blur', userNameTest);
+const inputEmail = document.querySelector('#input_email');
+inputEmail.addEventListener('blur', userNameTest);
+function userNameTest(e){
+  fetch('includes/usernametest.inc.php')
+  .then(res => res.text())
+  .then(data => duplicateValue(e.target, data))
+  .catch(err => console.log(err));
+}
+
+function duplicateValue(e,data){
+  const inputInterface = e;
+  const dataJsonParsed = JSON.parse(data);
+  let duplicate = false;
+
+  /* Loop for existing data and check for duplicate */
+  if(inputInterface.id === 'input_username'){
+    dataJsonParsed.forEach(item => {
+      if(inputInterface.value === item.user_name){
+        duplicate = true;
+        alert('Email Exist');
+      }
+    });
+  }
+
+  if(inputInterface.id === 'input_email'){
+    dataJsonParsed.forEach(item => {
+      if(inputInterface.value === item.user_email){
+        duplicate = true;
+        alert('Username Exist');
+      }
+    });
+  }
+
+  duplicate ? inputInterface.classList.add('input-req') : inputInterface.classList.remove('input-req');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

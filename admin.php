@@ -10,7 +10,7 @@
   <header>
     <div class="h-logo f-jl">
       <div class="logo-container">
-        <a href="home.html">
+        <a href="home.php">
          <img src="multimedia/image/logo/yomshoplogo.png" alt="logo">
         </a>
       </div>

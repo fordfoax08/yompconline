@@ -106,7 +106,8 @@ $dataInfo = [
 $dataAccount = [
   'user_id' => $user_id,
   'user_name' => $user_name_sanitized,
-  'user_password' => $user_password
+  'user_email' => $user_email,
+  'user_password' => $password_sanitized
 ];
 
 

@@ -1,3 +1,13 @@
+<?php
+session_start();
+if(isset($_SESSION['err'])){
+  echo '<script>alert("'.$_SESSION['err'].'");</script>';
+  unset($_SESSION['err']);
+}
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,18 +33,23 @@
       <div class="msg">
         <p>You must register to continue</p>
       </div>
-      <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+      <form action="includes/login_proc.inc.php" method="post">
         <h3>Login:</h3>
         <div class="field-container">
-          <input type="text" name="username" placeholder="Username / Email">
-          <input type="password" name="passwd" placeholder="Password">
+          <input type="text" name="username" placeholder="Username / Email" id="input_username">
+          <input type="password" name="passwd" placeholder="Password" id="input_password">
         </div>
         <div class="create-container">
           <pre><a href="">forgot password</a></pre>
           <pre><a href="register.php">Sign Up</a></pre>
         </div>
-        <button>Login</button>
+        <button type="button" id="btn-login">Login</button>
       </form>
+      <div class="loading close">
+        <div class="progress">
+          <div class="progress-color"></div>
+        </div>
+      </div>
     </section>
 
 
@@ -44,6 +59,6 @@
 
 
 
-  <!-- <script></script> -->
+  <script src="js/login_main.js"></script>
 </body>
 </html>
