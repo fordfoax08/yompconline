@@ -110,6 +110,7 @@ function addNewSpec(e){
     newLi.innerHTML = `${specText.value}<span class="spec-close">&times;</span>`;
     let specInpt = document.createElement('INPUT');
     specInpt.setAttribute('type','hidden');
+    specInpt.setAttribute('name','item_specs['+specNodeCount()+']')
     specInpt.value = specText.value;
     ulParent.appendChild(newLi);
     ulParent.appendChild(specInpt);
@@ -130,6 +131,10 @@ function isSpecDuplicate(e){
     }
   })
   return boolSample;
+}
+function specNodeCount(){
+  const inputNodes = document.querySelectorAll('.specific-container ul input');
+  return inputNodes.length; 
 }
 
 
@@ -162,6 +167,7 @@ function addNewIncludedItem(e){
     newLi.innerHTML = `${itemIncText.value}<span class="item-list-close">&times;</span>`;
     let newHidden = document.createElement('INPUT');
     newHidden.setAttribute('type','hidden');
+    newHidden.setAttribute('name','item_included[]');
     newHidden.value = itemIncText.value;
     ulParent.appendChild(newLi);
     ulParent.appendChild(newHidden);
@@ -188,4 +194,14 @@ function removeItemInclude(e){
   e.target.parentNode.nextElementSibling.remove();
   e.target.parentNode.remove();
   /* console.log(e.target.parentNode.nextElementSibling); */
+}
+
+
+/* Button Submit new Item */
+const btnSubmitNewItem = document.querySelector('.btn-new-item');
+btnSubmitNewItem.addEventListener('click', submitNewItem);
+function submitNewItem(e){
+
+  e.target.parentNode.submit();
+  // console.log(e.target);
 }

@@ -20,7 +20,7 @@ function submitForm(e){
   loadingScreen();
   setTimeout(()=>{
     e.target.parentNode.submit();
-  }, 5000);
+  }, 3000);
   
 }
 

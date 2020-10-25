@@ -1,15 +1,12 @@
 <?php
 session_start();
 
-/* check Session visit, if firstime
- *redirect to home.php
-*/
-/* if(!isset($_SESSION['visited_count'])){
-  $_SESSION['visited_count']++;
+/* if(isset($_SESSION['logged_in'])){
+  echo 'Logged In!';
 } */
+
 !isset($_SESSION['visited_count']) ? $_SESSION['visited_count'] = 1 : $_SESSION['visited_count']++;
 
-/* echo $_SESSION['visited_count']; */
 
 
 
@@ -487,7 +484,7 @@ session_start();
     <div class="user-login close">
       <div class="user-login-a-close">&times;</div>
 
-      <div class="user-login-a d-none">
+      <div class="user-login-a <?php echo isset($_SESSION['logged_in']) && isset($_SESSION['u_id']) ?'':'d-none';?>">
         <h5>WELCOME!</h5>
         <div class="user-grid-container">
           <div class="grid-1">
@@ -502,7 +499,7 @@ session_start();
         </div>
         
       </div>
-      <div class="user-login-b">
+      <div class="user-login-b <?php echo isset($_SESSION['logged_in']) && isset($_SESSION['u_id']) ?'d-none':'';?>">
         <h3>You are not Logged In.</h3>
         <p style="margin-bottom: 20px;"> Please Sign In to continue....</p>
         <p><a href="login.php">Sign In</a></p>

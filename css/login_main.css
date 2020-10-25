@@ -167,7 +167,7 @@ header div{
 .progress-color.load{
   /* width: 100%;
   transition: 4s all ease-in-out; */
-  animation: loading 5s 1;
+  animation: loading 3s 1;
   animation-fill-mode: forwards;
 }
 

@@ -16,7 +16,7 @@ $isValidUser = $con->loginUser($arrayCredentials) ?? false;
 if($isValidUser){
   $user_id = $con->getUserId($username);
   $_SESSION['logged_in'] = true;
-  $_SESSION['u_id'] = $user_id;
+  $_SESSION['u_id'] = $user_id['user_id'];
   header('Location: ../admin.php');
 }else{
   //session_destroy();

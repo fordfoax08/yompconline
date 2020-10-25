@@ -5,6 +5,10 @@ if(isset($_SESSION['err'])){
   unset($_SESSION['err']);
 }
 
+if(isset($_SESSION['logged_in'])){
+  header('Location: admin.php');
+}
+
 
 
 ?>

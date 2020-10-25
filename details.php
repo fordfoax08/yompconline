@@ -1,3 +1,8 @@
+<?php
+  session_start();
+
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +15,7 @@
   <header>
     <div class="h-logo f-jl">
       <div class="logo-container">
-        <a href="home.html">
+        <a href="home.php">
          <img src="multimedia/image/logo/yomshoplogo.png" alt="logo">
         </a>
       </div>
@@ -255,7 +260,7 @@
     <div class="user-login close">
       <div class="user-login-a-close">&times;</div>
 
-      <div class="user-login-a d-none">
+      <div class="user-login-a <?php echo isset($_SESSION['logged_in']) && isset($_SESSION['u_id']) ?'':'d-none';?>">
         <h5>WELCOME!</h5>
         <div class="user-grid-container">
           <div class="grid-1">
@@ -263,17 +268,17 @@
             <h4>Yom De Guapo</h4>
           </div>
           <div class="grid-2">
-            <a href="admin.html">Admin Home</a>
-            <a href="index.html">My Shop</a>
+            <a href="admin.php">Admin Home</a>
+            <a href="index.php">My Shop</a>
             <a href="includes/#">Logout</a>
           </div>
         </div>
         
       </div>
-      <div class="user-login-b">
+      <div class="user-login-b <?php echo isset($_SESSION['logged_in']) && isset($_SESSION['u_id']) ?'d-none':'';?>">
         <h3>You are not Logged In.</h3>
         <p style="margin-bottom: 20px;"> Please Sign In to continue....</p>
-        <p><a href="login.html">Sign In</a></p>
+        <p><a href="login.php">Sign In</a></p>
       </div>
 
     </div>
@@ -341,7 +346,7 @@
     const btnBackShop = document.querySelector('.back-to-shop');
     btnBackShop.addEventListener('click',() => {
       window.history.back();
-      window.location.replace('index.html');
+      window.location.replace('index.php');
     });
 
   </script>

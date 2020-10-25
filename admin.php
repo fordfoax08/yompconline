@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +28,14 @@
     <section class="section1">
       <div class="sec1-a">
         <!-- hidden default for design purpose -->
-        <div class="sec1a"></div>
+        <div class="sec1a">
+          <img class="dp-img" src="multimedia/image/users/dp.jpg" alt="">
+          <div class="user-details">
+            <h3><a href="index.php">Yom Diz Guapo</a></h3>
+            <p>poging_pogi.talaga@yomdi.yup</p>
+            <p>0928350928</p>
+          </div>
+        </div>
         <div class="sec1a"></div>
 
         <div class="sec1a">
@@ -304,10 +315,7 @@
         <div class="sec1-c-b">
           dkasjdflkj
         </div>
-        
-        <!-- <div class="page-container">
-          flex
-        </div> -->
+
 
       </div>
       <!-- End of sec1-c -->
@@ -315,31 +323,25 @@
 
 
 
-
-
-
-
-
-
-
     <section class="section2">
       
-      <div class="container sec2-header">
-        <h1>Add new Item</h1>
-        <p>Please fill up all important information.</p>
-      </div>
-
-      <div class="container">
-        <form class="inpts" action="" method="post">
+      
+      <div class="container sec2-main-container">
+        <div class="sec2-header">
+          <h1>Add new Item</h1>
+          <p>Please fill up all important information.</p>
+        </div>
+        <form class="inpts" action="includes/add_item.inc.php" method="post">
           <input type="file" name="item_image">
           <select name="item_category" id="item-category">
             <option value="0" selected disabled>Category</option>
-            <option value="1">Mother Board</option>
-            <option value="2">Monitor</option>
-            <option value="3">Mouse</option>
-            <option value="4">Keyboard</option>
+            <option value="1">Keyboard</option>
+            <option value="2">Mother Board</option>
+            <option value="3">Monitor</option>
+            <option value="4">Mouse</option>
             <option value="5">Others</option>
           </select>
+          <input type="number" name="item_available" id="item_available" placeholder="Number of Items Available">
           <input type="text" name="item_name" id="item_name" placeholder="Item name">
           <input type="text" name="item_sub_name" id="item_sub_name" placeholder="Sub name">
           <textarea name="item_short_desc" id="item_short_desc" cols="30" rows="3" placeholder="Short Item description"></textarea>
@@ -361,11 +363,11 @@
             <ul>
               <!-- <li>EXAMPLE<span class="item-list-close">&times;</span></li> -->
             </ul>
-            <input type="text" style="padding: 4px;" name="item_name_included" class="item-included-input" placeholder="Item included">
+            <input type="text" style="padding: 4px;" class="item-included-input" placeholder="Item included">
             <button type="button" class="item-included-btn">&plus;</button>
           </div>
 
-
+          <button type="button" class="btn-new-item">Add new Item</button>
           
         </form>
       </div>
@@ -405,8 +407,9 @@
       <div class="menu-header">
         <img src="multimedia/image/logo/yomshoplogo2.png" width="50" alt="">
       </div>
-      <div class="menu1">Home</div>
-      <div class="menu2">New Item</div>
+      <div class="menu1 mn">Home</div>
+      <div class="menu2 mn">New Item</div>
+      <div class="menu3 mn">Logout</div>
     </div>
   </div>
 
