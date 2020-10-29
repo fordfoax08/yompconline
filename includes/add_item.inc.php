@@ -16,16 +16,70 @@ $item_information = getPostData('item_information',2);
 $item_specification = getPostData('item_specification');
 $item_specs = getPostData('item_specs');
 $item_included = getPostData('item_included');
+$item_category = getPostData('item_category');
+$item_path = itemPath($item_category);
 
 
 /* ITEM IMAGE */
+$filterImage = new FilterImage;
+$file = $_FILES['item_image'];
+$file_name = $file['name'];
+$file_temp = $file['tmp_name'];
+$file_size = $file['size'];
+$file_valid = true;
+
+/* Change Image name according to item id */
+$file_name = $filterImage->imageNewName($file_name, $item_id);
+
+/* Check if Image is Valid, Size and Type */
+if(!$filterImage->isImageFileValid($file_name) || !$filterImage->imageSizeValid($file_size)){
+  $file_valid = false;
+  $file_name = 'noimage.jpg';
+}
 
 
 
-echo '<pre>';
-// var_dump($_POST);
-var_dump($item_available);
-echo '</pre>';
+/* PREPARE DATA FOR SAVING (array) */
+$dataPrepared = array(
+  'user_id' => $user_id,
+  'item_id' => $item_id,
+  'item_image' => $file_name,
+  'item_path' => $item_path,
+  'item_category' => $item_category,
+  'item_name' => $item_name,
+  'item_sub_name' => $item_sub_name,
+  'item_short_desc' => $item_short_desc,
+  'item_overview' => $item_overview,
+  'item_information' => $item_information,
+  'item_specification' => $item_specification,
+  'item_specs' => $item_specs,
+  'item_included' => $item_included,
+  'item_available' => $item_available
+);
+
+
+/* INSERTING DATA TO DATABASE */
+$cruditem = new CrudItem;
+if($cruditem->insertNewItem($dataPrepared)){
+  if($file_valid){
+    /* move image if File is valid */
+    move_uploaded_file($file_temp,'../multimedia/image/'.$item_path.'/'.$file_name);
+  }
+  echo 'Uploaded!';
+}
+
+
+
+/* echo '<pre>';
+var_dump($cruditem->insertNewItem($dataPrepared));
+// var_dump($item_available);
+echo '</pre>'; */
+
+
+
+
+
+
 
 
 
@@ -51,6 +105,30 @@ function generateItemId(){
   return $item_id;
 }
 
+/* GET ITEM PATH by category*/
+function itemPath($category){
+  $path = '';
+  switch($category){
+    case 1:
+      $path = 'keyboard';
+      break;
+    case 2:
+      $path = 'mobo';
+      break;
+    case 3:
+      $path = 'monitor';
+      break;
+    case 4:
+      $path = 'mouse';
+      break;
+    case 5:
+      $path = 'others';
+      break;
+    default:
+      $path = '';
+  }
+  return $path;
+}
 
 
 /* Get post data */
@@ -84,14 +162,6 @@ function getPostData($str,$opt = 1){
       $data3 = $filterInput->sanitizeString($data2);
       return $data3;
   }
-
-
-
-
-
-
-
-
 }
 
 

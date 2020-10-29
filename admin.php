@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if(isset($_SESSION['err'])){
+  echo '<script>alert("'.$_SESSION['err'].'");</script>';
+  unset($_SESSION['err']);
+}
 
 
 ?>
@@ -331,7 +337,7 @@
           <h1>Add new Item</h1>
           <p>Please fill up all important information.</p>
         </div>
-        <form class="inpts" action="includes/add_item.inc.php" method="post">
+        <form class="inpts" action="includes/add_item.inc.php" method="post" enctype="multipart/form-data">
           <input type="file" name="item_image">
           <select name="item_category" id="item-category">
             <option value="0" selected disabled>Category</option>
