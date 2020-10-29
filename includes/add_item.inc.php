@@ -7,7 +7,7 @@ require_once('autoload.inc.php');
 /* declaring Variable getPostData('form-name', option)*/
 $user_id = $_SESSION['u_id'];
 $item_id = generateItemId();
-$item_available = getPostData('item_available',3);
+$item_available = getPostData('item_available');
 $item_name = getPostData('item_name');
 $item_sub_name = getPostData('item_sub_name');
 $item_short_desc = getPostData('item_short_desc');
@@ -62,16 +62,17 @@ $dataPrepared = array(
 $cruditem = new CrudItem;
 if($cruditem->insertNewItem($dataPrepared)){
   if($file_valid){
-    /* move image if File is valid */
+    // move image if File is valid
     move_uploaded_file($file_temp,'../multimedia/image/'.$item_path.'/'.$file_name);
   }
-  echo 'Uploaded!';
+  $_SESSION['done'] = 'Success';
+  echo '<script>window.history.go(-1);</script>';
 }
 
 
 
 /* echo '<pre>';
-var_dump($cruditem->insertNewItem($dataPrepared));
+var_dump($item_available);
 // var_dump($item_available);
 echo '</pre>'; */
 
@@ -110,18 +111,24 @@ function itemPath($category){
   $path = '';
   switch($category){
     case 1:
-      $path = 'keyboard';
-      break;
-    case 2:
       $path = 'mobo';
       break;
+    case 2:
+      $path = 'chassis';
+      break;
     case 3:
-      $path = 'monitor';
+      $path = 'gpu';
       break;
     case 4:
-      $path = 'mouse';
+      $path = 'monitor';
       break;
     case 5:
+      $path = 'keyboard';
+      break;
+    case 6:
+      $path = 'mouse';
+      break;
+    case 7:
       $path = 'others';
       break;
     default:
@@ -156,8 +163,6 @@ function getPostData($str,$opt = 1){
       case 2:
         $data2 = (strlen($data1) > 999) ? substr($data1,0,900) : $data1; 
         break;
-      case 3:
-        $data2 = $data1 === '' ?? '1';
       }
       $data3 = $filterInput->sanitizeString($data2);
       return $data3;

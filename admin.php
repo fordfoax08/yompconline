@@ -5,6 +5,11 @@ if(isset($_SESSION['err'])){
   echo '<script>alert("'.$_SESSION['err'].'");</script>';
   unset($_SESSION['err']);
 }
+if(isset($_SESSION['done'])){
+  echo '<script>alert("'.$_SESSION['done'].'");</script>';
+  unset($_SESSION['done']);
+  echo '<script>location.reload();</script>';
+}
 
 
 ?>
@@ -341,11 +346,13 @@ if(isset($_SESSION['err'])){
           <input type="file" name="item_image">
           <select name="item_category" id="item-category">
             <option value="0" selected disabled>Category</option>
-            <option value="1">Keyboard</option>
-            <option value="2">Mother Board</option>
-            <option value="3">Monitor</option>
-            <option value="4">Mouse</option>
-            <option value="5">Others</option>
+            <option value="1">Board / CPU</option>
+            <option value="2">Chassis / Rig</option>
+            <option value="3">Graphics Card</option>
+            <option value="4">Monitor</option>
+            <option value="5">Keyboard</option>
+            <option value="6">Mouse</option>
+            <option value="7">Others</option>
           </select>
           <input type="number" name="item_available" id="item_available" placeholder="Number of Items Available">
           <input type="text" name="item_name" id="item_name" placeholder="Item name">
