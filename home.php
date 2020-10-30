@@ -178,7 +178,7 @@ session_start();
           <div class="grid-2">
             <a href="admin.php">Admin Home</a>
             <a href="index.php">My Shop</a>
-            <a href="includes/#">Logout</a>
+            <a href="includes/logout_proc.php">Logout</a>
           </div>
         </div>
         

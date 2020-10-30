@@ -183,6 +183,10 @@ header div{
   width: 100%;
   cursor: pointer;
 }
+.menu3 > a{
+  color: rgb(14, 13, 13);
+  text-decoration: none;
+}
 
 /* .menu1{
   border: 1px solid blue;
@@ -390,13 +394,19 @@ header div{
   border-collapse: collapse;
   width: 100%;
 }
-.table1 tbody{
+/* .table1 tbody{
   height: 150px;
+} */
+.table1 tbody tr{
+  border-bottom: 5px solid white;
+  height: 70px;
+  overflow: hidden;
 }
 .table1 th,tr,td{
   border-bottom: 2px solid white;
   background-image: linear-gradient(rgb(179, 179, 179), rgb(233, 233, 233));
 }
+
 .table1 tr:nth-of-type(odd){
   background-image: linear-gradient(rgb(233, 233, 233),rgb(179, 179, 179));
 }
@@ -420,7 +430,7 @@ header div{
   font-size: .8em;
 }
 .table1 td:nth-child(3) p:nth-child(2){
-  font-weight: lighter;
+  /* font-weight: lighter; */
   font-size: .8em;
 }
 .table1 td:nth-child(4){

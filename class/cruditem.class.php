@@ -30,21 +30,15 @@ class CrudItem{
     } catch (PDOExeption $e) {
       echo 'ERROR: '.$e->getMessage();
     }
-
-    // return $arr_data_cleaned;
    
   }
 
+  
 
+  
 
 
 }
-
-
-
-
-
-
 
 
 

@@ -152,6 +152,7 @@ if(isset($_SESSION['err'])){
     <button class="btn-submit">
       REGISTER
     </button>
+    <span class="already">Already Member? click <a href="login.php">HERE</a></span>
   </div>
 
 

@@ -817,12 +817,17 @@ footer div{
 }
 
 .user-login-b{
-  padding: 8px;
+  padding: 16px 8px;
+  overflow: hidden;
 }
 .user-login-b > h3{
   background-color: tomato;
-  padding: 4px; 
+  padding: 4px;
   margin-bottom: 16px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
 }
 .user-login-b > p:nth-child(3){
   text-align: center;
@@ -950,6 +955,10 @@ footer div{
     grid-template-columns: 1fr 3fr;
   }
 
+  .user-login{
+    width: 50%;
+  }
+
 }
 
 
@@ -995,6 +1004,11 @@ footer div{
     top: 5%;
     right: 10%;
     left: 55%;
+  }
+
+  /* USER LOGIN SECTION */
+  .user-login{
+    width: 40%;
   }
 
 }

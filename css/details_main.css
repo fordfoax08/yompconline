@@ -567,6 +567,11 @@ footer div{
     grid-template-columns: 1fr 3fr;
   }
 
+  /* USER LOGIN SECTION */
+  .user-login{
+    width: 50%;
+  }
+
 }
 
 @media screen and (min-width: 992px){
@@ -578,5 +583,8 @@ footer div{
     left: 55%;
   }
 
-
+  /* USER LOGIN SECTION */
+  .user-login{
+    width: 40%;
+  }
 }

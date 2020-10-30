@@ -139,11 +139,13 @@ session_start();
           <label for="search_by_category">Catergory:&nbsp;</label>
           <select name="search_category" id="search_by_category">
             <option value="1">All</option>
-            <option value="2">Motherboard</option>
-            <option value="3">Monitor</option>
-            <option value="4">Keyboard</option>
-            <option value="5">Mouse</option>
-            <option value="6">Others</option>
+            <option value="2">CPU / Motherboard</option>
+            <option value="3">Chassis / Rig</option>
+            <option value="4">Graphics Card</option>
+            <option value="5">Monitor</option>
+            <option value="6">Keyboard</option>
+            <option value="7">Mouse</option>
+            <option value="8">Others</option>
           </select>
         </div>
 
@@ -517,14 +519,14 @@ session_start();
           <div class="grid-2">
             <a href="admin.php">Admin Home</a>
             <a href="index.php">My Shop</a>
-            <a href="includes/#">Logout</a>
+            <a href="includes/logout_proc.php">Logout</a>
           </div>
         </div>
         
       </div>
       <div class="user-login-b <?php echo isset($_SESSION['logged_in']) && isset($_SESSION['u_id']) ?'d-none':'';?>">
         <h3>You are not Logged In.</h3>
-        <p style="margin-bottom: 20px;"> Please Sign In to continue....</p>
+        <p style="margin-bottom: 20px; margin-top: 40px;"> Please Sign In to continue....</p>
         <p><a href="login.php">Sign In</a></p>
       </div>
 

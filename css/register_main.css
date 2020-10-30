@@ -226,6 +226,16 @@ input[type=number]:focus{
   font-style: italic;
 }
 
+.already{
+  color: rgb(216, 216, 216);
+  padding: 16px;
+  float: right;
+}
+.already > a{
+  color: rgb(251, 233, 233);
+  font-weight: bold;
+}
+
 
 
 
