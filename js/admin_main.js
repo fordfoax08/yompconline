@@ -193,7 +193,6 @@ let itemIncClose;
 function removeItemInclude(e){
   e.target.parentNode.nextElementSibling.remove();
   e.target.parentNode.remove();
-  /* console.log(e.target.parentNode.nextElementSibling); */
 }
 
 
@@ -205,3 +204,35 @@ function submitNewItem(e){
   e.target.parentNode.submit();
   // console.log(e.target);
 }
+
+
+/* SEARCH AJAX */
+const searchBtn = document.querySelector('#searchBtn');
+const searchInpt = document.querySelector('#search_item');
+const userId = document.querySelector('#user_id');
+let searchLimit = 10; //Continue Tommorrow
+searchBtn.addEventListener('click', getSearch);
+function getSearch(e){
+  let data1 = searchInpt.value.toLowerCase().trim();
+  let formData = new FormData();
+  formData.append('user_id', userId.value);
+  formData.append('search_data',data1);
+
+  fetch('includes/admin_search_item.inc.php',{
+    method: 'POST',
+    // headers: {'Content-Type':'multipart/form-data'},
+    body: formData
+  })
+  .then(res => res.text())
+  .then(data => console.log(JSON.parse(data)))
+  .catch(err => console.log(err));
+
+
+
+  //location.reload();
+  // console.log(userId.value);
+}
+
+
+
+

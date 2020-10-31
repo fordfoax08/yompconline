@@ -256,7 +256,6 @@ header div{
 .user-details h3{
   padding: 0;
   margin: 0;
-  margin-top: -4px;
 }
 .user-details h3 > a{
   text-decoration: none;
@@ -291,19 +290,21 @@ header div{
   justify-content: center;
   align-items: center;
 }
-.search-item form select{
+.search-item select{
   padding: 5px;
   border: none;
 }
-.search-item form input[type=text]{
+.search-item input[type=text]{
   padding: 5px;
 }
-.search-item form button{
+.search-item button{
   padding: 7px 10px;
   background-color: rgb(221, 162, 68);
   color: white;
   border: none;
   border-radius: 5px;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 
@@ -366,7 +367,7 @@ header div{
  /*  border: 1px solid red; */
   padding: 0 4px;
   position: relative;
-  display: flex;
+  /* display: flex; */
 
   /* z-index: 0; */
 }
@@ -374,7 +375,7 @@ header div{
 .sec1-c-a{
   position: relative;
   /* border: 1px solid orange; */
-  width: 75%;
+  width: 100%;
   height: 470px;
   overflow-y: scroll;
   margin-top: 5px;
@@ -436,10 +437,13 @@ header div{
 .table1 td:nth-child(4){
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  padding-right: 8px;
+  padding-left: 8px;
 }
 .table1 td:nth-child(4) svg{
   /* width:2%; */
 color: rgb(57, 122, 46);
+cursor: pointer;
 }
 
 
@@ -629,6 +633,38 @@ footer{
 
 
 @media screen and (min-width: 576px){
+  .menu-content{
+    width: 25%;
+  }
+ 
+  .search-item{
+   float: right;
+   /* transform: translate(27%, 0); */
+   }
+ 
+   /* check box all */
+   .select-all-container{
+     margin-left: 11%;
+   }
+ 
+   .sec1-c{
+     padding: 0 10%;
+   }
+ 
+   /* sec1-c-b */
+   .sec1-c-b{
+     display: block;
+     margin: 8px;
+   }
+ 
+   .sec1-c{
+     position: relative;
+     display: flex;
+   }
+   
+   .sec1-c-a{
+     width: 100%;
+   }
   
 }
 
@@ -641,34 +677,15 @@ footer{
     padding: 0 5%;
   } */
 
- .menu-content{
-   width: 25%;
- }
 
- .search-item{
-  float: right;
-  /* transform: translate(27%, 0); */
-  }
+  
 
-  /* check box all */
-  .select-all-container{
-    margin-left: 11%;
-  }
 
-  .sec1-c{
-    padding: 0 10%;
-  }
 
-  /* sec1-c-b */
-  .sec1-c-b{
-    display: block;
-    margin: 8px;
-  }
+
 
   /* SECTION 2 ************* */
-  /* .sec2-header{
-    width: 80%;
-  } */
+ 
   .sec2-body{
     grid-template-columns: 1fr 1fr;
     padding: 0 5%;

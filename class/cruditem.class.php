@@ -35,6 +35,24 @@ class CrudItem{
 
   
 
+  /* SEARCH USER ITEM Ajax*/
+  public function searchUserItem($user_id, $search_data){
+    $conn = new Dsn;
+    try {
+      $sql = "SELECT * FROM tbl_items WHERE user_id = ? AND item_name LIKE ?";
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute([$user_id,"%{$search_data}%"]);
+      if($stmt->rowCount() > 0){
+        return array(25 => $stmt->fetchAll(PDO::FETCH_ASSOC)) ;
+      }else{
+        return [];
+      }
+    } catch (PDOException $e) {
+      echo 'Error'.$e-getMessage();
+    }
+
+    // return 'Test successfull';
+  }
   
 
 

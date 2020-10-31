@@ -1,24 +1,42 @@
 <?php
 session_start();
 // require_once 'includes/autoload.inc.php';
+include_once 'class/display_user_details.class.php';
 include_once 'class/display_items.class.php';
 if(isset($_SESSION['err'])){
   echo '<script>alert("'.$_SESSION['err'].'");</script>';
   unset($_SESSION['err']);
 }
+
+/* Feedback after successfull adding Item */
 if(isset($_SESSION['done'])){
   echo '<script>alert("'.$_SESSION['done'].'");</script>';
   unset($_SESSION['done']);
   echo '<script>location.reload();</script>';
 }
 
+/* User information */
+$user_details = [];
+if(isset($_SESSION['logged_in']) && isset($_SESSION['u_id'])){
+  $userDetails = new UserDetails;
+  $user_details = $userDetails->getUserInformation($_SESSION['u_id']);
+}else{
+  header('Location: login.php');
+}
+
 // $crudItem = new CrudItem;
 $displayItems = new DisplayItems;
 $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
+
+
+
+
+
+
+/* DEBUGGING DUMP */
 // echo '<pre>';
-// var_dump($con->getSellersItems($_SESSION['u_id']));
+// var_dump($user_details);
 // echo '</pre>';
-// echo $con->test();
 
 
 
@@ -52,11 +70,27 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
       <div class="sec1-a">
         <!-- hidden default for design purpose -->
         <div class="sec1a">
-          <img class="dp-img" src="multimedia/image/users/dp.jpg" alt="">
+          <img class="dp-img" src="multimedia/image/users/<?php echo $user_details['user_image'];?>" alt="">
           <div class="user-details">
-            <h3><a href="index.php">Yom Diz Guapo</a></h3>
-            <p>poging_pogi.talaga@yomdi.yup</p>
-            <p>0928350928</p>
+            <input type="hidden" name="user_id" id="user_id" value="<?php echo $user_details['user_id'];?>">
+            <h3><a href="index.php">
+              <?php 
+                $name = $user_details['seller_name'];
+                echo strlen($name) >= 30 ? substr($name,0,28) : $name;
+              ?>
+            </a></h3>
+            <p>
+              <?php 
+                $Uemail = $user_details['user_email'];
+                echo strlen($Uemail) >= 30 ? substr($Uemail,0,28) : $Uemail;
+              ?>
+            </p>
+            <p>
+              <?php 
+                $Scontact = $user_details['seller_contact'];
+                echo strlen($Scontact) >= 30 ? substr($Scontact,0,28) : $Scontact;
+              ?>
+            </p>
           </div>
         </div>
         <div class="sec1a"></div>
@@ -64,21 +98,21 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
         <div class="sec1a">
           <!-- for search area -->
           <div class="search-item">
-            <form action="">
+            <!-- <form action=""> -->
               <select name="search_filter">
                 <option value="" selected disabled>Search by</option>
                 <option value="1">Name</option>
                 <option value="2">Supplier</option>
                 <option value="3">Item No.</option>
               </select>
-              <input type="text" name="search_item">
-              <button>
+              <input type="text" name="search_item" id="search_item">
+              <button id="searchBtn">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
                   <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
                 </svg>
               </button>
-            </form>
+            <!-- </form> -->
           </div>
           <!-- Enf of Search -->
           
@@ -122,13 +156,8 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
         <div class="sec1-c-a">
           <div class="items">
             <table class="table1">
-             <!--  <thead>
-                <th>No</th>
-                <th></th>
-                <th>Name</th>
-                <th></th>
-              </thead> -->
               <tbody>
+                <!-- Populate items -->
               <?php foreach($userItems as $key){?>
                 <?php
                   $dataArr = array(
