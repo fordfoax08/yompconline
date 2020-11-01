@@ -28,6 +28,101 @@ class OpenClose{
 /* Variable Global */
 let newObj = new OpenClose;
 const mainContainer = document.querySelector('.main-container');
+const userId = document.querySelector('#user_id');
+const tableParent = document.querySelector('.table1 tbody');
+let itemData = [];
+
+/* Load Items AJAX */
+document.addEventListener('DOMContentLoaded', loadSellerItems);
+function loadSellerItems(){
+  const user_id = userId.value;
+  let formData = new FormData();
+  formData.append('user_id', user_id);
+
+  fetch('includes/admin_display_item.inc.php', {method: 'POST',body: formData})
+  .then(res => res.text())
+  /* pass array data to display Function */
+  .then(data => displaySellerItems(JSON.parse(data)))
+  .catch(err => console.log(err))
+}
+function displaySellerItems(itemArray){
+  itemArray.forEach(item => {
+    /* Create element tr */
+    let newTr = document.createElement('TR');
+    newTr.innerHTML = `
+      <tr>
+        <td>
+          <input type="checkbox" name="productName" class="input-chk">
+          <input type="hidden" name="item_id" value="${item.item_id}">
+        </td>
+        <td><img src="multimedia/image/${item.item_path}/${item.item_image}" alt=""></td>
+        <td>
+          <p>${item.item_name}</p>
+          <p>${item.item_short_desc}</p>
+        </td>
+        <td>
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+        </td>
+      </tr>
+    `;
+    tableParent.appendChild(newTr);
+  })
+
+  /* queryAll Checkboxes */
+  allCheckBox = document.querySelectorAll('.input-chk');
+  allCheckBox.forEach(item => {
+    item.addEventListener('change', function(){
+      if(this.checked){
+        itemData.push(this.nextElementSibling.value);
+      }else{
+        // itemData.pop(this.nextElementSibling.value);
+        const index = itemData.indexOf(this.nextElementSibling.value);
+        if(index > -1){
+          itemData.splice(index, 1);
+        }
+      }
+    })
+  })
+}
+
+/* SEARCH AJAX */
+const searchBtn = document.querySelector('#searchBtn');
+const searchInpt = document.querySelector('#search_item');
+let searchLimit = 10; //Continue Tommorrow
+searchBtn.addEventListener('click', getSearch);
+function getSearch(e){
+  let data1 = searchInpt.value.toLowerCase().trim();
+  let formData = new FormData();
+  formData.append('user_id', userId.value);
+  formData.append('search_data',data1);
+
+  fetch('includes/admin_search_item.inc.php',{
+    method: 'POST',
+    // headers: {'Content-Type':'multipart/form-data'},
+    body: formData
+  })
+  .then(res => res.text())
+  .then(data => {
+    tableParent.innerHTML = '';
+    displaySellerItems(JSON.parse(data));
+  })
+  .catch(err => console.log(err));
+
+
+  //location.reload();
+}
+
+
+
+
+
+
+
+
+
 
 /* Menu Drawer */
 const menuBtn = document.querySelector('.menu-drawer-container');
@@ -206,33 +301,30 @@ function submitNewItem(e){
 }
 
 
-/* SEARCH AJAX */
-const searchBtn = document.querySelector('#searchBtn');
-const searchInpt = document.querySelector('#search_item');
-const userId = document.querySelector('#user_id');
-let searchLimit = 10; //Continue Tommorrow
-searchBtn.addEventListener('click', getSearch);
-function getSearch(e){
-  let data1 = searchInpt.value.toLowerCase().trim();
-  let formData = new FormData();
-  formData.append('user_id', userId.value);
-  formData.append('search_data',data1);
-
-  fetch('includes/admin_search_item.inc.php',{
-    method: 'POST',
-    // headers: {'Content-Type':'multipart/form-data'},
-    body: formData
-  })
-  .then(res => res.text())
-  .then(data => console.log(JSON.parse(data)))
-  .catch(err => console.log(err));
+/* Select All Items */
 
 
 
-  //location.reload();
-  // console.log(userId.value);
+const selectAll = document.querySelector('#select_all');
+//ready allcheckbox var
+let allCheckBox = undefined;
+selectAll.addEventListener('change', selectAllCheck);
+function selectAllCheck(e){
+  if(allCheckBox.length === 0 || allCheckBox === undefined){
+    return;
+  }
+  if(selectAll.checked){
+    allCheckBox.forEach(item => {
+      item.checked = true;
+      /* populate itemData item_id from hidden input */
+      itemData.push(item.nextElementSibling.value);
+    });
+  }else{
+    allCheckBox.forEach(item => {
+      item.checked = false;
+      itemData.pop(item.nextElementSibling.value);
+    });
+    ;
+  }
 }
-
-
-
 

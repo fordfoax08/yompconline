@@ -33,7 +33,22 @@ class CrudItem{
    
   }
 
-  
+  /* Display All User/seller's Item Ajax */
+  public function getAllUserItem($user_id){
+    $conn = new Dsn;
+    try{
+      $sql = 'SELECT * FROM tbl_items WHERE user_id = ?';
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute([$user_id]);
+      if($stmt->rowCount() > 0){
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      }else{
+        return [];
+      }
+    }catch(PDOException $e){
+      echo 'Error: '.$e->getMessage();
+    }
+  }
 
   /* SEARCH USER ITEM Ajax*/
   public function searchUserItem($user_id, $search_data){
@@ -43,7 +58,7 @@ class CrudItem{
       $stmt = $conn->connect()->prepare($sql);
       $stmt->execute([$user_id,"%{$search_data}%"]);
       if($stmt->rowCount() > 0){
-        return array(25 => $stmt->fetchAll(PDO::FETCH_ASSOC)) ;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
       }else{
         return [];
       }
@@ -51,8 +66,8 @@ class CrudItem{
       echo 'Error'.$e-getMessage();
     }
 
-    // return 'Test successfull';
   }
+  
   
 
 

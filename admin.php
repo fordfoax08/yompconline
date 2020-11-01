@@ -143,7 +143,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
 
       <!-- Section1 C main container of items -->
       <div class="select-all-container">
-        <input type="checkbox">
+        <input type="checkbox" id="select_all">
         <p>Select all</p>
         <div class="page-container">
           <div class="page"><a href="#">&lt;</a></div>
@@ -158,19 +158,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
             <table class="table1">
               <tbody>
                 <!-- Populate items -->
-              <?php foreach($userItems as $key){?>
-                <?php
-                  $dataArr = array(
-                    $key['item_path'],
-                    $key['item_image'],
-                    $key['item_name'],
-                    $key['item_short_desc']  
-                  );
-                  echo $displayItems->displayTemplate($dataArr);
-                ?>
-                
-                
-              <?php }?>
+             
                 
                 <!-- DUMPED 
                 <tr>
