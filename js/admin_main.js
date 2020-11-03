@@ -76,7 +76,9 @@ function displaySellerItems(itemArray){
   allCheckBox.forEach(item => {
     item.addEventListener('change', function(){
       if(this.checked){
-        itemData.push(this.nextElementSibling.value);
+        if(itemData.indexOf(this.nextElementSibling.value) > -1){
+          itemData.push(this.nextElementSibling.value);
+        }
       }else{
         // itemData.pop(this.nextElementSibling.value);
         const index = itemData.indexOf(this.nextElementSibling.value);
