@@ -11,6 +11,8 @@ class CrudItem{
         return $item;
       }
     },$arr_data);
+
+    /* KEY and table param */
     $sql_items = '';
     $sql_val_placeholder = '';
     foreach(array_keys($arr) as $key){
@@ -68,6 +70,34 @@ class CrudItem{
 
   }
   
+
+  /* DELETE Item/s Ajax
+  * admin.php
+  */
+
+
+  public function deleteSellerItems($user_id, $item_id){
+    $placeholder = '';
+    for($i = 0; $i < count($item_id);$i++){
+      $placeholder .= '?,';
+    }
+    /* return $placeholder; */
+    array_unshift($item_id,$user_id);
+
+    $conn = new Dsn;
+    try{
+      $sql = "DELETE FROM tbl_items WHERE user_id = ? AND item_id IN (".rtrim($placeholder,',').")";
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute($item_id);
+      if($stmt->rowCount() > 0){
+        return $this->getAllUserItem($user_id);
+      }else{
+        return [];
+      }
+    }catch(PDOException $e){
+      echo 'Error: '.$e->getMessage();
+    }
+  }
   
 
 

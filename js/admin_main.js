@@ -32,18 +32,37 @@ const userId = document.querySelector('#user_id');
 const tableParent = document.querySelector('.table1 tbody');
 let itemData = [];
 
+
+/* Ajax template 
+* @display Data when Doc is loaded
+* @for delete / Search
+*/
+async function getItems(url,data){
+  const res = await fetch(url, {method:'POST', body: data})
+    .then(res => res.text())
+    .then(data => JSON.parse(data))
+    .catch(err => console.log(err))
+  return res;
+}
+
+
+
 /* Load Items AJAX */
 document.addEventListener('DOMContentLoaded', loadSellerItems);
 function loadSellerItems(){
   const user_id = userId.value;
   let formData = new FormData();
   formData.append('user_id', user_id);
+  getItems('includes/admin_display_item.inc.php',formData)
+  .then(res => displaySellerItems(res));
 
-  fetch('includes/admin_display_item.inc.php', {method: 'POST',body: formData})
-  .then(res => res.text())
-  /* pass array data to display Function */
-  .then(data => displaySellerItems(JSON.parse(data)))
-  .catch(err => console.log(err))
+  //OR code below, original, before using async await
+  // fetch('includes/admin_display_item.inc.php', {method: 'POST',body: formData})
+  // .then(res => res.text())
+  // /* pass array data to display Function */
+  // .then(data => displaySellerItems(JSON.parse(data)))
+  // .catch(err => console.log(err))
+  
 }
 function displaySellerItems(itemArray){
   itemArray.forEach(item => {
@@ -76,7 +95,7 @@ function displaySellerItems(itemArray){
   allCheckBox.forEach(item => {
     item.addEventListener('change', function(){
       if(this.checked){
-        if(itemData.indexOf(this.nextElementSibling.value) > -1){
+        if(!itemData.indexOf(this.nextElementSibling.value) > -1){
           itemData.push(this.nextElementSibling.value);
         }
       }else{
@@ -84,6 +103,7 @@ function displaySellerItems(itemArray){
         const index = itemData.indexOf(this.nextElementSibling.value);
         if(index > -1){
           itemData.splice(index, 1);
+          selectAll.checked = false;
         }
       }
     })
@@ -101,23 +121,57 @@ function getSearch(e){
   formData.append('user_id', userId.value);
   formData.append('search_data',data1);
 
-  fetch('includes/admin_search_item.inc.php',{
-    method: 'POST',
-    // headers: {'Content-Type':'multipart/form-data'},
-    body: formData
-  })
-  .then(res => res.text())
-  .then(data => {
+  getItems('includes/admin_search_item.inc.php',formData)
+  .then(res => {
     tableParent.innerHTML = '';
-    displaySellerItems(JSON.parse(data));
-  })
-  .catch(err => console.log(err));
+    displaySellerItems(res)
+  });
 
+  // fetch('includes/admin_search_item.inc.php',{
+  //   method: 'POST',
+  //   // headers: {'Content-Type':'multipart/form-data'},
+  //   body: formData
+  // })
+  // .then(res => res.text())
+  // .then(data => {
+  //   tableParent.innerHTML = '';
+  //   displaySellerItems(JSON.parse(data));
+  // })
+  // .catch(err => console.log(err));
 
-  //location.reload();
 }
 
 
+/* AJAX delete Item and refresh list */
+const deleteBtn = document.querySelector('#delete-item');
+deleteBtn.addEventListener('click', deleteItem);
+function deleteItem(e){
+  if(itemData.length === 0){
+    return;
+  }
+  if(!confirm('Are you sure you wan\'t to remove item/s?')){
+    return;
+  }
+
+  let formData = new FormData();
+  formData.append('item_name',JSON.stringify(itemData));
+  
+  /* fetch('includes/remove_item.inc.php', {method: 'POST', body: formData})
+  .then(res => res.text())
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => console.log(err)) */
+
+  getItems('includes/remove_item.inc.php', formData)
+  .then(data => {
+    tableParent.innerHTML = '';
+    displaySellerItems(data);
+  })
+  .catch(err => console.log(err))
+
+  // console.log(formData);
+}
 
 
 
@@ -303,10 +357,10 @@ function submitNewItem(e){
 }
 
 
+
+
+
 /* Select All Items */
-
-
-
 const selectAll = document.querySelector('#select_all');
 //ready allcheckbox var
 let allCheckBox = undefined;
@@ -316,6 +370,7 @@ function selectAllCheck(e){
     return;
   }
   if(selectAll.checked){
+    itemData = [];
     allCheckBox.forEach(item => {
       item.checked = true;
       /* populate itemData item_id from hidden input */
@@ -324,7 +379,8 @@ function selectAllCheck(e){
   }else{
     allCheckBox.forEach(item => {
       item.checked = false;
-      itemData.pop(item.nextElementSibling.value);
+      itemData = [];
+      // itemData.pop(item.nextElementSibling.value);
     });
     ;
   }
