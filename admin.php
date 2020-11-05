@@ -63,7 +63,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
   
   
 
-  <!-- REMOVE sec2 to view section 1 -->
+  <!-- REMOVE / ADD sec2 to view section 1 -->
   <div class="main-container">
     <!-- Shrinked  -->
     <section class="section1">
@@ -130,7 +130,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
                     <option value="2">Descending</option>
                   </select>
                 </form>
-                <a href="#" id="delete-item">
+                <a href="javascript:void(0)" id="delete-item">
                   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                   </svg>
@@ -187,7 +187,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
         </div>
         
         <div class="sec1-c-b">
-          dkasjdflkj
+          <!-- dkasjdflkj -->
         </div>
 
 
@@ -206,7 +206,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
           <p>Please fill up all important information.</p>
         </div>
         <form class="inpts" action="includes/add_item.inc.php" method="post" enctype="multipart/form-data">
-          <input type="file" name="item_image">
+          <input type="file" id="item_image">
           <select name="item_category" id="item-category">
             <option value="0" selected disabled>Category</option>
             <option value="1">Board / CPU</option>
@@ -228,7 +228,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
           <label for="item_specification">Specification</label>
           <textarea name="item_specification" id="item_specification" cols="30" rows="3" placeholder="Specification Overview"></textarea>
           <div class="specific-container">
-            <ul>
+            <ul class="specific-ul">
               <!-- Specification Items here -->
             </ul>
             <input type="text" class="spec-input-txt" style="padding: 4px;" placeholder="Add Specification">
@@ -236,7 +236,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
           </div>
           <p class="items-included-title">Items included</p>
           <div class="item-included-container">
-            <ul>
+            <ul class="included-ul">
               <!-- <li>EXAMPLE<span class="item-list-close">&times;</span></li> -->
             </ul>
             <input type="text" style="padding: 4px;" class="item-included-input" placeholder="Item included">

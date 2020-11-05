@@ -349,11 +349,45 @@ function removeItemInclude(e){
 
 /* Button Submit new Item */
 const btnSubmitNewItem = document.querySelector('.btn-new-item');
+const formInpt = document.querySelector('.inpts');
 btnSubmitNewItem.addEventListener('click', submitNewItem);
 function submitNewItem(e){
+  /* e.target.parentNode.submit(); */
+  let formData = new FormData();
+  formData.append('item_image', document.querySelector('#item_image').files[0]);
+  formInpt.childNodes.forEach(child =>  {
+    if(child.name){
+      /* If input has value continue */
+      if(child.value){
+        formData.append(child.name, child.value);
+      }
+    }
+    else{
+      if(child.tagName === 'DIV'){
+        let childNode = child.firstElementChild.childNodes;
+        childNode.forEach(children => {
+          if(children.name){
+            // console.log(children);
+            formData.append(children.name,children.value);
+          }
+        })
+      }
+      
+    }
+  })
 
-  e.target.parentNode.submit();
-  // console.log(e.target);
+
+  fetch('includes/admin_add_item.inc.php',{method: 'POST', body: formData})
+  .then(res => res.text())
+  .then(data => {
+    if(parseInt(data) > 0){
+      /* Empty all input fields */
+      formInpt.reset();
+      document.querySelector('.specific-ul').innerHTML = '';
+      document.querySelector('.included-ul').innerHTML = '';
+    }
+  })
+  .catch(err => console.log(err));
 }
 
 
