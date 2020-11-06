@@ -202,7 +202,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
       
       <div class="container sec2-main-container">
         <div class="sec2-header">
-          <h1>Add new Item</h1>
+          <h1>Sell Item</h1>
           <p>Please fill up all important information.</p>
         </div>
         <form class="inpts" action="includes/add_item.inc.php" method="post" enctype="multipart/form-data">
@@ -264,10 +264,15 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
       </div> -->
 
     </section>
-
-
   </div>
 
+
+  <!-- Pop up indicating if item is added or error occured -->
+  <div class="item-alert">
+      <div class="item-alert-container">
+        <span class="item-alert-text">Complete Required Field</span>
+      </div>
+  </div>
 
   <footer>
 

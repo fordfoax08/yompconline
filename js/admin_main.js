@@ -298,7 +298,7 @@ function specClose(e){
 
 
 
-/* ITEMS INCLUDED add items */
+/* Add ITEMS INCLUDED */
 const itemIncText = document.querySelector('.item-included-input');
 const itemIncBtn = document.querySelector('.item-included-btn');
 itemIncBtn.addEventListener('click', addNewIncludedItem);
@@ -353,12 +353,35 @@ const formInpt = document.querySelector('.inpts');
 btnSubmitNewItem.addEventListener('click', submitNewItem);
 function submitNewItem(e){
   /* e.target.parentNode.submit(); */
+  let isReady = true;
   let formData = new FormData();
   formData.append('item_image', document.querySelector('#item_image').files[0]);
+  
+  /* Check for required fields */
+  if(document.querySelector('input[name="item_name"]').value === ''){
+    isReady = false;
+    document.querySelector('input[name="item_name"]').style.backgroundColor = '#f0a8a8';
+  }
+  if(document.querySelector('#item_short_desc').value === ''){
+    isReady = false;
+    document.querySelector('#item_short_desc').style.backgroundColor = '#f0a8a8';
+  }
+  if(document.querySelector('#item-category').value == '0'){
+    isReady = false;
+    document.querySelector('#item-category').style.backgroundColor = '#f0a8a8';
+  }
+  if(document.querySelector('#item_available').value === ''){
+    isReady = false;
+    document.querySelector('#item_available').style.backgroundColor = '#f0a8a8';
+  }
+
+
+  
   formInpt.childNodes.forEach(child =>  {
     if(child.name){
       /* If input has value continue */
       if(child.value){
+        child.style.backgroundColor = '#ffffff';
         formData.append(child.name, child.value);
       }
     }
@@ -376,19 +399,27 @@ function submitNewItem(e){
     }
   })
 
-
-  fetch('includes/admin_add_item.inc.php',{method: 'POST', body: formData})
-  .then(res => res.text())
-  .then(data => {
-    if(parseInt(data) > 0){
-      /* Empty all input fields */
-      formInpt.reset();
-      document.querySelector('.specific-ul').innerHTML = '';
-      document.querySelector('.included-ul').innerHTML = '';
-    }
-  })
-  .catch(err => console.log(err));
+  /* if isReady is TRUE, then save to DB */
+  if(isReady){
+    fetch('includes/admin_add_item.inc.php',{method: 'POST', body: formData})
+    .then(res => res.text())
+    .then(data => {
+      if(parseInt(data) > 0){
+        /* Empty all input fields */
+        formInpt.reset();
+        document.querySelector('.specific-ul').innerHTML = '';
+        document.querySelector('.included-ul').innerHTML = '';
+      }
+    })
+    .catch(err => console.log(err));
+    itemAlert('Item Added!');
+  }else{
+    // alert('Fill required Fields');
+    itemAlert('Complete All Required Field!');
+  }
 }
+
+
 
 
 
@@ -419,4 +450,21 @@ function selectAllCheck(e){
     ;
   }
 }
+
+
+/* For Function itemAlert */
+function itemAlert(msg){
+  const a = document.querySelector('.item-alert');
+  const b = document.querySelector('.item-alert-container'); 
+  b.firstChild.innerHTML = msg;
+  a.classList.add('open');
+  setTimeout(() => {
+    b.classList.add('open');
+    setTimeout(()=>{
+      b.classList.remove('open');
+      setTimeout(()=>{a.classList.remove('open')}, 500)
+    },2000)
+  }, 100)
+}
+
 

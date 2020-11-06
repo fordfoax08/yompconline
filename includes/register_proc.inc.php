@@ -116,7 +116,8 @@ $crud = new CrudRegister;
 if($crud->insertIntoAccount($dataAccount)){
   $crud->insertIntoInfo($dataInfo);
   move_uploaded_file($image_tmp, $destination.$newImageName);
-  echo 'Registered!';
+  // echo 'Registered!';
+  header('Location: ../login.php');
 }else{
   // errReport('Something wen\'t wrong in server');
   echo 'Registration Failed!';
