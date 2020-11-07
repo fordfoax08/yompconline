@@ -53,10 +53,14 @@ class CrudItem{
   }
 
   /* SEARCH USER ITEM Ajax*/
-  public function searchUserItem($user_id, $search_data){
+  public function searchUserItem($user_id, $search_data,$search_option){
+    $opt = 'item_name';
+    if($search_option == 2){
+      $opt = 'item_id';
+    }
     $conn = new Dsn;
     try {
-      $sql = "SELECT * FROM tbl_items WHERE user_id = ? AND item_name LIKE ?";
+      $sql = "SELECT * FROM tbl_items WHERE user_id = ? AND $opt LIKE ?";
       $stmt = $conn->connect()->prepare($sql);
       $stmt->execute([$user_id,"%{$search_data}%"]);
       if($stmt->rowCount() > 0){

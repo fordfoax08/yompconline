@@ -113,6 +113,7 @@ function displaySellerItems(itemArray){
 /* SEARCH AJAX */
 const searchBtn = document.querySelector('#searchBtn');
 const searchInpt = document.querySelector('#search_item');
+const searchOpt = document.querySelector('.search_filter');
 let searchLimit = 10; //Continue Tommorrow
 searchBtn.addEventListener('click', getSearch);
 function getSearch(e){
@@ -120,6 +121,7 @@ function getSearch(e){
   let formData = new FormData();
   formData.append('user_id', userId.value);
   formData.append('search_data',data1);
+  formData.append('search_option', searchOpt.value);
 
   getItems('includes/admin_search_item.inc.php',formData)
   .then(res => {
@@ -456,7 +458,8 @@ function selectAllCheck(e){
 function itemAlert(msg){
   const a = document.querySelector('.item-alert');
   const b = document.querySelector('.item-alert-container'); 
-  b.firstChild.innerHTML = msg;
+  const c = document.querySelector('.item-alert-text'); 
+  c.innerHTML = msg;
   a.classList.add('open');
   setTimeout(() => {
     b.classList.add('open');

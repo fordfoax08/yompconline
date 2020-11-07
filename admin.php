@@ -99,8 +99,8 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
           <!-- for search area -->
           <div class="search-item">
             <!-- <form action=""> -->
-              <select name="search_filter">
-                <option value="" selected disabled>Search by</option>
+              <select name="search_filter" class="search_filter">
+                <option value="1" selected disabled>Search by</option>
                 <option value="1">Name</option>
                 <option value="2">Item No.</option>
               </select>
@@ -124,7 +124,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
           <div class="header">
               <div class="item-delete">
                 <form action="">
-                  <label for="sort_item">Sort by</label>
+                  <label for="sort_item">Sort Date:</label>
                   <select name="sort_item" id="">
                     <option value="1">Ascending</option>
                     <option value="2">Descending</option>
@@ -217,9 +217,12 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
             <option value="6">Mouse</option>
             <option value="7">Others</option>
           </select>
+          <span class="req-field">*</span>
           <input type="number" name="item_available" id="item_available" placeholder="Number of Items Available">
+          <span class="req-field">*</span>
           <input type="text" name="item_name" id="item_name" placeholder="Item name">
           <input type="text" name="item_sub_name" id="item_sub_name" placeholder="Sub name">
+          <span class="req-field">*</span>
           <textarea name="item_short_desc" id="item_short_desc" cols="30" rows="3" placeholder="Short Item description"></textarea>
           <label for="item_overview">Overview</label>
           <textarea name="item_overview" id="item_overview" cols="30" rows="6" placeholder="Item Overview"></textarea>
@@ -270,7 +273,7 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
   <!-- Pop up indicating if item is added or error occured -->
   <div class="item-alert">
       <div class="item-alert-container">
-        <span class="item-alert-text">Complete Required Field</span>
+        <span class="item-alert-text">Item Added!</span>
       </div>
   </div>
 
