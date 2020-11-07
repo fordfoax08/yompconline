@@ -36,10 +36,14 @@ class CrudItem{
   }
 
   /* Display All User/seller's Item Ajax */
-  public function getAllUserItem($user_id){
+  public function getAllUserItem($user_id, $sort_by){
+    $sort = 'ASC';
+    if($sort_by == 2){
+      $sort = 'DESC';
+    }
     $conn = new Dsn;
     try{
-      $sql = 'SELECT * FROM tbl_items WHERE user_id = ?';
+      $sql = "SELECT * FROM tbl_items WHERE user_id = ? ORDER BY id $sort";
       $stmt = $conn->connect()->prepare($sql);
       $stmt->execute([$user_id]);
       if($stmt->rowCount() > 0){
@@ -80,7 +84,7 @@ class CrudItem{
   */
 
 
-  public function deleteSellerItems($user_id, $item_id){
+  public function deleteSellerItems($user_id, $item_id, $sort_by){
     $placeholder = '';
     for($i = 0; $i < count($item_id);$i++){
       $placeholder .= '?,';
@@ -94,7 +98,7 @@ class CrudItem{
       $stmt = $conn->connect()->prepare($sql);
       $stmt->execute($item_id);
       if($stmt->rowCount() > 0){
-        return $this->getAllUserItem($user_id);
+        return $this->getAllUserItem($user_id,$sort_by);
       }else{
         return [];
       }

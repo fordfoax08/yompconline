@@ -30,6 +30,7 @@ let newObj = new OpenClose;
 const mainContainer = document.querySelector('.main-container');
 const userId = document.querySelector('#user_id');
 const tableParent = document.querySelector('.table1 tbody');
+const sortSelect = document.querySelector('#sort_item');
 let itemData = [];
 
 
@@ -157,13 +158,8 @@ function deleteItem(e){
 
   let formData = new FormData();
   formData.append('item_name',JSON.stringify(itemData));
+  formData.append('sort_by', sortSelect.value);
   
-  /* fetch('includes/remove_item.inc.php', {method: 'POST', body: formData})
-  .then(res => res.text())
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => console.log(err)) */
 
   getItems('includes/remove_item.inc.php', formData)
   .then(data => {
@@ -176,7 +172,24 @@ function deleteItem(e){
 }
 
 
+/* SORT ITEM BY DATE */
+/* Sort item list */
+sortSelect.addEventListener('change', sortItem);
+function sortItem(e){
+  let opt = sortSelect.value;
+  const user_id = userId.value;
+  let formData = new FormData();
+  formData.append('user_id', user_id);
+  formData.append('sort_by', opt);
 
+  /* Call getItem function */
+  getItems('includes/admin_display_item.inc.php', formData)
+  .then(res => {
+    tableParent.innerHTML = '';
+    displaySellerItems(res)
+  });
+
+}
 
 
 
@@ -238,6 +251,89 @@ function showMenu1(e){
 function showMenu2(e){
   newObj.classAdd('.main-container','sec2');
 }
+
+
+
+
+
+
+/* Select All Items */
+const selectAll = document.querySelector('#select_all');
+//ready allcheckbox var
+let allCheckBox = undefined;
+selectAll.addEventListener('change', selectAllCheck);
+function selectAllCheck(e){
+  if(allCheckBox.length === 0 || allCheckBox === undefined){
+    return;
+  }
+  if(selectAll.checked){
+    itemData = [];
+    allCheckBox.forEach(item => {
+      item.checked = true;
+      /* populate itemData item_id from hidden input */
+      itemData.push(item.nextElementSibling.value);
+    });
+  }else{
+    allCheckBox.forEach(item => {
+      item.checked = false;
+      itemData = [];
+      // itemData.pop(item.nextElementSibling.value);
+    });
+    ;
+  }
+}
+
+
+/* Pagination *************** */
+let currPage = 1; //Curr page
+const prevMax = document.querySelector('.page_prev_max');
+const prevMin = document.querySelector('.page_prev');
+const nextMin = document.querySelector('.page_next');
+const nextMax = document.querySelector('.page_next_max');
+
+/* add function to page buttons */
+nextMin.addEventListener('click', currPageAdd);
+function currPageAdd(){
+  currPage++;
+  console.log(currPage);
+}
+prevMin.addEventListener('click', currPageMinus);
+function currPageMinus(){
+  if(currPage > 1){
+    currPage--;
+    console.log(currPage);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* SEC2 Area */
+
+
+/* For Function itemAlert */
+function itemAlert(msg){
+  const a = document.querySelector('.item-alert');
+  const b = document.querySelector('.item-alert-container'); 
+  const c = document.querySelector('.item-alert-text'); 
+  c.innerHTML = msg;
+  a.classList.add('open');
+  setTimeout(() => {
+    b.classList.add('open');
+    setTimeout(()=>{
+      b.classList.remove('open');
+      setTimeout(()=>{a.classList.remove('open')}, 500)
+    },2000)
+  }, 100)
+}
+
 
 
 
@@ -423,51 +519,5 @@ function submitNewItem(e){
 
 
 
-
-
-
-
-/* Select All Items */
-const selectAll = document.querySelector('#select_all');
-//ready allcheckbox var
-let allCheckBox = undefined;
-selectAll.addEventListener('change', selectAllCheck);
-function selectAllCheck(e){
-  if(allCheckBox.length === 0 || allCheckBox === undefined){
-    return;
-  }
-  if(selectAll.checked){
-    itemData = [];
-    allCheckBox.forEach(item => {
-      item.checked = true;
-      /* populate itemData item_id from hidden input */
-      itemData.push(item.nextElementSibling.value);
-    });
-  }else{
-    allCheckBox.forEach(item => {
-      item.checked = false;
-      itemData = [];
-      // itemData.pop(item.nextElementSibling.value);
-    });
-    ;
-  }
-}
-
-
-/* For Function itemAlert */
-function itemAlert(msg){
-  const a = document.querySelector('.item-alert');
-  const b = document.querySelector('.item-alert-container'); 
-  const c = document.querySelector('.item-alert-text'); 
-  c.innerHTML = msg;
-  a.classList.add('open');
-  setTimeout(() => {
-    b.classList.add('open');
-    setTimeout(()=>{
-      b.classList.remove('open');
-      setTimeout(()=>{a.classList.remove('open')}, 500)
-    },2000)
-  }, 100)
-}
 
 
