@@ -50,10 +50,16 @@ async function getItems(url,data){
 
 /* Load Items AJAX */
 document.addEventListener('DOMContentLoaded', loadSellerItems);
+
 function loadSellerItems(){
+  /* Update Item count for pagination purpose */
+  updatePage();
+
   const user_id = userId.value;
   let formData = new FormData();
   formData.append('user_id', user_id);
+  formData.append('limit_a', limit);
+  formData.append('limit_b', limitOffset);
   getItems('includes/admin_display_item.inc.php',formData)
   .then(res => displaySellerItems(res));
 
@@ -109,26 +115,36 @@ function displaySellerItems(itemArray){
       }
     })
   })
+  
 }
 
 /* SEARCH AJAX */
 const searchBtn = document.querySelector('#searchBtn');
 const searchInpt = document.querySelector('#search_item');
 const searchOpt = document.querySelector('.search_filter');
+const pageContainer = document.querySelector('.page-container');
 let searchLimit = 10; //Continue Tommorrow
 searchBtn.addEventListener('click', getSearch);
 function getSearch(e){
   let data1 = searchInpt.value.toLowerCase().trim();
-  let formData = new FormData();
-  formData.append('user_id', userId.value);
-  formData.append('search_data',data1);
-  formData.append('search_option', searchOpt.value);
-
-  getItems('includes/admin_search_item.inc.php',formData)
-  .then(res => {
+  if(data1 === ''){
+    pageContainer.style.display = 'flex';
     tableParent.innerHTML = '';
-    displaySellerItems(res)
-  });
+    loadSellerItems();
+    return;
+  }else{
+    pageContainer.style.display = 'none';
+    let formData = new FormData();
+    formData.append('user_id', userId.value);
+    formData.append('search_data',data1);
+    formData.append('search_option', searchOpt.value);
+  
+    getItems('includes/admin_search_item.inc.php',formData)
+    .then(res => {
+      tableParent.innerHTML = '';
+      displaySellerItems(res)
+    });
+  }
 
   // fetch('includes/admin_search_item.inc.php',{
   //   method: 'POST',
@@ -168,7 +184,8 @@ function deleteItem(e){
   })
   .catch(err => console.log(err))
 
-  // console.log(formData);
+  /* Update Item count for pagination purpose */
+  updatePage();
 }
 
 
@@ -285,7 +302,12 @@ function selectAllCheck(e){
 
 
 /* Pagination *************** */
+const pageText = document.querySelector('#page_text');
+let itemCount = 0;
+let totalPage = 1;
 let currPage = 1; //Curr page
+let limit = 0;
+let limitOffset = 10;
 const prevMax = document.querySelector('.page_prev_max');
 const prevMin = document.querySelector('.page_prev');
 const nextMin = document.querySelector('.page_next');
@@ -294,18 +316,79 @@ const nextMax = document.querySelector('.page_next_max');
 /* add function to page buttons */
 nextMin.addEventListener('click', currPageAdd);
 function currPageAdd(){
-  currPage++;
-  console.log(currPage);
+  if(currPage !== totalPage){
+    currPage++;
+    limit = limit + 10;
+    pageText.innerHTML = currPage;
+    paginationUpdate();
+    // console.log(limitOffset);
+  }
 }
 prevMin.addEventListener('click', currPageMinus);
 function currPageMinus(){
   if(currPage > 1){
     currPage--;
-    console.log(currPage);
+    limit = limit - 10;
+    pageText.innerHTML = currPage;
+    paginationUpdate();
+    // console.log(limitOffset);
   }
 }
+prevMax.addEventListener('click', currPagePrevMax);
+function currPagePrevMax(){
+  if(currPage === 1){return}
+  currPage = 1;
+  limit = 0;
+  pageText.innerHTML = currPage;
+  paginationUpdate();
+  // console.log(limitOffset);
+}
+nextMax.addEventListener('click', currPageNextMax);
+function currPageNextMax(){
+  if(currPage === totalPage){return}
+  currPage = totalPage;
+  limit = (currPage * 10) - 10;
+  pageText.innerHTML = currPage;
+  paginationUpdate();
+  // console.log(limitOffset);
+}
 
+/* Get all item number / count all seller's item */
+async function getAllItemsCount($user_id){
+  let count = await fetch('includes/item_count.inc.php')
+    .then(res => res.text())
+    .then(data => JSON.parse(data)) //parse Json
+    .catch(err => console.log(err));
+  return count;
+}
 
+/* Pagination */
+function updatePage(){
+  /* Update Item count for pagination purpose */
+  getAllItemsCount().then(res => {
+    itemCount = res;
+    totalPage = Math.ceil(res / 10);
+    document.querySelector('#page_total').innerHTML = Math.ceil(res / 10);
+  });
+}
+
+/* Pagination display */
+function paginationUpdate(){
+  tableParent.innerHTML = '';
+
+  const user_id = userId.value;
+  let opt = sortSelect.value;
+  let formData = new FormData();
+  formData.append('user_id', user_id);
+  formData.append('sort_by', opt);
+  formData.append('limit_a', limit);
+  getItems('includes/admin_display_item.inc.php',formData)
+  .then(res => {
+    displaySellerItems(res);
+  });
+  /* console.log(limit);
+  // console.log(limitOffset); */
+}
 
 
 

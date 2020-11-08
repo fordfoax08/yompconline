@@ -36,14 +36,16 @@ class CrudItem{
   }
 
   /* Display All User/seller's Item Ajax */
-  public function getAllUserItem($user_id, $sort_by){
+  public function getAllUserItem($user_id, $sort_by,$limit){
     $sort = 'ASC';
     if($sort_by == 2){
       $sort = 'DESC';
     }
     $conn = new Dsn;
     try{
-      $sql = "SELECT * FROM tbl_items WHERE user_id = ? ORDER BY id $sort";
+      $sql = "SELECT * FROM tbl_items WHERE user_id = ? ORDER BY id $sort LIMIT $limit,10";
+      // $sql = "SELECT * FROM tbl_items WHERE user_id = ? ORDER BY id $sort LIMIT $limit,$limit_offset";
+      // $sql = "SELECT * FROM tbl_items WHERE user_id = ? ORDER BY id $sort";
       $stmt = $conn->connect()->prepare($sql);
       $stmt->execute([$user_id]);
       if($stmt->rowCount() > 0){
@@ -55,6 +57,26 @@ class CrudItem{
       echo 'Error: '.$e->getMessage();
     }
   }
+
+
+  /* GET All item count */
+  public function getAllItemsCount($user_id){
+    $conn = new Dsn;
+    try {
+      $sql = "SELECT * FROM tbl_items WHERE user_id = ?";
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute(array($user_id));
+      if($stmt->rowCount() > 0){
+        return $stmt->rowCount();
+      }else{
+        return 0;
+      }
+    } catch (PDOException $e) {
+      echo 'Error: '.$e->getMessage();
+    }
+  }
+
+
 
   /* SEARCH USER ITEM Ajax*/
   public function searchUserItem($user_id, $search_data,$search_option){

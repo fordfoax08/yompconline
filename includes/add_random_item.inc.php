@@ -1,9 +1,10 @@
 <?php
+session_start();
 require_once 'autoload.inc.php';
 
 /* FOR DEVELOPMENT PURPOSE  */
 
-$userId = '202011062343120';
+$userId = $_SESSION['u_id'];
 
 $dataPrepared = array(
     'user_id' => $userId,

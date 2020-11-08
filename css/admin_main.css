@@ -351,7 +351,7 @@ header div{
 .page-container{
   display: flex;
   position: absolute;
-  left: 50%;
+  left: 42%;
   color: rgb(102, 102, 102);
 }
 .page-container div{
@@ -491,6 +491,8 @@ cursor: pointer;
   height: 450px;
   width: 30%;
   background-color: rgb(134, 134, 134);
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 0px black;
 }
 
 
@@ -700,6 +702,10 @@ footer{
    .select-all-container{
      margin-left: 11%;
    }
+
+   .page-container{
+    left: 42%;
+   }
  
    .sec1-c{
      padding: 0 10%;
@@ -730,6 +736,10 @@ footer{
   /* .main-container{
     padding: 0 5%;
   } */
+
+  .page-container{
+    left: 52%;
+  }
 
 
   

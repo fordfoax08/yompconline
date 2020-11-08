@@ -145,12 +145,12 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
         <input type="checkbox" id="select_all">
         <p>Select all</p>
         <div class="page-container">
-          <div class="page page_prev_max"><a href="#">&lt;&lt;</a></div>
-          <div class="page page_prev"><a href="#">&lt;</a></div>
-          <div class="page page_next"><a href="#">&gt;</a></div>
-          <div class="page page_next_max"><a href="#">&gt;&gt;</a></div>
+          <div class="page page_prev_max"><a href="javascript:void(0);">&lt;&lt;</a></div>
+          <div class="page page_prev"><a href="javascript:void(0);">&lt;</a></div>
+          <div class="page page_next"><a href="javascript:void(0);">&gt;</a></div>
+          <div class="page page_next_max"><a href="javascript:void(0);">&gt;&gt;</a></div>
           <input type="hidden" name="page_no" id="page_no" value="1">
-          Page &nbsp; <span id="page_text">1</span>
+          Page &nbsp; <span id="page_text">1</span> &nbsp; of &nbsp;<span id="page_total">1</span>
         </div>
       </div>
       <div class="sec1-c">
