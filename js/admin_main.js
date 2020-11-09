@@ -171,16 +171,17 @@ function deleteItem(e){
   if(!confirm('Are you sure you wan\'t to remove item/s?')){
     return;
   }
-
+  selectAll.checked = false;
   let formData = new FormData();
   formData.append('item_name',JSON.stringify(itemData));
   formData.append('sort_by', sortSelect.value);
-  
+  formData.append('limit_a', limit);
 
   getItems('includes/remove_item.inc.php', formData)
   .then(data => {
     tableParent.innerHTML = '';
-    displaySellerItems(data);
+    // displaySellerItems(data);
+    loadSellerItems();
   })
   .catch(err => console.log(err))
 
@@ -368,7 +369,7 @@ function updatePage(){
   getAllItemsCount().then(res => {
     itemCount = res;
     totalPage = Math.ceil(res / 10);
-    document.querySelector('#page_total').innerHTML = Math.ceil(res / 10);
+    document.querySelector('#page_total').innerHTML = (Math.ceil(res / 10) === 0)? '': totalPage;
   });
 }
 
@@ -536,7 +537,9 @@ function submitNewItem(e){
   /* e.target.parentNode.submit(); */
   let isReady = true;
   let formData = new FormData();
-  formData.append('item_image', document.querySelector('#item_image').files[0]);
+  if(document.querySelector('#item_image').files[0] !== undefined){
+    formData.append('item_image', document.querySelector('#item_image').files[0]);
+  }
   
   /* Check for required fields */
   if(document.querySelector('input[name="item_name"]').value === ''){
@@ -585,6 +588,7 @@ function submitNewItem(e){
     fetch('includes/admin_add_item.inc.php',{method: 'POST', body: formData})
     .then(res => res.text())
     .then(data => {
+      console.log(data);
       if(parseInt(data) > 0){
         /* Empty all input fields */
         formInpt.reset();

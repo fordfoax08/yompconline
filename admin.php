@@ -126,8 +126,8 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
                 <form action="">
                   <label for="sort_item">Sort Date:</label>
                   <select name="sort_item" id="sort_item">
-                    <option value="1">Ascending</option>
-                    <option value="2">Descending</option>
+                    <option value="1">Descending</option>
+                    <option value="2">Ascending</option>
                   </select>
                 </form>
                 <a href="javascript:void(0)" id="delete-item">

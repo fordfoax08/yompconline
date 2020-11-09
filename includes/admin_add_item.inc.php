@@ -24,6 +24,7 @@ $item_path = itemPath($item_category);
 $filterImage = new FilterImage;
 //$file = $_FILES['item_image'];
 $file_name = 'noimage.jpg';
+$file_valid = false;
 if(isset($_FILES['item_image'])){
   $file = $_FILES['item_image'];
   $file_name = $file['name'];
@@ -65,11 +66,11 @@ $dataPrepared = array(
 /* INSERTING DATA TO DATABASE */
 $cruditem = new CrudItem;
 if($cruditem->insertNewItem($dataPrepared)){
+  echo 1;
   if($file_valid){
     // move image if File is valid
     move_uploaded_file($file_temp,'../multimedia/image/'.$item_path.'/'.$file_name);
   }
-  echo 1;
   // $_SESSION['done'] = 'Success';
   // echo '<script>window.history.go(-1);</script>';
 }else{

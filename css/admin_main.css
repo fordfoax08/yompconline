@@ -268,7 +268,7 @@ header div{
 .user-details p:nth-of-type(1){
   font-style: italic;
   font-size: .8em;
-  color: gray;
+  color: rgb(37, 37, 37);
 }
 .user-details p:nth-of-type(2){
   font-style: bold;
