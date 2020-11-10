@@ -45,11 +45,11 @@ class CrudItem{
     // }
     try{
       if($item_category > 0){
-        $sql = "SELECT * FROM tbl_items WHERE item_category = ? ORDER BY id DESC";
+        $sql = "SELECT * FROM tbl_items WHERE item_category = ? ORDER BY RAND ()";
         $stmt = $conn->connect()->prepare($sql);
         $stmt->execute(array($item_category));
       }else{
-        $sql = "SELECT * FROM tbl_items ORDER BY id DESC";
+        $sql = "SELECT * FROM tbl_items ORDER BY RAND ()";
         $stmt = $conn->connect()->prepare($sql);
         $stmt->execute();
       }

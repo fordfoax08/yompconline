@@ -285,6 +285,7 @@ header div{
 }
 .section2 > div{
   /* background-color: rgb(78, 78, 78); */
+  position: relative;
   height: auto;
   padding: 7px 0;
   border-radius: 5px;
@@ -292,7 +293,7 @@ header div{
   background-image: linear-gradient(rgb(47, 47, 47),rgb(153, 153, 153) 50%);
   box-shadow: 1px 1px 5px 0px black;
   overflow: hidden;
-
+  
 }
 
 .i-c-a{
@@ -311,11 +312,15 @@ header div{
   margin-bottom: 16px;
 }
 .i-c-a img{
-  width: 80%;
+  /* width: 80%; */
+  height: 90px;
+  margin: 32px 0;
+  transition: 1s all ease-in-out;
 }
 .i-c-b{
   height: 100%;
-  border: 1px solid red;
+ /*  border: 1px solid red; */
+  
 }
 .i-c-b h5{
   padding: 0 5%;
@@ -919,6 +924,13 @@ footer div{
   .section2  div{
     height: auto;
   }
+
+  .i-c-a img{
+    /* width: 80%; */
+    height: 120px;
+    margin: 32px 0;
+  }
+  
 }
 
 @media screen and (min-width: 768px){
@@ -942,6 +954,10 @@ footer div{
   /* Sec 2 */
   .section2 div{
     height: auto;
+  }
+  .i-c-a img:hover{
+    transform: scale(1.3);
+    transition: 1s all ease-in-out;
   }
 
   /* Section 3 */

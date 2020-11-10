@@ -23,7 +23,7 @@ $item_path = itemPath($item_category);
 /* ITEM IMAGE */
 $filterImage = new FilterImage;
 //$file = $_FILES['item_image'];
-$file_name = 'noimage.jpg';
+$file_name = 'noimage.png';
 $file_valid = false;
 if(isset($_FILES['item_image'])){
   $file = $_FILES['item_image'];
@@ -38,7 +38,7 @@ if(isset($_FILES['item_image'])){
   /* Check if Image is Valid, Size and Type */
   if(!$filterImage->isImageFileValid($file_name) || !$filterImage->imageSizeValid($file_size)){
     $file_valid = false;
-    $file_name = 'noimage.jpg';
+    $file_name = 'noimage.png';
   }
 }
 

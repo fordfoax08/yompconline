@@ -92,6 +92,38 @@ navBtns.forEach(btn => {
     this.style.backgroundColor = '#f5a442';
     this.firstElementChild.style.color = 'rgb(30,30,30)';
     this.lastElementChild.style.color = 'black';
+    switch(this.className){
+      case 'nav-item-1':
+        itemCategory = 6;
+        getItemData();
+        break;
+      case 'nav-item-2':
+        itemCategory = 5;
+        getItemData();
+        break;
+      case 'nav-item-3':
+        itemCategory = 4;
+        getItemData();
+        break;
+      case 'nav-item-4':
+        itemCategory = 1;
+        getItemData();
+        break;
+      case 'nav-item-5':
+        itemCategory = 2;
+        getItemData();
+        break;
+      case 'nav-item-6':
+        itemCategory = 3;
+        getItemData();
+        break;
+      case 'nav-item-7':
+        itemCategory = 7;
+        getItemData();
+        break;
+      default:
+        itemCategory = 0;
+    }
   })
 })
 
