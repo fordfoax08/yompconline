@@ -1,7 +1,7 @@
 class OpenClose{
   
   
-  classContains(_target,_className){
+  classContains(_target,_className){ //This code is not used
     return _target.classList.contains(_className);
   }
 
@@ -26,7 +26,7 @@ class OpenClose{
 
 
 /* Variable Global */
-let newObj = new OpenClose;
+
 const mainContainer = document.querySelector('.main-container');
 const userId = document.querySelector('#user_id');
 const tableParent = document.querySelector('.table1 tbody');
@@ -258,12 +258,16 @@ function draw2(){
 /* .menu1 element class name
   showMenu1 is a callback function
 */
+let newObj = new OpenClose;
 newObj.eventClick('.menu1',showMenu1);
 newObj.eventClick('.menu2', showMenu2);
 /* classRemove and classAdd
   .classRemove(#targetElement#,#class-name-to-remove#)
 */
 function showMenu1(e){
+  tableParent.innerHTML = '';
+    // displaySellerItems(data);
+    loadSellerItems();
   newObj.classRemove('.main-container','sec2');
 }
 function showMenu2(e){
