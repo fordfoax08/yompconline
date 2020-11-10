@@ -150,15 +150,22 @@ session_start();
         </div>
 
       </div>
-      <div class="sec1-drawer"></div>
+      <div class="sec1-drawer">
+        <div class="arrow-1"></div>
+        <div class="arrow-2"></div>
+      </div>
     </section>
 
     <section class="section2">
+
+
+
       <div class="item-container">
         <div class="i-c-a">
           <a href="#" onclick="itemModalExt();">
             <img src="multimedia/image/mobo/01-2345.png" alt="">
           </a>
+          
         </div>
         <div class="i-c-b">
           <h5>Cougar mobo</h5>

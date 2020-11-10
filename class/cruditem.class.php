@@ -35,6 +35,39 @@ class CrudItem{
    
   }
 
+
+  /* Display index.php all item */
+  public function getAllItems($item_category = 0){
+    $conn = new Dsn;
+    // $sql = "SELECT * FROM tbl_items ORDER BY id DESC";
+    // if($item_category > 0){
+    //   $sql = "SELECT * FROM tbl_items WHERE item_category = ? ORDER BY id DESC";
+    // }
+    try{
+      if($item_category > 0){
+        $sql = "SELECT * FROM tbl_items WHERE item_category = ? ORDER BY id DESC";
+        $stmt = $conn->connect()->prepare($sql);
+        $stmt->execute(array($item_category));
+      }else{
+        $sql = "SELECT * FROM tbl_items ORDER BY id DESC";
+        $stmt = $conn->connect()->prepare($sql);
+        $stmt->execute();
+      }
+
+      /* Returning Result data */
+      if($stmt->rowCount() > 0){
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      }else{
+        return [];
+      }
+    } catch (PDOException $e){
+      echo 'Error: '.$e->getMessage();
+    }
+  }
+
+
+
+
   /* Display All User/seller's Item Ajax */
   public function getAllUserItem($user_id, $sort_by,$limit){
     $sort = 'DESC';
