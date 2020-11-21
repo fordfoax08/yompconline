@@ -272,18 +272,20 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
     </section>
   </div>
 
+  <footer>
 
-  <!-- Pop up indicating if item is added or error occured -->
+  </footer>
+
+
+  <!-- Pop up indicating if item is added or error occured itemAlert(msg)-->
   <div class="item-alert">
       <div class="item-alert-container">
         <span class="item-alert-text">Item Added!</span>
       </div>
   </div>
 
-  <footer>
-
-  </footer>
-
+  
+  
 
   <!-- MENU LEFT NAV -->
   <div class="menu-drawer-container">
@@ -297,6 +299,81 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
       <div class="menu1 mn">Home</div>
       <div class="menu2 mn">New Item</div>
       <div class="menu3 mn"><a href="includes/logout_proc.php">Logout</a></div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- MODAl FOR UPDATING ITEM INFORMATION open-->
+  <div class="modal-container">
+    <div class="edit-container">
+      <!-- Div for closing modal -->
+      <div class="edit-container-close">&times;</div>
+      <!-- Edit A for Image, B for Item Info-->
+      <div class="edit-a">
+        <img id="edit_image" src="multimedia/image/banner/banner1.png" alt="image">
+      </div>
+      <!-- B ************** -->
+      <div class="edit-b">
+        <h3>Update Item Info</h3>
+        
+        <div class="modal-input-container">
+          <input type="hidden" name="item_id" id="item_id2">
+          <span class="req-field">*</span>
+          <input type="text" name="item_name" id="item_name2" placeholder="Item name">
+          <input type="text" name="item_sub_name" id="item_sub_name2" placeholder="Sub name">
+          <select name="item_category" id="item-category2">
+            <option value="0" selected disabled>Category</option>
+            <option value="1">Board / CPU</option>
+            <option value="2">Chassis / Rig</option>
+            <option value="3">Graphics Card</option>
+            <option value="4">Monitor</option>
+            <option value="5">Keyboard</option>
+            <option value="6">Mouse</option>
+            <option value="7">Others</option>
+          </select>
+          <span class="req-field">*</span>
+          <label for="item_available2">Available Units</label>
+          <input type="number" name="item_available" id="item_available2" placeholder="Number of Items Available">
+          <span class="req-field">*</span>
+          <label for="item_short_desc2">Short Description</label>
+          <textarea name="item_short_desc" id="item_short_desc2" cols="30" rows="3" placeholder="Short Item description"></textarea>
+          <label for="item_overview">Overview</label>
+          <textarea name="item_overview" id="item_overview2" cols="30" rows="6" placeholder="Item Overview"></textarea>
+          <label for="item_information">Information</label>
+          <textarea name="item_information" id="item_information2" cols="30" rows="6" placeholder="Item Overview"></textarea>
+          <label for="item_specification">Specification</label>
+          <textarea name="item_specification" id="item_specification2" cols="30" rows="3" placeholder="Specification Overview"></textarea>
+          <div class="specific-container2">
+            <ul class="specific-ul2">
+              <!-- Specification Items here -->
+            </ul>
+            <input type="text" class="spec-input-txt2" style="padding: 4px;" placeholder="Add Specification">
+            <button type="button" class="spec-add-btn2">&plus;</button>
+          </div>
+          <p class="items-included-title2">Items included</p>
+          <div class="item-included-container2">
+            <ul class="included-ul2">
+              <!-- <li>EXAMPLE<span class="item-list-close">&times;</span></li> -->
+            </ul>
+            <input type="text" style="padding: 4px;" class="item-included-input2" placeholder="Item included">
+            <button type="button" class="item-included-btn2">&plus;</button>
+          
+          </div>
+          <div class="price-container2">
+            <span class="price-current2">Price:</span>
+            <input type="number" name="item_price" id="item_price2" placeholder="Price">
+            <br />
+            <label for="item_discount">Discount</label>
+            <input type="number" name="item_discount" id="item_discount2" placeholder="Discount %">
+          </div>
+          <button class="btn-update">UPDATE ITEM</button>
+      </div>
+
+
     </div>
   </div>
 

@@ -144,7 +144,25 @@ header div{
   font-size: ;
 } */
 
-
+.nav-all-items{
+  position: absolute;
+  top: -12px;
+  height: 10px;
+  width: 70%;
+  border-radius: 50px;
+  background-color: rgb(177, 177, 177);
+  border: 1px solid rgb(194, 194, 194);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: transparent;
+  padding-bottom: 5px;
+  transition: .8s all ease-in-out;
+}.nav-all-items:hover{
+  color: black;
+  width: 110%;
+  transition: .8s all ease-in-out;
+}
 
 
 
@@ -339,6 +357,7 @@ header div{
 .a-c-c-1 > p{
   color: rgb(255, 0, 0);
   text-align: left;
+  margin-left: 8px;
 }
 .i-price{
   font-weight: bold;
@@ -391,7 +410,7 @@ header div{
   align-items: center;
   border-left: .3px solid rgb(214, 212, 212);
 }.page:hover{
-  background-color: rgb(216, 50, 50);
+  background-color: tomato;
   color: white;
 }
 .page a{

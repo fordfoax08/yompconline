@@ -25,6 +25,24 @@ class OpenClose{
 }
 
 
+class InputCheck{
+  isInputLengthValid(str,limit=100){
+    if(str.trim().length > limit){
+      return false;
+    }
+    return true;
+  }
+
+  isInputWithoutScript(str){
+    let regex = /<script[\s\S]*?>[\s\S]*?<\/script>/gi;
+    if(regex.test(str)){
+      return false;
+    }
+    return true;
+  }
+
+}
+
 /* Variable Global */
 
 const mainContainer = document.querySelector('.main-container');
@@ -70,6 +88,7 @@ function loadSellerItems(){
   // .then(data => displaySellerItems(JSON.parse(data)))
   // .catch(err => console.log(err))
   
+  
 }
 function displaySellerItems(itemArray){
   itemArray.forEach(item => {
@@ -87,7 +106,8 @@ function displaySellerItems(itemArray){
           <p>${item.item_short_desc}</p>
         </td>
         <td>
-          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <input type="hidden" value="${item.item_id}">
+          <svg class="edit-item" onclick="openCloseEdit(this);" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
           </svg>
@@ -115,7 +135,7 @@ function displaySellerItems(itemArray){
       }
     })
   })
-  
+
 }
 
 /* SEARCH AJAX */
@@ -210,6 +230,241 @@ function sortItem(e){
 }
 
 
+/* EDIT ITEM */
+const editClose = document.querySelector('.edit-container-close');
+const editModal = document.querySelector('.modal-container');
+
+/* DRAW EDIT Close */
+editModal.addEventListener('click', closeModalEdit);
+function closeModalEdit(e){
+  if(e.target.classList.contains('modal-container') || e.target.classList.contains('edit-container-close')){
+    openCloseEdit();
+    //console.log(e.target);
+  }
+}
+
+/* toggle EditModal
+*Display Item Information for EditModal */
+const specificUl = document.querySelector('.specific-ul2');
+const includedUl = document.querySelector('.included-ul2');
+function openCloseEdit(e){
+  if(editModal.classList.contains('open')){
+    specificUl.innerHTML = '<!-- Specification Items here -->';
+    includedUl.innerHTML = '<!-- <li>EXAMPLE<span class="item-list-close">&times;</span></li> -->';
+    editModal.classList.remove('open');
+  }else{
+    let itemId = e.previousElementSibling.value;
+    
+    let formData = new FormData();
+    formData.append('user_id', userId.value);
+    formData.append('item_id', itemId);
+
+    fetch('includes/admin_get_item.inc.php', {method: 'POST', body: formData})
+    .then(res => res.text())
+    .then(data => {
+      const dataJson = JSON.parse(data);
+      document.querySelector('#edit_image').src = `multimedia/image/${dataJson.item_path}/${dataJson.item_image}`;
+      document.querySelector('#item_id2').value = dataJson.item_id;
+      document.querySelector('#item_name2').value = dataJson.item_name;
+      document.querySelector('#item_sub_name2').value = dataJson.item_sub_name;
+      document.querySelector('#item_available2').value = dataJson.item_available;
+      document.querySelector('#item_short_desc2').value = dataJson.item_short_desc;
+      document.querySelector('#item_overview2').value = dataJson.item_overview;
+      document.querySelector('#item_information2').value = dataJson.item_information;
+      document.querySelector('#item_specification2').value = dataJson.item_specification;
+      document.querySelector('#item_price2').value = (dataJson.item_price.length > 0) ? parseFloat(dataJson.item_price).toFixed(2) : 0;
+      document.querySelector('#item_discount2').value = (dataJson.item_discount > 0) ? parseFloat(dataJson.item_price) : 0 ;
+      document.querySelectorAll('#item-category2 option').forEach(opt => {
+        if(opt.value < 1){
+          opt.selected = false;
+        }
+        if(opt.value == Number(dataJson.item_category)){
+          opt.selected = true; 
+        }
+      });
+
+      let specs = (dataJson.item_specs.length > 0) ? JSON.parse(dataJson.item_specs) : [];
+      if(specs.length > 0){
+        specs.forEach(item => {
+          let newLi = document.createElement('LI');
+          newLi.innerHTML = `${item}<span class="spec-close">&times;</span>`;
+          let specInpt = document.createElement('INPUT');
+          specInpt.setAttribute('type','hidden');
+          specInpt.setAttribute('name','item_specs[]')
+          specInpt.value = item;
+          specificUl.appendChild(newLi);
+          specificUl.appendChild(specInpt);
+        });
+        /* update list to be able to remove specs item */
+        updateEditSpecsInclude();
+      }
+
+
+      let includes = (dataJson.item_included.length > 0) ? JSON.parse(dataJson.item_included) : [];
+      if(includes.length > 0){
+        includes.forEach(item => {
+          let newLi = document.createElement('LI');
+          newLi.innerHTML = `${item}<span class="item-list-close">&times;</span>`;
+          let newHidden = document.createElement('INPUT');
+          newHidden.setAttribute('type','hidden');
+          newHidden.setAttribute('name','item_included[]');
+          newHidden.value = item;
+          includedUl.appendChild(newLi);
+          includedUl.appendChild(newHidden);
+          // console.log(item);
+        });
+        /* update list to be able to remove includes item */
+        updateEditSpecsInclude();
+      }
+
+    })
+    .catch(err => console.log(err));
+    editModal.classList.add('open');
+  }
+}
+
+/* Remove Edit Item Specs and Included */
+let editSpecs = undefined;
+function removeEditSpecs(e){
+  const li = e.target.parentNode;
+  const inpt = e.target.parentNode.nextElementSibling;
+  if(confirm('Are you sure you wan\'t to delete this?')){
+    li.remove();
+    inpt.remove();
+  }
+}
+
+let editIncluded = undefined;
+function removeEditIncluded(e){
+  const li = e.target.parentNode;
+  const inpt = e.target.parentNode.nextElementSibling;
+  if(confirm('Are you sure you wan\'t to remove this in included items?')){
+    li.remove();
+    inpt.remove();
+  }
+}
+
+/* Add item for Edit ***************/
+const editAddSpecsBtn = document.querySelector('.spec-add-btn2');
+const editSpecsText = document.querySelector('.spec-input-txt2');
+editAddSpecsBtn.addEventListener('click', editAddSpecs);
+function editAddSpecs(e){
+  const inputTest = new InputCheck();
+  const countItem = document.querySelectorAll('.specific-ul2 li');
+  if(!inputTest.isInputLengthValid(editSpecsText.value.trim(), 50)){
+    return;
+  }
+  if(countItem.length > 4){
+    return;
+  }
+  let newLi = document.createElement('LI');
+  newLi.innerHTML = `${editSpecsText.value.trim()}<span class="spec-close">&times;</span>`;
+  let newHidden = document.createElement('INPUT');
+  newHidden.setAttribute('type','hidden');
+  newHidden.setAttribute('name','item_specs[]');
+  newHidden.value = editSpecsText.value.trim();
+  /* Append to parent created elements */
+  specificUl.appendChild(newLi);
+  specificUl.appendChild(newHidden);
+  /* Update Specs Item */
+  updateEditSpecsInclude();
+}
+
+const editAddIncludedBtn = document.querySelector('.item-included-btn2');
+const editIncludedText = document.querySelector('.item-included-input2');
+editAddIncludedBtn.addEventListener('click', editAddIncluded);
+function editAddIncluded(e){
+  const inputTest = new InputCheck();
+  const countItem = document.querySelectorAll('.included-ul2 li');
+  if(countItem.length > 7){
+    return;
+  }
+  if(!inputTest.isInputLengthValid(editIncludedText.value.trim(), 50)){
+    return;
+  }
+  
+  let newLi = document.createElement('LI');
+  newLi.innerHTML = `${editIncludedText.value.trim()}<span class="item-list-close">&times;</span>`;
+  let newHidden = document.createElement('INPUT');
+  newHidden.setAttribute('type','hidden');
+  newHidden.setAttribute('name','item_included[]');
+  newHidden.value = editIncludedText.value.trim();
+  includedUl.appendChild(newLi);
+  includedUl.appendChild(newHidden);
+  /* Update Include */
+  updateEditSpecsInclude();
+}
+
+/* call this to update ListNodes of Specs and Include items */
+function updateEditSpecsInclude(){
+  editSpecs = document.querySelectorAll('.specific-ul2 li .spec-close');
+  editSpecs.forEach(btn => btn.addEventListener('click', removeEditSpecs));
+  editIncluded = document.querySelectorAll('.included-ul2 li .item-list-close');
+  editIncluded.forEach(btn => btn.addEventListener('click', removeEditIncluded));
+}
+
+
+/* UPDATE Item Info ************/
+const updateBtn = document.querySelector('.btn-update');
+updateBtn.addEventListener('click', updateItemInfo);
+function updateItemInfo(e){
+  if(!confirm('Are you sure you wan\'t to update?')){
+    return;
+  }
+  const itemId = document.querySelector('#item_id2');
+  const itemName = document.querySelector('#item_name2');
+  const itemSubName = document.querySelector('#item_sub_name2');
+  const itemCategory = document.querySelector('#item-category2');
+  const itemAvailable = document.querySelector('#item_available2');
+  const itemShortDesc = document.querySelector('#item_short_desc2');
+  const itemOverview = document.querySelector('#item_overview2');
+  const itemInformation = document.querySelector('#item_information2');
+  const itemSpecification = document.querySelector('#item_specification2');
+  const itemPrice = document.querySelector('#item_price2');
+  const itemDiscount = document.querySelector('#item_discount2');
+  const itemSpecs = document.querySelectorAll('.specific-ul2 input[name="item_specs[]"]');
+  const itemIncluded = document.querySelectorAll('.included-ul2 input[name="item_included[]"]');
+  /* Prepare Array container */
+  let arrSpecs = [];
+  let arrIncluded = [];
+  let formData = new FormData();
+  /* Prepare Array Specs and Included Specs */
+  (itemSpecs.length > 0) ? itemSpecs.forEach(item => arrSpecs.push(item.value)) : [];
+  (itemIncluded.length > 0) ? itemIncluded.forEach(item => arrIncluded.push(item.value)) : [];
+
+  let dataObj = {
+    item_id : itemId.value,
+    item_name : itemName.value.trim(),
+    item_sub_name : itemSubName.value.trim(),
+    item_category : (itemCategory.value > 7 || itemCategory.value < 1) ? 7 : itemCategory.value,
+    item_available : itemAvailable.value,
+    item_short_desc : itemShortDesc.value.trim(),
+    item_overview : itemOverview.value.trim(),
+    item_information : itemInformation.value.trim(),
+    item_specification : itemSpecification.value.trim(),
+    item_price : String(itemPrice.value),
+    item_discount: String(itemDiscount.value),
+    item_specs : (arrSpecs.length > 0) ? arrSpecs : '',
+    item_included : (arrIncluded.length > 0) ? arrIncluded : []
+  };
+
+  formData.append('data',JSON.stringify(dataObj));
+
+  fetch('includes/admin_update_item.inc.php', {method: 'POST', body: formData})
+  .then(res => res.text())
+  .then(data => {
+    console.log(data)
+    if(data == 1){
+      itemAlert('Updated!');
+    }else{
+      itemAlert('Update Failed!');
+      console.log(data);
+    }
+    // openCloseEdit();
+  })
+  .catch(err => console.log(err));
+  // console.log(dataObj);
+}
 
 
 
@@ -607,6 +862,7 @@ function submitNewItem(e){
     itemAlert('Complete All Required Field!');
   }
 }
+
 
 
 

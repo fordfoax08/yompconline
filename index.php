@@ -72,6 +72,7 @@ session_start();
       </div>
       
       <div class="nav-item-4">
+        <span class="nav-all-items">...</span>
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cpu" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0zm-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3h-7zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3zM6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
         </svg>
@@ -116,10 +117,10 @@ session_start();
         <div class="sec1-a">
           <!-- SEARCH BAR -->
           <div class="input-group">
-            <input type="text" name="search_que" id="" placeholder="Search">
+            <input type="text" name="search_que" id="search_que" placeholder="Search">
             <div class="input-group-append">
               <span class="input-group-text">
-                <a href="#">
+                <a href="javascript:void(0)">
                   <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
                     <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
@@ -134,18 +135,18 @@ session_start();
           <label for="search_by_id">Search by:&nbsp;</label>
           <select name="search_by" id="search_by_id">
             <option value="1">Items</option>
-            <option value="2">Seller</option>
+            <!-- <option value="2">Seller</option> -->
           </select>
           <label for="search_by_category">Catergory:&nbsp;</label>
           <select name="search_category" id="search_by_category">
-            <option value="1">All</option>
-            <option value="2">CPU / Motherboard</option>
-            <option value="3">Chassis / Rig</option>
-            <option value="4">Graphics Card</option>
-            <option value="5">Monitor</option>
-            <option value="6">Keyboard</option>
-            <option value="7">Mouse</option>
-            <option value="8">Others</option>
+            <option value="0">All</option>
+            <option value="1">CPU / Motherboard</option>
+            <option value="2">Chassis / Rig</option>
+            <option value="3">Graphics Card</option>
+            <option value="4">Monitor</option>
+            <option value="5">Keyboard</option>
+            <option value="6">Mouse</option>
+            <option value="7">Others</option>
           </select>
         </div>
 
@@ -156,7 +157,7 @@ session_start();
       </div>
     </section>
 
-    <section class="section2">
+    <section class="section2" id="section2">
 
 
 
@@ -176,7 +177,7 @@ session_start();
               <p>P <span class="i-price">2000</span></p>
             </div>
             <div class="a-c-c-2">
-              <a href="javacript:void(0)">
+              <a href="javascript:void(0)">
                 <img src="multimedia/image/others/addtocart.png" alt="">
               </a>
             </div>
@@ -199,7 +200,7 @@ session_start();
               <p>P <span class="i-price">2000</span></p>
             </div>
             <div class="a-c-c-2">
-              <a href="javacript:void(0)">
+              <a href="javascript:void(0)">
                 <img src="multimedia/image/others/addtocart.png" alt="">
               </a>
             </div>
@@ -222,7 +223,7 @@ session_start();
               <p>P <span class="i-price">2000</span></p>
             </div>
             <div class="a-c-c-2">
-              <a href="javacript:void(0)">
+              <a href="javascript:void(0)">
                 <img src="multimedia/image/others/addtocart.png" alt="">
               </a>
             </div>
@@ -245,7 +246,7 @@ session_start();
               <p>P <span class="i-price">2000</span></p>
             </div>
             <div class="a-c-c-2">
-              <a href="javacript:void(0)">
+              <a href="javascript:void(0)">
                 <img src="multimedia/image/others/addtocart.png" alt="">
               </a>
             </div>
@@ -268,7 +269,7 @@ session_start();
               <p>P <span class="i-price">2000</span></p>
             </div>
             <div class="a-c-c-2">
-              <a href="javacript:void(0)">
+              <a href="javascript:void(0)">
                 <img src="multimedia/image/others/addtocart.png" alt="">
               </a>
             </div>
@@ -284,14 +285,15 @@ session_start();
 
     <section class="section3">
       <div class="page-container">
-        <div class="page"><a href="#">&lt;</a></div>
-        <div class="page"><a href="#">1</a></div>
-        <div class="page"><a href="#">2</a></div>
-        <div class="page"><a href="#">3</a></div>
-        <div class="page"><a href="#">4</a></div>
-        <div class="page"><a href="#">5</a></div>
-        <div class="page"><a href="#">&gt;</a></div>
-        <div class="page"><a href="#">&gt;&gt;</a></div>
+        <div class="page pagePrevMax"><a href="javascript:void(0)">&lt;&lt;</a></div>
+        <div class="page pagePrev"><a href="javascript:void(0)">&lt;</a></div>
+        <!-- <div class="page pageNo pageFirst"><a href="javascript:void(0)">1</a></div>
+        <div class="page pageNo pageSecond"><a href="javascript:void(0)">2</a></div>
+        <div class="page pageNo pageThird"><a href="javascript:void(0)">3</a></div>
+        <div class="page pageNo pageFourth"><a href="javascript:void(0)">4</a></div> -->
+        <div class="page pageJump"><a href="javascript:void(0)">...</a></div>
+        <div class="page pageNext"><a href="javascript:void(0)">&gt;</a></div>
+        <div class="page pageNextMax"><a href="javascript:void(0)">&gt;&gt;</a></div>
       </div>
     </section>
 
@@ -302,61 +304,10 @@ session_start();
     <div class="f-2"></div>
   </footer>
   
-  <!-- View Item Modal -->
-  <div class="item-modal-container ">
-    <div class="item-modal ">
-      <div class="item-modal-close">&times;</div>
-      <div class="item-modal-image">
-        <div class="m-i">
-          <img src="multimedia/image/mobo/01-3462.png" alt="img">
-        </div>
-        <div class="m-i">
-          <img src="multimedia/image/mobo/01-3462.png" alt="img">
-        </div>
-        <div class="m-i">
-          <img src="multimedia/image/mobo/01-3462.png" alt="img">
-        </div>
-        <div class="m-i">
-          <img src="multimedia/image/mobo/01-3462.png" alt="img">
-        </div>
-      </div>
-
-      <div class="item-modal-info">
-        <h4 class="item-acc">Overview<span class="acc-plus">&plus;</span></h4>
-        <div class="item-overview acc">
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum sapiente, delectus impedit at omnis neque et! Quo, perspiciatis exercitationem. Voluptates deserunt blanditiis molestiae labore cupiditate, incidunt ipsam ullam, est adipisci ipsa qui rerum eum dicta. Consequatur sit assumenda numquam non.</p>
-        </div>
-        <h4 class="item-acc">Information<span class="acc-plus">&plus;</span></h4>
-        <div class="item-details acc">
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum sapiente, delectus impedit at omnis neque et! Quo, perspiciatis exercitationem. Voluptates deserunt blanditiis molestiae labore cupiditate, incidunt ipsam ullam, est adipisci ipsa qui rerum eum dicta. Consequatur sit assumenda numquam non.</p>
-        </div>
-        <h4 class="item-acc">Specification <span class="acc-plus">&plus;</span></h4>
-        <div class="item-specification acc">
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum sapiente, delectus impedit at omnis neque et! Quo, perspiciatis exercitationem. Voluptates deserunt blanditiis molestiae labore cupiditate, incidunt ipsam ullam, est adipisci ipsa qui rerum eum dicta. Consequatur sit assumenda numquam non.</p>
-        </div>
-
-        <!-- <div class="item-redirect">
-          s
-        </div> -->
-      </div>
-
-      <div class="item-redirect2">
-        <div class="redirect-item">
-          <a href="#">
-            <img src="multimedia/image/others/addtocart.png" alt="">
-          </a>
-        </div>
-        <div class="redirect-item">
-          <a href="details.php">
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-            </svg>
-          </a>
-          <p>More Details</p>
-        </div>
-      </div>
-
-    </div>
+  <!-- View Item Modal open -->
+  <div class="item-modal-container">
+    <!-- Item modal here -->
+    
   </div>
 
 
@@ -372,7 +323,7 @@ session_start();
         <div class="cart-item">
           <div class="c-i qtyy"></div>
           <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2345.png" width="60px" alt="item">
+            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
           </div>
           <div class="c-i">Aspire 1000 Mother board</div>
           <div class="c-i">
@@ -389,10 +340,11 @@ session_start();
             </div>
           </div>
         </div>
+
         <div class="cart-item">
           <div class="c-i qtyy"></div>
           <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2387.png" width="60px" alt="item">
+            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
           </div>
           <div class="c-i">Dell Desk Fan, 200px</div>
           <div class="c-i">
@@ -413,7 +365,7 @@ session_start();
         <div class="cart-item">
           <div class="c-i qtyy"></div>
           <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2463.png" width="60px" alt="item">
+            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
           </div>
           <div class="c-i">Toshiba Mouse original from </div>
           <div class="c-i">
@@ -434,7 +386,7 @@ session_start();
         <div class="cart-item">
           <div class="c-i qtyy"></div>
           <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2521.png" width="60px" alt="item">
+            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
           </div>
           <div class="c-i">Pc stand</div>
           <div class="c-i">
@@ -455,7 +407,7 @@ session_start();
         <div class="cart-item">
           <div class="c-i qtyy"></div>
           <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2673.png" width="60px" alt="item">
+            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
           </div>
           <div class="c-i">10k Monitor Asus</div>
           <div class="c-i">
@@ -476,7 +428,7 @@ session_start();
         <div class="cart-item">
           <div class="c-i qtyy"></div>
           <div class="c-i">
-            <img src="/multimedia/image/mobo/01-3462.png" width="60px" alt="item">
+            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
           </div>
           <div class="c-i">Dell Desk Fan, 200px</div>
           <div class="c-i">
@@ -543,6 +495,7 @@ session_start();
 
   <!-- <p style="padding-bottom: 500px"></p> -->
   <script src="js/index_main.js"></script>
+  <script src="js/index_pagination.js"></script>
   <script>
     
 
