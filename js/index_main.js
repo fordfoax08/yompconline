@@ -70,7 +70,7 @@ function displayItem(item){
           <!-- Add to Cart Container -->
           <div class="a-c-c">
             <div class="a-c-c-1">
-              <p>P <span class="i-price">${data.item_price.length <= 0 ? 'enquire' : parseFloat(data.item_price).toFixed(2)}</span></p>
+              <p>P <span class="i-price">${parseFloat(data.item_price.length) <= 0 ? 'Free' : parseInt(data.item_price) <= 0 ? parseFloat(data.item_price) :parseFloat(data.item_price).toFixed(2)}</span></p>
             </div>
             <div class="a-c-c-2">
               <a href="javascript:void(0)">
@@ -267,33 +267,37 @@ function itemModalExt(e){
     fetch('includes/index_modal_item.inc.php', {method: 'POST', body: formData})
     .then(res => res.text())
     .then(data => {
-      
-      console.log(data);
+      let dataObject = JSON.parse(data);
+      if(objectLenght(dataObject) > 0){
+        // console.log(dataArray);
+        itemModalShow.innerHTML = itemModalTemplate(dataObject);
+      }else{
+        itemModalShow.innerHTML = itemModalTemplate({});
+      }
+      itemModalShow.classList.add('open');
+      setTimeout(() => {
+        itemModalShow.firstElementChild.classList.add('open');
+      }, 100)
+      // console.log(itemId.value);
+      accBtn = document.querySelectorAll('.item-acc');
+      accBtn.forEach(btn => {
+        btn.addEventListener('click', showAcc);
+      });
     })
     .catch(err => console.log(err));
     
     
-    itemModalShow.innerHTML = itemModalTemplate([]);
-    itemModalShow.classList.add('open');
-    setTimeout(() => {
-      itemModalShow.firstElementChild.classList.add('open');
-    }, 100)
-    // console.log(itemId.value);
-    accBtn = document.querySelectorAll('.item-acc');
-    accBtn.forEach(btn => {
-      btn.addEventListener('click', showAcc);
-    });
   }
 }
 
-function itemModalTemplate($dataArray){
-  if($dataArray.length === 0){
+function itemModalTemplate(dataObject){
+  if(objectLenght(dataObject) === 0){
     return `
         <div class="item-modal ">
         <div class="item-modal-close">&times;</div>
         <div class="item-modal-image">
           <div class="m-i">
-            <img src="multimedia/image/mobo/01-3462.png" alt="img">
+          <img src="multimedia/image/mobo/01-3462.png" alt="img">
           </div>
           <div class="m-i">
             <img src="multimedia/image/mobo/01-3462.png" alt="img">
@@ -342,11 +346,75 @@ function itemModalTemplate($dataArray){
         </div>
 
       </div>
-    
+    `;
+  }else{
+    return `
+        <div class="item-modal ">
+        <div class="item-modal-close">&times;</div>
+        <div class="item-modal-image">
+          <div class="m-i">
+            <img src="multimedia/image/${dataObject.item_path}/${dataObject.item_image}" alt="img">
+          </div>
+          <div class="m-i">
+            <img src="multimedia/image/${dataObject.item_path}/${dataObject.item_image}" alt="img">
+          </div>
+          <div class="m-i">
+            <img src="multimedia/image/${dataObject.item_path}/${dataObject.item_image}" alt="img">
+          </div>
+          <div class="m-i">
+            <img src="multimedia/image/${dataObject.item_path}/${dataObject.item_image}" alt="img">
+          </div>
+        </div>
+
+        <div class="item-modal-info">
+          <h4 class="modal-item-name">${dataObject.item_name}</h4>
+          <h6 class="modal-item-sub-name">${dataObject.item_sub_name}</h6>
+          <h5 class="modal-item-price">P 20,000 srp <span class="modal-item-discount">-51% sale!</span></h5>
+          <h4 class="item-acc">Overview<span class="acc-plus">&plus;</span></h4>
+          <div class="item-overview acc">
+            <p>${dataObject.item_overview.length > 0 ? dataObject.item_overview : 'Not Available'}</p>
+          </div>
+          <h4 class="item-acc">Information<span class="acc-plus">&plus;</span></h4>
+          <div class="item-details acc">
+            <p>${dataObject.item_information.length > 0 ? dataObject.item_information : 'Not Available'}</p>
+          </div>
+          <h4 class="item-acc">Specification <span class="acc-plus">&plus;</span></h4>
+          <div class="item-specification acc">
+            <p>${dataObject.item_specification.length > 0 ? dataObject.item_specification : 'Not Available'}</p>
+          </div>
+
+          <!-- <div class="item-redirect">
+            s
+          </div> -->
+        </div>
+
+        <div class="item-redirect2">
+          <div class="redirect-item">
+            <a href="javascript:void(0)">
+              <img src="multimedia/image/others/addtocart.png" alt="">
+            </a>
+          </div>
+          <div class="redirect-item">
+            <a href="details.php">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+              </svg>
+            </a>
+            <p>More Details</p>
+          </div>
+        </div>
+
+      </div>
     `;
   }
+
 }
 
+//object lenght via key int
+function objectLenght(obj){
+  let key = Object.keys(obj);
+  return key.length;
+}
 
 /* Item Modal Accordion */
 let accBtn = document.querySelectorAll('.item-acc');
