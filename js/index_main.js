@@ -52,6 +52,8 @@ function getItemData(){
 
 function displayItem(item){
   if(item.length > 0){
+    /* get localStorage list to check for cart item if include adjust cart png */
+    let localStorageItem = JSON.parse(localStorage.getItem('cart'));
     item.forEach(data => {
       let itemContainer = document.createElement('DIV');
       itemContainer.class = 'item-container';
@@ -73,8 +75,10 @@ function displayItem(item){
               <p>P <span class="i-price">${parseFloat(data.item_price.length) <= 0 ? 'Free' : parseInt(data.item_price) <= 0 ? parseFloat(data.item_price) :parseFloat(data.item_price).toFixed(2)}</span></p>
             </div>
             <div class="a-c-c-2">
-              <a href="javascript:void(0)">
-                <img src="multimedia/image/others/addtocart.png" alt="">
+              <a href="javascript:void(0)" onclick="addToCart(this)">
+                <input type="hidden" value="${data.item_id}">
+                <!--<img src="multimedia/image/others/addtocart.png" alt="">-->
+                <img src="multimedia/image/others/${isItemExisted(localStorageItem, data) ? 'addtocart_done.png' : 'addtocart.png'}" alt="">
               </a>
             </div>
           </div>
@@ -83,6 +87,7 @@ function displayItem(item){
     `;
     /* append Template */
     section2.appendChild(itemContainer);
+    // console.log(isItemExisted(localStorageItem, data));
     })
   }else{
     section2.innerHTML = 'NO ITEMS FOUND';
@@ -259,6 +264,7 @@ function itemModalExt(e){
       itemModalShow.classList.remove('open');
       itemModalShow.innerHTML = '';
     }, 300)
+    /* localStorage.removeItem('cartBtn'); */
   }else{
     const itemId = e.nextElementSibling.value;
     let formData = new FormData();
@@ -286,11 +292,14 @@ function itemModalExt(e){
     })
     .catch(err => console.log(err));
     
-    
+    /* localStorage.setItem('cartBtn', e.outerHTML); */
   }
+  
 }
 
 function itemModalTemplate(dataObject){
+  // let localStorageItem = JSON.parse(localStorage.getItem('cart'));
+  let addCartLogo = isItemExisted(JSON.parse(localStorage.getItem('cart')), dataObject) ? 'addtocart_done.png' : 'addtocart.png';
   if(objectLenght(dataObject) === 0){
     return `
         <div class="item-modal ">
@@ -390,8 +399,9 @@ function itemModalTemplate(dataObject){
 
         <div class="item-redirect2">
           <div class="redirect-item">
-            <a href="javascript:void(0)">
-              <img src="multimedia/image/others/addtocart.png" alt="">
+            <a href="javascript:void(0)" onclick="addToCart(this)">
+              <input type="hidden" value="${dataObject.item_id}">
+              <img src="multimedia/image/others/${addCartLogo}" alt="">
             </a>
           </div>
           <div class="redirect-item">

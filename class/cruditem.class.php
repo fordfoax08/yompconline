@@ -159,6 +159,23 @@ class CrudItem{
     }
   }
 
+  /* Get item for Cart , index.php */
+  public function getItemForCart($item_id){
+    $conn = new Dsn;
+    $sql = " SELECT * FROM tbl_items WHERE item_id = ?";
+    try{
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute(array($item_id));
+      if($stmt->rowCount() > 0){
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+      }else{
+        return [];
+      }
+    }catch(PDOException $e){
+      echo 'Error getting item for Cart: '.$e->getMessage();
+    }
+  }
+
 
 
   /* GET ONE SELLER/USER ITEM by item id, admin.php */
