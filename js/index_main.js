@@ -99,12 +99,7 @@ function displayItem(item){
   
 }
 
-/* load Cart item */
-function loadCartData(){
-  if(localStorage.getItem('cart') === null){
-    localStorage.setItem('cart',JSON.stringify([]));
-  }
-}
+
 
 function getPageNumber(){
   let formData = new FormData();
@@ -387,7 +382,7 @@ function itemModalTemplate(dataObject){
         <div class="item-modal-info">
           <h4 class="modal-item-name">${dataObject.item_name}</h4>
           <h6 class="modal-item-sub-name">${dataObject.item_sub_name}</h6>
-          <h5 class="modal-item-price">P 20,000 srp <span class="modal-item-discount">-51% sale!</span></h5>
+          <h5 class="modal-item-price">P ${dataObject.item_price} srp <span class="modal-item-discount">${(dataObject.item_discount.length > 0) ? '-'+dataObject.item_discount+'% sale!' : ''}</span></h5>
           <h4 class="item-acc">Overview<span class="acc-plus">&plus;</span></h4>
           <div class="item-overview acc">
             <p>${dataObject.item_overview.length > 0 ? dataObject.item_overview : 'Not Available'}</p>

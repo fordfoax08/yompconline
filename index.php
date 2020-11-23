@@ -475,6 +475,7 @@ session_start();
         <div class="user-grid-container">
           <div class="grid-1">
             <img src="multimedia/image/logo/yomshoplogo.jpg" alt="">
+            <input type="hidden" id="user_id" value="<?php echo isset($_SESSION['u_id']) ? $_SESSION['u_id'] : '';?>">
             <h4>Yom De Guapo</h4>
           </div>
           <div class="grid-2">

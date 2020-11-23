@@ -1,3 +1,14 @@
+/* LOAD CART */
+/* load Cart item */
+function loadCartData(){
+  if(localStorage.getItem('cart') === null){
+    localStorage.setItem('cart',JSON.stringify([]));
+  }else{
+    /* display item count indicator */
+    cartItemCount();
+  }
+}
+
 /* ADD TO CART */
 
 function addToCart(e){
@@ -39,6 +50,7 @@ function addToCartLocal(dataObj,e){
       localStorage.setItem('cart', JSON.stringify(newData));
       e.lastElementChild.src = 'multimedia/image/others/addtocart.png';
       cartItemCount(); //update cart number indicator
+      addToCartDatabase();
       /* cartBtn before modal */
       
     }else{
@@ -46,13 +58,38 @@ function addToCartLocal(dataObj,e){
       localStorage.setItem('cart', JSON.stringify(localData));  
       e.lastElementChild.src = 'multimedia/image/others/addtocart_done.png';
       cartItemCount(); //update cart number indicator
-      console.log(JSON.parse(localStorage.getItem('cart')));
+      addToCartDatabase();
+      // console.log(JSON.parse(localStorage.getItem('cart')));
     }
   }
 
 
 
 }
+
+
+/* ADD CART to DB
+*if user is logged in upload 
+*/
+function addToCartDatabase(){
+  const userId = document.querySelector('#user_id');
+  const data = JSON.parse(localStorage.getItem('cart'));
+  /* if theres an item in cart */
+  if(data.length > 0){
+    /* if user is logged in */
+    if(userId.value.length > 0){
+      let formData = new FormData();
+      formData.append('cart_data', JSON.stringify(data));
+      /* Update DB php AJAX */
+      fetch('includes/index_add_cart.inc.php', {method : 'POST', body : formData})
+      .then(res => res.text())
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+      // console.log(userId.value.length);
+    }
+  }
+}
+
 
 /* Function to check existing cart item */
 function isItemExisted(arrayData,item){
@@ -74,6 +111,10 @@ function cartItemCount(){
     cartIndicator.classList.remove('show');
   }else{
     cartIndicator.classList.add('show');
+    setTimeout(() => {
+      cartIndicator.classList.add('anim');
+      setTimeout(() => cartIndicator.classList.remove('anim'),800);
+    },200);
     cartIndicator.innerHTML = localStorageData.length;
   }
 }

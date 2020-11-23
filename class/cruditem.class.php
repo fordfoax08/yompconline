@@ -239,6 +239,22 @@ class CrudItem{
     }
   }
 
+  /* Adding Cart Item to user_cart */
+  public function addToCart($data,$u_id){
+    $conn = new Dsn;
+    $sql = "UPDATE tbl_user_info SET user_cart = ? WHERE user_id = ?";
+    try{
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute(array($data,$u_id));
+      if($stmt->rowCount() > 0){
+        return 'Cart Updated';
+      }else{
+        return 'Error Updating Cart';
+      }
+    } catch (PDOException $e){
+      echo 'ERROR UPDATING CART : '.$e->getMessage();
+    }
+  }
 
 
   /* SEARCH USER ITEM Ajax for admin.php*/

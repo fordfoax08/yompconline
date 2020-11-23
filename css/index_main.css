@@ -137,6 +137,41 @@ header div{
   z-index: 2;
 }.cart-item-indicator.show{
   display: flex;
+}.cart-item-indicator.anim{
+  animation: indicatorAnim .5s 1;
+}
+
+@keyframes indicatorAnim{
+  10%{
+    transform: scale(1);
+  }
+  20%{
+    transform: scale(1.1);
+  }
+  30%{
+    transform: scale(1.2);
+  }
+  40%{
+    transform: scale(1.3);
+  }
+  50%{
+    transform: scale(1.4);
+  }
+  60%{
+    transform: scale(1.3);
+  }
+  70%{
+    transform: scale(1.2);
+  }
+  80%{
+    transform: scale(1.1);
+  }
+  90%{
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(1);
+  }
 }
 
 
