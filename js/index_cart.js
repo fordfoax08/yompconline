@@ -46,8 +46,10 @@ function addToCartLocal(dataObj,e){
       localStorage.setItem('cart', JSON.stringify(localData));  
       e.lastElementChild.src = 'multimedia/image/others/addtocart_done.png';
       cartItemCount(); //update cart number indicator
+      console.log(JSON.parse(localStorage.getItem('cart')));
     }
   }
+
 
 
 }

@@ -26,6 +26,7 @@ session_start();
     <div class="h-logo f-jl">
       <div class="logo-container">
         <a href="home.php">
+          <input type="hidden" id="logged-in" value="<?php echo isset($_SESSION['logged_in']) ? 1 : 0 ;?>">
           <img src="multimedia/image/logo/yomshoplogo.png" alt="logo">
         </a>
       </div>
@@ -495,12 +496,11 @@ session_start();
 
 
   <!-- <p style="padding-bottom: 500px"></p> -->
+
   <script src="js/index_main.js"></script>
   <script src="js/index_pagination.js"></script>
   <script src="js/index_cart.js"></script>
   <script>
-    
-
   </script>
 </body>
 </html>

@@ -13,6 +13,7 @@ let maxPage = 0;
 const section2 = document.querySelector('.section2'); //Item Container
 
 
+
 /* Load All Items */
 async function loadItems(data){
   const res = await fetch('includes/index_display_item.inc.php',{method: 'POST', body: data})
@@ -32,6 +33,7 @@ async function getPageCount(category){
 /* Once DOM is loaded call getItemData which process displayItem */
 /* display all items currPage shoud be 1, and itemCategory should be 0 ind. all */
 document.addEventListener('DOMContentLoaded', function(){
+  loadCartData();
   getItemData();
   getPageNumber();
 });
@@ -53,6 +55,7 @@ function getItemData(){
 function displayItem(item){
   if(item.length > 0){
     /* get localStorage list to check for cart item if include adjust cart png */
+    //let localStorageItem = JSON.parse(localStorage.getItem('cart')) === null ? JSON.parse(localStorage.getItem('cart')) : localStorage.setItem('cart','[]');
     let localStorageItem = JSON.parse(localStorage.getItem('cart'));
     item.forEach(data => {
       let itemContainer = document.createElement('DIV');
@@ -88,6 +91,7 @@ function displayItem(item){
     /* append Template */
     section2.appendChild(itemContainer);
     // console.log(isItemExisted(localStorageItem, data));
+    // ${isItemExisted(localStorageItem, data) ? 'addtocart_done.png' : 'addtocart.png'}
     })
   }else{
     section2.innerHTML = 'NO ITEMS FOUND';
@@ -95,7 +99,12 @@ function displayItem(item){
   
 }
 
-
+/* load Cart item */
+function loadCartData(){
+  if(localStorage.getItem('cart') === null){
+    localStorage.setItem('cart',JSON.stringify([]));
+  }
+}
 
 function getPageNumber(){
   let formData = new FormData();
