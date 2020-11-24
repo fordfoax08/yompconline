@@ -83,7 +83,9 @@ function addToCartDatabase(){
       /* Update DB php AJAX */
       fetch('includes/index_add_cart.inc.php', {method : 'POST', body : formData})
       .then(res => res.text())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data)
+      })
       .catch(err => console.log(err));
       // console.log(userId.value.length);
     }

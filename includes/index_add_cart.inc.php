@@ -6,10 +6,11 @@ require_once 'autoload.inc.php';
 $data = $_POST['cart_data'];
 $u_id = $_SESSION['u_id'];
 
-// echo $data;
+
 /* adding to DB */
 $crudItem = new CrudItem();
-$crudItem->addToCart($data,$u_id);
-;
+echo $crudItem->addToCart($data,$u_id);
+
+
 
 ?>

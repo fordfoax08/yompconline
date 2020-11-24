@@ -30,13 +30,16 @@ $userItems = $displayItems->getSellersItems($_SESSION['u_id']);
 
 
 
-
+/* Prepare Cart Item */
+if(strlen($user_details['user_cart']) > 0){
+  echo "<script>localStorage.setItem('cart','".$user_details['user_cart']."');</script>";
+}
 
 
 /* DEBUGGING DUMP */
-// echo '<pre>';
-// var_dump($user_details);
-// echo '</pre>';
+/* echo '<pre>';
+var_dump($user_details['user_cart']);
+echo '</pre>'; */
 
 
 

@@ -56,8 +56,28 @@
       echo 'Error getting Credential: '.$e->getMessage();
     }
   }
+  
+  /* Get cart item */
+  /* public function getCartItem($user_id){
+    $conn = new Dsn;
+    $sql = "SELECT user_cart FROM tbl_user_info WHERE user_id = ?";
+    try {
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute(array($user_id));
+      if($stmt->rowCount() > 0){
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+      }else{
+        return [];
+      }
+    } catch (PDOException $e) {
+      echo 'ERROR GETTING Cart item: '.$e->getMessage();
+    }
+   } */
 
 
  }
- 
+
+
+
+
 ?>
