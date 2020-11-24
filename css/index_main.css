@@ -888,6 +888,28 @@ footer div{
   transition: .3s all ease-in-out;
 }
 
+.cart-added-anim{
+  position: absolute;
+  height: 400px;
+  width: 140px;
+  background-color: rgb(56, 56, 56);
+  animation: cartAddAnim 1s 1;
+}
+@keyframes cartAddAnim{
+  0%{transform: scale(1);}
+  10%{transform: scale(.99) translate(10px, 10px);}
+  20%{transform: scale(.89) translate(10px, -10px);;}
+  50%{transform: scale(.59) translate(30px, -30px);;}
+  70%{transform: scale(.39);}
+  90%{transform: scale(.09);}
+  100%{transform: scale(.009);}
+}
+
+.cart-empty{
+  margin-top: 16px;
+  margin-left: 16px;
+}
+
 
 
 /* Login Modal */

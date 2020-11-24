@@ -322,7 +322,13 @@ session_start();
       <h3>My Cart</h3>
       
       <div class="cart-item-container">
-        <div class="cart-item">
+      
+        <!-- <div class="cart-empty">
+          Empty Cart shop now.
+        </div> -->
+
+
+        <!-- <div class="cart-item">
           <div class="c-i qtyy"></div>
           <div class="c-i">
             <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
@@ -341,117 +347,11 @@ session_start();
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
-          </div>
-          <div class="c-i">Dell Desk Fan, 200px</div>
-          <div class="c-i">
-            <span class="item-price">12312</span>
-            <span class="item-sub-price">12412</span>
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty" class="item-qty" value="1">
-              <div class="add-btns">
-                <button class="plus">&plus;</button>
-                <button class="minus">&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
-          </div>
-          <div class="c-i">Toshiba Mouse original from </div>
-          <div class="c-i">
-            <span class="item-price">423</span>
-            <span class="item-sub-price">423</span>  
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty"class="item-qty" value="1">
-              <div class="add-btns">
-                <button class="plus">&plus;</button>
-                <button class="minus">&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
-          </div>
-          <div class="c-i">Pc stand</div>
-          <div class="c-i">
-            <span class="item-price">2000</span>
-            <span class="item-sub-price">2000</span>
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty" class="item-qty" value="1">
-              <div class="add-btns">
-                <button class="plus">&plus;</button>
-                <button class="minus">&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
-          </div>
-          <div class="c-i">10k Monitor Asus</div>
-          <div class="c-i">
-            <span class="item-price">2000</span>
-            <span class="item-sub-price">2000</span>
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty" class="item-qty" value="1">
-              <div class="add-btns">
-                <button class="plus">&plus;</button>
-                <button class="minus">&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="multimedia/image/mobo/noimage.png" width="40px" alt="item">
-          </div>
-          <div class="c-i">Dell Desk Fan, 200px</div>
-          <div class="c-i">
-            <span class="item-price">111</span>
-            <span class="item-sub-price">111</span>
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty" class="item-qty" value="1">
-              <div class="add-btns">
-                <button class="plus">&plus;</button>
-                <button class="minus">&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        </div> -->
 
 
 
-
-        
+        <!-- End of cart container -->
       </div>
       
       <div class="cart-total">
