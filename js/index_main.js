@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function(){
   loadCartData();
   getItemData();
   getPageNumber();
+  
 });
 
 function getItemData(){

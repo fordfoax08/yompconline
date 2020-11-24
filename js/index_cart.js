@@ -87,6 +87,17 @@ function addToCartDatabase(){
       .catch(err => console.log(err));
       // console.log(userId.value.length);
     }
+  }else{
+    /* if user is logged In */
+    if(userId.value.length > 0){
+      let formData = new FormData();
+      formData.append('cart_data', JSON.stringify(data));
+      /* update DB php Ajax empty db */
+      fetch('includes/index_add_cart.inc.php', {method : 'POST', body : formData})
+      .then(res => res.text())
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+    }
   }
 }
 

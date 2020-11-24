@@ -10,8 +10,6 @@ $u_id = $_SESSION['u_id'];
 /* adding to DB */
 $crudItem = new CrudItem();
 $crudItem->addToCart($data,$u_id);
-
-
-
+;
 
 ?>
