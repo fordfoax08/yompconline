@@ -18,26 +18,28 @@ function updateCartDisplay(){
   if(cartData.length > 0){
     cartContainer.innerHTML = '';
     cartData.forEach(item => {
+      const {item_id,item_discount,item_price,item_path,item_image,item_name,pcs_item} = item;
       let newDiv = document.createElement('DIV');
       newDiv.setAttribute('class','cart-item')
       newDiv.innerHTML = `
         <div class="c-i qtyy"></div>
         <div class="c-i">
-          <img src="multimedia/image/${item.item_path}/${item.item_image}" width="40px" alt="item">
+          <img src="multimedia/image/${item_path}/${item_image}" width="40px" alt="item">
         </div>
-        <div class="c-i">${item.item_name}</div>
+        <div class="c-i">${item_name}</div>
         <div class="c-i">
-          <span class="item-price">${item.item_price}</span>
-          <span class="item-sub-price">${item.item_price - ((item.item_discount / 100) *item.item_price)}</span>
-          <input type="hidden" value="${item.item_discount/100}">
+          <span class="item-price">${item_price}</span>
+          <span class="item-sub-price">${(item_price - ((item_discount / 100) * item_price)) * pcs_item}</span>
+          <input type="hidden" value="${item_discount/100}">
         </div>
         <div class="c-i">
           <div class="add-item">
-            <input type="number" name="qty" class="item-qty" value="1">
+            <input type="number" name="qty" class="item-qty" value="${pcs_item}">
             <div class="add-btns">
               <button class="plus">&plus;</button>
               <button class="minus">&minus;</button>
             </div>
+            <input type="hidden" value="${item_id}">
           </div>
         </div>
       `;
@@ -53,6 +55,8 @@ function updateCartDisplay(){
     newDiv.innerHTML = 'Empty Cart Shop now.';
     cartContainer.appendChild(newDiv); 
   }
+  /* update cart number Indicator */
+  cartItemCount();
 }
 
 
@@ -214,23 +218,43 @@ function updateCartDisplayBtns(){
   }
   
   /* Add item quantity Button */
-  const addQuantityBtn = document.querySelectorAll('.add-btns > button');
-  addQuantityBtn.forEach(btn => {
-    btn.addEventListener('click', addQuantity);
+  const addRemoveQuantityBtn = document.querySelectorAll('.add-btns > button');
+  addRemoveQuantityBtn.forEach(btn => {
+    btn.addEventListener('click', addRemoveQuantity);
   });
-  function addQuantity(e){
+  function addRemoveQuantity(e){
     let inputQuantity = e.target.parentNode.parentNode.firstElementChild;
+     /* get item id to be used to filter out from exiting data */
+     const itemId = e.target.parentNode.nextElementSibling.value;
     if(e.target.classList.contains('plus')){
       inputQuantity.value ++;
+
+      /* update Quantity */
+      updateItemQuantity(itemId,inputQuantity);
+
     }
   
     if(e.target.classList.contains('minus')){
       inputQuantity.value --;
       /* chec if inputQuantity is 0 remove item from the list */
+      /* update Item Quantity */
+      updateItemQuantity(itemId,inputQuantity);
       if(inputQuantity.value < 1){
         if(confirm('Remove this item from add to cart?')){
+  
+          /* get items in cartdata */
+          const cartItem = JSON.parse(localStorage.getItem('cart'));
+          /* filtered cartItem */
+          let newCartData = cartItem.filter(data => data.item_id !== itemId);
+          /* Jsonify and set to localStorage the updated data */
+          localStorage.setItem('cart',JSON.stringify(newCartData));
           /* parent Element / container of item */
           e.target.parentNode.parentNode.parentNode.parentNode.remove();
+          /* update cart display */
+          updateCartDisplay();
+          // console.log(newCartData);
+        }else{
+          inputQuantity.value = 1;
         }
       }
     }
@@ -238,4 +262,23 @@ function updateCartDisplayBtns(){
   }
 }
 
+/* update quantity 2 params itemId qty val */
+function updateItemQuantity(itemId, itemQty){
+  /* get items of cart in localStorage */
+  let cartItem = JSON.parse(localStorage.getItem('cart'));
+  /* update psc_item using Map */
+  let newCartData = cartItem.map(item => {
+    if(item.item_id == itemId){
+      item.pcs_item = parseInt(itemQty.value);
+      return item;
+    }else{
+      return item;
+    }
+  });
+
+  /* convert newCartData to JSON string to be set in localStorage */
+  localStorage.setItem('cart',JSON.stringify(newCartData));
+  /* update cart Display */
+  updateCartDisplay();
+}
 
