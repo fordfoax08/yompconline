@@ -1,14 +1,16 @@
 <?php
 session_start();
-
+include_once 'class/display_user_details.class.php';
 /* if(isset($_SESSION['logged_in'])){
   echo 'Logged In!';
 } */
 
 !isset($_SESSION['visited_count']) ? $_SESSION['visited_count'] = 1 : $_SESSION['visited_count']++;
 
-
-
+if(isset($_SESSION['u_id'])){
+  $userDetails = new UserDetails();
+  $userInfo = $userDetails->getUserInformation($_SESSION['u_id']);  
+}
 
 
 ?>
@@ -374,9 +376,9 @@ session_start();
         <h5>WELCOME!</h5>
         <div class="user-grid-container">
           <div class="grid-1">
-            <img src="multimedia/image/logo/yomshoplogo.jpg" alt="">
+            <img src="multimedia/image/users/<?php echo isset($userInfo) ? $userInfo['user_image'] : 'dp.jpg' ;?>" alt="">
             <input type="hidden" id="user_id" value="<?php echo isset($_SESSION['u_id']) ? $_SESSION['u_id'] : '';?>">
-            <h4>Yom De Guapo</h4>
+            <h4><?php echo isset($userInfo) ? $userInfo['user_name'] : 'Anon';?></h4>
           </div>
           <div class="grid-2">
             <a href="admin.php">Admin Home</a>
@@ -389,7 +391,7 @@ session_start();
       <div class="user-login-b <?php echo isset($_SESSION['logged_in']) && isset($_SESSION['u_id']) ?'d-none':'';?>">
         <h3>You are not Logged In.</h3>
         <p style="margin-bottom: 20px; margin-top: 40px;"> Please Sign In to continue....</p>
-        <p><a href="login.php">Sign In</a></p>
+        <p class="sign-in"><a href="login.php">Sign In</a></p>
       </div>
 
     </div>

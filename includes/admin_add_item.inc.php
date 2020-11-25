@@ -9,6 +9,8 @@ $user_id = $_SESSION['u_id'];
 $item_id = generateItemId();
 $item_available = getPostData('item_available');
 $item_name = getPostData('item_name');
+$item_price = getPostData('item_price');
+$item_discount = getPostData('item_discount');
 $item_sub_name = getPostData('item_sub_name');
 $item_short_desc = getPostData('item_short_desc');
 $item_overview = getPostData('item_overview');
@@ -59,6 +61,8 @@ $dataPrepared = array(
   'item_specification' => $item_specification,
   'item_specs' => $item_specs,
   'item_included' => $item_included,
+  'item_price' => $item_price,
+  'item_discount' => $item_discount,
   'item_available' => $item_available
 );
 

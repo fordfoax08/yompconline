@@ -226,6 +226,9 @@ echo '</pre>'; */
           <span class="req-field">*</span>
           <input type="number" name="item_available" id="item_available" placeholder="Number of Items Available">
           <span class="req-field">*</span>
+          <input type="number" name="item_price" id="item_price" placeholder="Item Price">
+          <input type="number" name="item_discount" id="item_discount" placeholder="Item discount %">
+          <span class="req-field">*</span>
           <input type="text" name="item_name" id="item_name" placeholder="Item name">
           <input type="text" name="item_sub_name" id="item_sub_name" placeholder="Sub name">
           <span class="req-field">*</span>

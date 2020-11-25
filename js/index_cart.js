@@ -51,8 +51,8 @@ function updateCartDisplay(){
     let totalPrice = cartData.reduce((acc,item) => {
       return ((item.item_price - ((item.item_discount / 100) * item.item_price)) * item.pcs_item) + acc;
     },0);
-    totalPriceDisplay.innerHTML = totalPrice;
-    // console.log(totalPrice);
+    /* update Total */
+    totalPriceDisplay.innerHTML = totalPrice.toFixed(2);
     /* update buttons */
     updateCartDisplayBtns();
   }else{

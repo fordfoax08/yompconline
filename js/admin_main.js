@@ -805,6 +805,10 @@ function submitNewItem(e){
     isReady = false;
     document.querySelector('input[name="item_name"]').style.backgroundColor = '#f0a8a8';
   }
+  if(document.querySelector('input[name="item_price"]').value === ''){
+    isReady = false;
+    document.querySelector('input[name="item_price"]').style.backgroundColor = '#f0a8a8';
+  }
   if(document.querySelector('#item_short_desc').value === ''){
     isReady = false;
     document.querySelector('#item_short_desc').style.backgroundColor = '#f0a8a8';

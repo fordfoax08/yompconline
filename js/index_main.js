@@ -502,3 +502,10 @@ function toggleLoginOpen(){
       userLoginModal.firstElementChild.classList.remove('close');
     }, 100);
 }
+
+/* sign in reset cart data */
+const signInBtn = document.querySelector('.sign-in');
+signInBtn.addEventListener('click', (e)=>{
+  localStorage.removeItem('cart');
+})
+
