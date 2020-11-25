@@ -13,6 +13,7 @@ function loadCartData(){
 
 /* CART DISPLAY */
 function updateCartDisplay(){
+  let totalPriceDisplay = document.querySelector('.total-price');
   let cartContainer = document.querySelector('.cart-item-container');
   const cartData = JSON.parse(localStorage.getItem('cart'));
   if(cartData.length > 0){
@@ -29,12 +30,12 @@ function updateCartDisplay(){
         <div class="c-i">${item_name}</div>
         <div class="c-i">
           <span class="item-price">${item_price}</span>
-          <span class="item-sub-price">${(item_price - ((item_discount / 100) * item_price)) * pcs_item}</span>
+          <span class="item-sub-price">${((item_price - ((item_discount / 100) * item_price)) * pcs_item).toFixed(2)}</span>
           <input type="hidden" value="${item_discount/100}">
         </div>
         <div class="c-i">
           <div class="add-item">
-            <input type="number" name="qty" class="item-qty" value="${pcs_item}">
+            <input type="number" name="qty" class="item-qty" value="${pcs_item}" disabled>
             <div class="add-btns">
               <button class="plus">&plus;</button>
               <button class="minus">&minus;</button>
@@ -46,6 +47,12 @@ function updateCartDisplay(){
       cartContainer.appendChild(newDiv);
       // console.log(item.item_name);
     })
+    /* for total Price */
+    let totalPrice = cartData.reduce((acc,item) => {
+      return ((item.item_price - ((item.item_discount / 100) * item.item_price)) * item.pcs_item) + acc;
+    },0);
+    totalPriceDisplay.innerHTML = totalPrice;
+    // console.log(totalPrice);
     /* update buttons */
     updateCartDisplayBtns();
   }else{
@@ -88,6 +95,7 @@ function addToCartLocal(dataObj,e){
     item_image : data.item_image,
     item_price : data.item_price,
     item_discount : data.item_discount,
+    item_available : data.item_available,
     pcs_item : 1
   };
 
@@ -154,7 +162,7 @@ function addToCartDatabase(){
       // console.log(userId.value.length);
     }
   }else{
-    /* if user is logged In */
+    /* if cart is empty while user is logged In */
     if(userId.value.length > 0){
       let formData = new FormData();
       formData.append('cart_data', JSON.stringify(data));
@@ -171,33 +179,6 @@ function addToCartDatabase(){
 }
 
 
-/* Function to check existing cart item */
-function isItemExisted(arrayData,item){
-  let res = false;
-  for(let i = 0; i < arrayData.length;i++){
-    if(arrayData[i].item_id == item.item_id){
-      res = true;
-    }
-  }
-  return res;
-}
-
-
-/* cart number indicator */
-function cartItemCount(){
-  let cartIndicator = document.querySelector('.cart-item-indicator');
-  let localStorageData = JSON.parse(localStorage.getItem('cart'));
-  if(localStorageData.length == 0){
-    cartIndicator.classList.remove('show');
-  }else{
-    cartIndicator.classList.add('show');
-    setTimeout(() => {
-      cartIndicator.classList.add('anim');
-      setTimeout(() => cartIndicator.classList.remove('anim'),800);
-    },200);
-    cartIndicator.innerHTML = localStorageData.length;
-  }
-}
 
 
 
@@ -228,20 +209,17 @@ function updateCartDisplayBtns(){
      const itemId = e.target.parentNode.nextElementSibling.value;
     if(e.target.classList.contains('plus')){
       inputQuantity.value ++;
-
       /* update Quantity */
       updateItemQuantity(itemId,inputQuantity);
-
+      /* Update DB user cart item */
+      addToCartDatabase();
     }
   
     if(e.target.classList.contains('minus')){
       inputQuantity.value --;
       /* chec if inputQuantity is 0 remove item from the list */
-      /* update Item Quantity */
-      updateItemQuantity(itemId,inputQuantity);
       if(inputQuantity.value < 1){
         if(confirm('Remove this item from add to cart?')){
-  
           /* get items in cartdata */
           const cartItem = JSON.parse(localStorage.getItem('cart'));
           /* filtered cartItem */
@@ -253,14 +231,30 @@ function updateCartDisplayBtns(){
           /* update cart display */
           updateCartDisplay();
           // console.log(newCartData);
+          /* Update DB user cart item */
+           addToCartDatabase();
         }else{
           inputQuantity.value = 1;
+          /* update Item Quantity in localStorage */
+          updateItemQuantity(itemId,inputQuantity);
+          /* Update DB user cart item */
+          addToCartDatabase();
         }
+      }else{
+        /* update Item Quantity in localStorage */
+        updateItemQuantity(itemId,inputQuantity);
+        /* Update DB user cart item */
+        addToCartDatabase();
       }
     }
     // console.log(inputQuantity);
   }
 }
+
+
+
+
+
 
 /* update quantity 2 params itemId qty val */
 function updateItemQuantity(itemId, itemQty){
@@ -269,7 +263,11 @@ function updateItemQuantity(itemId, itemQty){
   /* update psc_item using Map */
   let newCartData = cartItem.map(item => {
     if(item.item_id == itemId){
-      item.pcs_item = parseInt(itemQty.value);
+      if(parseInt(item.item_available) < itemQty.value){
+        item.pcs_item = parseInt(item.item_available);
+      }else{
+        item.pcs_item = parseInt(itemQty.value);
+      }
       return item;
     }else{
       return item;
@@ -282,3 +280,31 @@ function updateItemQuantity(itemId, itemQty){
   updateCartDisplay();
 }
 
+
+
+/* Function for cart number indicator */
+function cartItemCount(){
+  let cartIndicator = document.querySelector('.cart-item-indicator');
+  let localStorageData = JSON.parse(localStorage.getItem('cart'));
+  if(localStorageData.length == 0){
+    cartIndicator.classList.remove('show');
+  }else{
+    cartIndicator.classList.add('show');
+    setTimeout(() => {
+      cartIndicator.classList.add('anim');
+      setTimeout(() => cartIndicator.classList.remove('anim'),800);
+    },200);
+    cartIndicator.innerHTML = localStorageData.length;
+  }
+}
+
+/* Function to check existing cart item */
+function isItemExisted(arrayData,item){
+  let res = false;
+  for(let i = 0; i < arrayData.length;i++){
+    if(arrayData[i].item_id == item.item_id){
+      res = true;
+    }
+  }
+  return res;
+}

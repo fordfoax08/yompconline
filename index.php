@@ -355,7 +355,7 @@ session_start();
       </div>
       
       <div class="cart-total">
-        <p><b>Sub Total: </b> <span class="total-price">P &nbsp;2000</span></p>
+        <p><b>Sub Total: </b> P &nbsp;<span class="total-price">2000</span></p>
       </div>
 
       <div class="cart-checkout">
