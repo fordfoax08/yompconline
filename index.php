@@ -361,7 +361,7 @@ if(isset($_SESSION['u_id'])){
       </div>
 
       <div class="cart-checkout">
-        <button>Check out!</button>
+        <button id="checkout">Check out!</button>
       </div>
 
     </div>
@@ -394,6 +394,18 @@ if(isset($_SESSION['u_id'])){
         <p class="sign-in"><a href="login.php">Sign In</a></p>
       </div>
 
+    </div>
+  </div>
+
+
+  <!-- confirm pop up modal -->
+  <div class="confirm-container">
+    <div class="confirm">
+     <!--  <p>Are you sure about that?</p>
+      <div class="btn-confirm-container">
+        <button class="yesConfirm">Yes</button>
+        <button class="noConfirm">No</button>
+      </div> -->
     </div>
   </div>
 

@@ -7,6 +7,7 @@
 *5 - Keyboard
 *6 - Mouse
 * */
+let isUserLoggedIn = false;
 let itemCategory = 0;
 let currPage = 1;
 let maxPage = 0;
@@ -28,6 +29,13 @@ async function getPageCount(category){
               .then(res => res.text())
               .catch(err => console.log('Error Getting Page count: ' + err));
   return res;              
+}
+
+async function getStatus(){
+  const fetched = await fetch('includes/login_status.inc.php');
+  const res = await fetched.text();
+  const data = await JSON.parse(res);
+  return data; 
 }
 
 /* Once DOM is loaded call getItemData which process displayItem */
@@ -52,6 +60,15 @@ function getItemData(){
   })
   .catch(err => console.log(err));
 }
+
+
+/* Function to check if user is Logged In */
+(function (){
+  getStatus()
+  .then(data => {
+    isUserLoggedIn = data.online;
+  })
+})();
 
 function displayItem(item){
   if(item.length > 0){
@@ -509,3 +526,48 @@ signInBtn.addEventListener('click', (e)=>{
   localStorage.removeItem('cart');
 })
 
+
+/* Function pop up */
+let confirmCustom = document.querySelector('.confirm-container');
+
+const ui = {
+  confirm : async (msg) => createConfirm(msg)
+};
+
+const createConfirm = (msg) => {
+  let template = `
+    <p>${msg}</p>
+    <div class="btn-confirm-container">
+      <button class="yesConfirm">Yes</button>
+      <button class="noConfirm">No</button>
+    </div>
+  `;
+  confirmCustom.classList.add('active');
+  confirmCustom.firstElementChild.innerHTML = template;
+
+  return new Promise((resolve,reject) => {
+    document.querySelector('.yesConfirm').addEventListener('click',function(){
+      resolve(true);
+    });
+    document.querySelector('.noConfirm').addEventListener('click',function(){
+      resolve(false);
+    });
+  });
+}
+
+const areYouSure = async () =>{
+  const resolve = await ui.confirm('Are you sure?');
+  if(resolve){
+    confirmCustom.classList.remove('active');
+    confirmCustom.firstElementChild.innerHTML = '';
+    // console.log('Yes');
+    return true;
+  }else{
+    confirmCustom.classList.remove('active');
+    confirmCustom.firstElementChild.innerHTML = '';
+    // console.log('No');
+    return false;
+  }
+
+  // return false;
+}

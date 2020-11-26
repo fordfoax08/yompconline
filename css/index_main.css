@@ -1036,12 +1036,65 @@ footer div{
 
 
 
+/* custom Confirm Popup */
+.confirm-container{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.7);
+  z-index: 9;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}.confirm-container.active{
+  display: flex;
+}
 
+.confirm{
+  position: relative;
+  height: 100px;
+  width: 70%;
+  background-color: white;
+  border-radius: 5px;
+}
 
+.confirm p{
+  padding-left: 16px;
+  padding-top: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+}
 
+.btn-confirm-container{
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+}
 
+.yesConfirm,
+.noConfirm{
+  padding: 4px 16px;
+  cursor: pointer;
+  border: none;
+  border: 1px solid rgb(187, 187, 187);
+  border-radius: 5px;
+  color: white;
+}
 
-
+.yesConfirm{
+  background-color: rgb(70, 179, 70);
+}
+.noConfirm{
+  background-color: tomato;
+}
+.yesConfirm:hover{
+  background-color: rgb(41, 143, 41);
+}
+.noConfirm:hover{
+  background-color: rgb(214, 80, 57);
+}
 
 
 
@@ -1179,6 +1232,11 @@ footer div{
     width: 50%;
   }
 
+
+  .confirm{
+    width: 40%;
+  }
+
 }
 
 
@@ -1236,5 +1294,11 @@ footer div{
   .user-login{
     width: 40%;
   }
+
+  /* confirm */
+  .confirm{
+    width: 25%;
+  }
+  
 
 }
