@@ -1,6 +1,11 @@
 <?php
   session_start();
+  require_once 'class/display_items.class.php';
+  if(isset($_GET['v'])){
+    $conn = new DisplayItems;
+    $itemInfo = $conn->getItemInformation($_GET['v']);
 
+  }
 
 ?>
 <!DOCTYPE html>
@@ -22,6 +27,7 @@
     </div>
     <div class="h-cart">
       <div class="h-cart-container" onclick="cartToggle()">
+      <span class="cart-item-indicator"></span>
         <a href="javascript:void(0)">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
@@ -44,49 +50,53 @@
 
   <div class="main-container">
     <div class="title-container">
-      <h2>Product Title</h2>
+      <h2><?php echo isset($itemInfo) ? $itemInfo["item_name"] : "Product Title" ;?></h2>
     </div>
 
     <section class="section1">
       <div class="sec1-a">
-        <img src="multimedia/image/mobo/01-2345.png" alt="">
+        <img src="multimedia/image/<?php echo isset($itemInfo) ? $itemInfo["item_path"] : "mobo" ;?>/<?php echo isset($itemInfo) ? $itemInfo["item_image"] : "01-2345.png" ;?>" alt="item Image">
       </div>
       <div class="sec1-b">
         <h4>Specification</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam officia esse illum illo nam vero iure similique. Provident laborum, eos itaque dolores fugit facere dolorum, dignissimos neque illo, accusamus repudiandae?</p>
+        <p><?php echo isset($itemInfo) && strlen($itemInfo["item_specification"]) > 0  ? $itemInfo["item_specification"] : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam officia esse illum illo nam vero iure similique. Provident laborum, eos itaque dolores fugit facere dolorum, dignissimos neque illo, accusamus repudiandae?" ;?></p>
         <ul>
-          <li>Auto Transform</li>
-          <li>Led lights</li>
-          <li>Wireless Pc</li>
+          <?php 
+          if(isset($itemInfo["item_specs"]) && strlen($itemInfo["item_specs"]) > 0){
+          foreach(json_decode($itemInfo["item_specs"]) as $key){?>
+            <?php echo "<li>$key</li>";?>
+          <?php }};?>
+            <!-- <li>Auto Transform</li>
+            <li>Led lights</li>
+            <li>Wireless Pc</li> -->
         </ul>
       </div>
     </section>
     
     <section class="section2">
       <div class="sec2-a">
-        <img src="multimedia/image/mobo/01-2673.png" alt="">
+      <img src="multimedia/image/<?php echo isset($itemInfo) ? $itemInfo["item_path"] : "mobo" ;?>/<?php echo isset($itemInfo) ? $itemInfo["item_image"] : "01-2345.png" ;?>" alt="item Image">
       </div>
       <div class="sec2-b">
-        <h4>Dimention</h4>
+        <h4>Overview</h4>
       
-        <ul>
-          <li>Auto Transform</li>
-          <li>Led lights</li>
-          <li>Wireless Pc</li>
-        </ul>
+        <p><?php echo isset($itemInfo) && strlen($itemInfo["item_overview"]) > 0  ? $itemInfo["item_overview"] : "A amet consectetur adipisicing elit. Quibusdam officia esse illum illo nam vero iure similique. Provident laborum, eos itaque dolores fugit facere dolorum, dignissimos neque illo, accusamus repudiandae?" ;?></p>
       </div>
     </section>
 
     <!-- Item more details -->
     <section class="section3">
-      <h3>Item Included</h3>
+      <h2>Item Included</h2>
       <ul>
-        <li>Battery (Lowbat)</li>
-        <li>Screw (8 pcs)</li>
-        <li>Screw Driver</li>
-        <li>Screw Driver</li>
-        <li>Screw Driver</li>
-        <li>Screw Driver</li>
+        <?php 
+        if(isset($itemInfo["item_included"]) && strlen($itemInfo["item_included"]) > 0){
+          foreach(json_decode($itemInfo["item_included"]) as $key){
+            echo "<li>$key</li>";
+          }
+        }else{
+          echo "<li>". $itemInfo["item_name"] ."</li>";
+        }
+        ?>
       </ul>
     </section>
 
@@ -112,7 +122,9 @@
       <h3>My Cart</h3>
       
       <div class="cart-item-container">
-        <div class="cart-item">
+
+
+        <!-- <div class="cart-item">
           <div class="c-i qtyy"></div>
           <div class="c-i">
             <img src="/multimedia/image/mobo/01-2345.png" width="60px" alt="item">
@@ -131,124 +143,23 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2387.png" width="60px" alt="item">
-          </div>
-          <div class="c-i">Dell Desk Fan, 200px</div>
-          <div class="c-i">
-            <span class="item-price">12312</span>
-            <span class="item-sub-price">12412</span>
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty" class="item-qty">
-              <div class="add-btns">
-                <button>&plus;</button>
-                <button>&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2463.png" width="60px" alt="item">
-          </div>
-          <div class="c-i">Toshiba Mouse original from </div>
-          <div class="c-i">
-            <span class="item-price">423</span>
-            <span class="item-sub-price">423</span>  
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty"class="item-qty">
-              <div class="add-btns">
-                <button>&plus;</button>
-                <button>&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2521.png" width="60px" alt="item">
-          </div>
-          <div class="c-i">Pc stand</div>
-          <div class="c-i">
-            <span class="item-price">2000</span>
-            <span class="item-sub-price">2000</span>
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty" class="item-qty">
-              <div class="add-btns">
-                <button>&plus;</button>
-                <button>&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="/multimedia/image/mobo/01-2673.png" width="60px" alt="item">
-          </div>
-          <div class="c-i">10k Monitor Asus</div>
-          <div class="c-i">
-            <span class="item-price">2000</span>
-            <span class="item-sub-price">2000</span>
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty" class="item-qty">
-              <div class="add-btns">
-                <button>&plus;</button>
-                <button>&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="cart-item">
-          <div class="c-i qtyy"></div>
-          <div class="c-i">
-            <img src="/multimedia/image/mobo/01-3462.png" width="60px" alt="item">
-          </div>
-          <div class="c-i">Dell Desk Fan, 200px</div>
-          <div class="c-i">
-            <span class="item-price">111</span>
-            <span class="item-sub-price">111</span>
-          </div>
-          <div class="c-i">
-            <div class="add-item">
-              <input type="number" name="qty" class="item-qty">
-              <div class="add-btns">
-                <button>&plus;</button>
-                <button>&minus;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
+        </div> -->
+        
 
         
+
+
+
+
+        <!-- End of Cart Container -->
       </div>
       
       <div class="cart-total">
-        <p><b>Sub Total: </b> <span class="total-price">P &nbsp;2000</span></p>
+        <p><b>Sub Total: </b> P &nbsp;<span class="total-price">2000</span></p>
       </div>
 
       <div class="cart-checkout">
-        <button>Check out!</button>
+        <button id="checkout">Check out!</button>
       </div>
 
     </div>
@@ -285,6 +196,16 @@
   </div>
 
 
+  <!-- confirm pop up modal -->
+  <div class="confirm-container">
+    <div class="confirm">
+     <!--  <p>Are you sure about that?</p>
+      <div class="btn-confirm-container">
+        <button class="yesConfirm">Yes</button>
+        <button class="noConfirm">No</button>
+      </div> -->
+    </div>
+  </div>
 
 
 
@@ -293,61 +214,65 @@
 
 
 <!-- <p style="padding-bottom: 500px"></p> -->
+  <script src="js/details_main.js"></script>
   <script>
 
-    /* CART VIEW********** */
-    const cartShow = document.querySelector('.cart-modal-container');
-    cartShow.addEventListener('click', showCart);
-    function showCart(e){
-      const targetThis = e.target;
-      if(targetThis.classList.contains('modal-close') || targetThis.classList.contains('cart-modal-container')){
-        cartToggle();
-      }
-      return false;
-    }
-    function cartToggle(){
-      if(cartShow.classList.contains('open')){
-          cartShow.firstElementChild.classList.remove('open');
-        setTimeout(()=>{
-          cartShow.classList.remove('open');
-        },400)
-      }else{
-        cartShow.classList.add('open');
-        setTimeout(()=>{
-          cartShow.firstElementChild.classList.add('open');
-        },100)
-      }
-    }
+    //   /* CART VIEW********** */
+    // const cartShow = document.querySelector('.cart-modal-container');
+    // cartShow.addEventListener('click', showCart);
+    // function showCart(e){
+    //   const targetThis = e.target;
+    //   if(targetThis.classList.contains('modal-close') || targetThis.classList.contains('cart-modal-container')){
+    //     cartToggle();
+    //   }
+    //   return false;
+    // }
+    // function cartToggle(){
+    //   if(cartShow.classList.contains('open')){
+    //       cartShow.firstElementChild.classList.remove('open');
+    //       cartShow.firstElementChild.style.overflow = 'hidden';
+    //     setTimeout(()=>{
+    //       cartShow.classList.remove('open');
+    //     },700)
+    //   }else{
+    //     cartShow.classList.add('open');
+    //     setTimeout(()=>{
+    //       cartShow.firstElementChild.classList.add('open');
+    //       setTimeout(()=>{
+    //         cartShow.firstElementChild.style.overflow = 'visible';
+    //       }, 700);
+    //     },100);
+    //   }
+    // }
 
 
-    /* USER LOGIn */
-    const userLoginModal = document.querySelector('.user-login-container');
-    userLoginModal.addEventListener('click', toggleLogin);
+    //   /* USER LOGIn */
+    //   const userLoginModal = document.querySelector('.user-login-container');
+    //   userLoginModal.addEventListener('click', toggleLogin);
 
-    function toggleLogin(e){
-      if(e.target.classList.contains('user-login-container') || e.target.classList.contains('user-login-a-close')){
-        if(!userLoginModal.classList.contains('close')){
-          userLoginModal.firstElementChild.classList.add('close');
-          setTimeout(() =>{
-            userLoginModal.classList.add('close');
-          }, 400);
-        }
-      }
-    }
-    function toggleLoginOpen(){
-      userLoginModal.classList.remove('close');
-        setTimeout(() =>{
-          userLoginModal.firstElementChild.classList.remove('close');
-        }, 100);
-    }
+    //   function toggleLogin(e){
+    //     if(e.target.classList.contains('user-login-container') || e.target.classList.contains('user-login-a-close')){
+    //       if(!userLoginModal.classList.contains('close')){
+    //         userLoginModal.firstElementChild.classList.add('close');
+    //         setTimeout(() =>{
+    //           userLoginModal.classList.add('close');
+    //         }, 400);
+    //       }
+    //     }
+    //   }
+    //   function toggleLoginOpen(){
+    //     userLoginModal.classList.remove('close');
+    //       setTimeout(() =>{
+    //         userLoginModal.firstElementChild.classList.remove('close');
+    //       }, 100);
+    //   }
 
 
-    /* Back Btn */
-    const btnBackShop = document.querySelector('.back-to-shop');
-    btnBackShop.addEventListener('click',() => {
-      window.history.back();
-      window.location.replace('index.php');
-    });
+    //   /* Back Btn */
+    //   const btnBackShop = document.querySelector('.back-to-shop');
+    //   btnBackShop.addEventListener('click',() => {
+    //     window.close();
+    //   });
 
   </script>
 </body>

@@ -696,7 +696,7 @@ footer div{
 
 
 
-/* MOdAL */
+/* MOdAL / Modal Cart*/
 .cart-modal-container{
   position: fixed;
   top: 0;
@@ -719,16 +719,19 @@ footer div{
   left: 10%;
   background-color: white ;
   padding: 10px 5px;
- /*  height: 4000px; */
+  height: 0px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  transform: scale(0.002);
-  transition: .5s all ease-in-out;
-  box-shadow: 1px 1px 8px 0px black;
+  /* transform: scale(0.002); */
+  transition: 1s all ease-in-out;
+  box-shadow: .7px 1px 8px 0px black;
 }.cart-modal.open{
-  transform: scale(1.0);
-  transition: .5s all ease-in-out;
+  /* transform: scale(1.0); */
+  /* overflow: visible; */
+  height: 500px;
+  transition: .7s all ease-in-out;
 }
 .modal-close{
   position: absolute;
@@ -792,6 +795,11 @@ footer div{
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+.view-item{
+  text-decoration: none;
+  color: rgb(41,41,41);
+  font-size: .9em;
 }
 .item-sub-price{
   color: red;

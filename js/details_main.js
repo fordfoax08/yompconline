@@ -1,4 +1,81 @@
-/* LOAD CART */
+'use strict';
+let isUserLoggedIn = false;
+
+async function getStatus(){
+  const fetched = await fetch('includes/login_status.inc.php');
+  const res = await fetched.text();
+  const data = await JSON.parse(res);
+  return data; 
+}
+
+(function(){
+  loadCartData();
+})();
+
+
+/* CART VIEW********** */
+const cartShow = document.querySelector('.cart-modal-container');
+cartShow.addEventListener('click', showCart);
+function showCart(e){
+  const targetThis = e.target;
+  if(targetThis.classList.contains('modal-close') || targetThis.classList.contains('cart-modal-container')){
+    cartToggle();
+  }
+  return false;
+}
+function cartToggle(){
+  if(cartShow.classList.contains('open')){
+      cartShow.firstElementChild.classList.remove('open');
+      cartShow.firstElementChild.style.overflow = 'hidden';
+    setTimeout(()=>{
+      cartShow.classList.remove('open');
+    },700)
+  }else{
+    cartShow.classList.add('open');
+    setTimeout(()=>{
+      cartShow.firstElementChild.classList.add('open');
+      setTimeout(()=>{
+        cartShow.firstElementChild.style.overflow = 'visible';
+      }, 700);
+    },100);
+  }
+}
+
+
+  /* USER LOGIn */
+  const userLoginModal = document.querySelector('.user-login-container');
+  userLoginModal.addEventListener('click', toggleLogin);
+
+  function toggleLogin(e){
+    if(e.target.classList.contains('user-login-container') || e.target.classList.contains('user-login-a-close')){
+      if(!userLoginModal.classList.contains('close')){
+        userLoginModal.firstElementChild.classList.add('close');
+        setTimeout(() =>{
+          userLoginModal.classList.add('close');
+        }, 400);
+      }
+    }
+  }
+  function toggleLoginOpen(){
+    userLoginModal.classList.remove('close');
+      setTimeout(() =>{
+        userLoginModal.firstElementChild.classList.remove('close');
+      }, 100);
+  }
+
+
+  /* Back Btn */
+  const btnBackShop = document.querySelector('.back-to-shop');
+  btnBackShop.addEventListener('click',() => {
+    window.close();
+  });
+
+
+
+
+  /* CART************************** */
+
+  /* LOAD CART */
 /* load Cart item */
 function loadCartData(){
   if(localStorage.getItem('cart') === null){
@@ -28,7 +105,7 @@ function updateCartDisplay(){
           <img src="multimedia/image/${item_path}/${item_image}" width="40px" alt="item">
         </div>
         <div class="c-i">
-          <a href="details.php?v=${item_id}" class="view-item" target="_blank">
+          <a href="details.php?v=${item_id}" class="view-item">
             ${item_name}
           </a>
         </div>
@@ -71,116 +148,6 @@ function updateCartDisplay(){
 }
 
 
-/* ADD TO CART */
-
-function addToCart(e){
-  const itemId = e.firstElementChild.value;
-  let formData = new FormData();
-  formData.append('item_id', itemId);
-
-  fetch('includes/index_cart_item.inc.php', {method : 'POST', body : formData})
-  .then(res => res.text())
-  .then(data => {
-    addToCartLocal(data,e);
-  })
-  .catch(err => console.log(err));
-  
-
-  // console.log(itemId);
-}
-
-/* accepts string JSON  from DB, and set data to local storage */
-function addToCartLocal(dataObj,e){
-  const data = JSON.parse(dataObj);
-  let cartItem = {
-    item_id : data.item_id,
-    item_name : data.item_name,
-    item_path : data.item_path,
-    item_image : data.item_image,
-    item_price : data.item_price,
-    item_discount : data.item_discount,
-    item_available : data.item_available,
-    pcs_item : 1
-  };
-
-  if(localStorage.getItem('cart') == null){
-    localStorage.setItem('cart', JSON.stringify([cartItem]));  
-  }else{
-    let localData = JSON.parse(localStorage.getItem('cart'));
-    if(isItemExisted(localData, cartItem)){
-      /* remove item from the list */
-      let newData = localData.filter(item => item.item_id !== cartItem.item_id);
-      localStorage.setItem('cart', JSON.stringify(newData));
-      e.lastElementChild.src = 'multimedia/image/others/addtocart.png';
-      cartItemCount(); //update cart number indicator
-      /* update DB */
-      addToCartDatabase();
-      /* update Cart Display */
-       updateCartDisplay();
-      /* cartBtn before modal */
-      
-    }else{
-      localData.push(cartItem);
-      localStorage.setItem('cart', JSON.stringify(localData));  
-      e.lastElementChild.src = 'multimedia/image/others/addtocart_done.png';
-      cartItemCount(); //update cart number indicator
-      /* UPDATE DB */
-      addToCartDatabase();
-      /* update Cart Display */
-      updateCartDisplay();
-      // console.log(JSON.parse(localStorage.getItem('cart')));
-
-      /* animation test */
-      /* let newDiv = document.createElement('DIV');
-      newDiv.setAttribute('class','cart-added-anim');
-      newDiv.innerHTML = 'SAMPLE';
-      e.insertBefore(newDiv, e.lastElementChild); */
-      // console.log(e)
-    }
-  }
-
-
-
-}
-
-
-/* ADD CART to DB
-*if user is logged in upload 
-*/
-function addToCartDatabase(){
-  const userId = document.querySelector('#user_id');
-  const data = JSON.parse(localStorage.getItem('cart'));
-  /* if theres an item in cart */
-  if(data.length > 0){
-    /* if user is logged in */
-    if(userId.value.length > 0){
-      let formData = new FormData();
-      formData.append('cart_data', JSON.stringify(data));
-      /* Update DB php AJAX */
-      fetch('includes/index_add_cart.inc.php', {method : 'POST', body : formData})
-      .then(res => res.text())
-      .then(data => {
-        // console.log(data)
-      })
-      .catch(err => console.log(err));
-      // console.log(userId.value.length);
-    }
-  }else{
-    /* if cart is empty while user is logged In */
-    if(userId.value.length > 0){
-      let formData = new FormData();
-      formData.append('cart_data', JSON.stringify(data));
-      /* update DB php Ajax empty db */
-      fetch('includes/index_add_cart.inc.php', {method : 'POST', body : formData})
-      .then(res => res.text())
-      .then(data => {
-
-        // console.log(data);
-      })
-      .catch(err => console.log(err));
-    }
-  }
-}
 
 
 
@@ -216,7 +183,7 @@ function updateCartDisplayBtns(){
       /* update Quantity */
       updateItemQuantity(itemId,inputQuantity);
       /* Update DB user cart item */
-      addToCartDatabase();
+      // addToCartDatabase();
     }
   
     if(e.target.classList.contains('minus')){
@@ -249,7 +216,7 @@ function updateCartDisplayBtns(){
         /* update Item Quantity in localStorage */
         updateItemQuantity(itemId,inputQuantity);
         /* Update DB user cart item */
-        addToCartDatabase();
+        // addToCartDatabase();
       }
 
     }
@@ -278,7 +245,7 @@ const customConfirmRemove = async (e,itemId,inputQuantity) => {
     updateCartDisplay();
     // console.log(newCartData);
     /* Update DB user cart item */
-    addToCartDatabase();
+    // addToCartDatabase();
   }else{
     confirmCustom.classList.remove('active');
     confirmCustom.firstElementChild.innerHTML = '';
@@ -287,7 +254,7 @@ const customConfirmRemove = async (e,itemId,inputQuantity) => {
     /* update Item Quantity in localStorage */
     updateItemQuantity(itemId,inputQuantity);
     /* Update DB user cart item */
-    addToCartDatabase();
+    // addToCartDatabase();
   }
 }
 
@@ -342,6 +309,51 @@ const confirmContinueCheckBox = async () =>{
     confirmCustom.classList.remove('active');
     confirmCustom.firstElementChild.innerHTML = '';
   }
+}
+
+/* Function pop up */
+let confirmCustom = document.querySelector('.confirm-container');
+
+const ui = {
+  confirm : async (msg) => createConfirm(msg)
+};
+
+const createConfirm = (msg) => {
+  let template = `
+    <p>${msg}</p>
+    <div class="btn-confirm-container">
+      <button class="yesConfirm">Yes</button>
+      <button class="noConfirm">No</button>
+    </div>
+  `;
+  confirmCustom.classList.add('active');
+  confirmCustom.firstElementChild.innerHTML = template;
+
+  return new Promise((resolve,reject) => {
+    document.querySelector('.yesConfirm').addEventListener('click',function(){
+      resolve(true);
+    });
+    document.querySelector('.noConfirm').addEventListener('click',function(){
+      resolve(false);
+    });
+  });
+}
+
+const areYouSure = async () =>{
+  const resolve = await ui.confirm('Are you sure?');
+  if(resolve){
+    confirmCustom.classList.remove('active');
+    confirmCustom.firstElementChild.innerHTML = '';
+    // console.log('Yes');
+    return true;
+  }else{
+    confirmCustom.classList.remove('active');
+    confirmCustom.firstElementChild.innerHTML = '';
+    // console.log('No');
+    return false;
+  }
+
+  // return false;
 }
 
 

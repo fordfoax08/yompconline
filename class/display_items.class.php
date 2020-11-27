@@ -44,5 +44,23 @@ class DisplayItems{
     return $template;
   }
 
+
+  /* GET ITEM DETAILS details.php */
+  public function getItemInformation($item_id){
+    $conn = new Dsn;
+    $sql = "SELECT * FROM tbl_items WHERE item_id = ?";
+    try{
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute(array($item_id));
+      if($stmt->rowCount() > 0){
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+      }else{
+        return [];
+      }
+    } catch (PDOException $e){
+      echo "Error: ".$e->getMessage();
+    }
+  }
+
 }
 ?>

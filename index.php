@@ -324,10 +324,6 @@ if(isset($_SESSION['u_id'])){
       <h3>My Cart</h3>
       
       <div class="cart-item-container">
-      
-        <!-- <div class="cart-empty">
-          Empty Cart shop now.
-        </div> -->
 
 
         <!-- <div class="cart-item">
