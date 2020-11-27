@@ -191,27 +191,6 @@ function updateCartDisplayBtns(){
       /* chec if inputQuantity is 0 remove item from the list */
       if(inputQuantity.value < 1){
         customConfirmRemove(e,itemId,inputQuantity);
-        // if(confirm('Remove this item from add to cart?')){
-        //   /* get items in cartdata */
-        //   const cartItem = JSON.parse(localStorage.getItem('cart'));
-        //   /* filtered cartItem */
-        //   let newCartData = cartItem.filter(data => data.item_id !== itemId);
-        //   /* Jsonify and set to localStorage the updated data */
-        //   localStorage.setItem('cart',JSON.stringify(newCartData));
-        //   /* parent Element / container of item */
-        //   e.target.parentNode.parentNode.parentNode.parentNode.remove();
-        //   /* update cart display */
-        //   updateCartDisplay();
-        //   // console.log(newCartData);
-        //   /* Update DB user cart item */
-        //    addToCartDatabase();
-        // }else{
-        //   inputQuantity.value = 1;
-        //   /* update Item Quantity in localStorage */
-        //   updateItemQuantity(itemId,inputQuantity);
-        //   /* Update DB user cart item */
-        //   addToCartDatabase();
-        // }
       }else{
         /* update Item Quantity in localStorage */
         updateItemQuantity(itemId,inputQuantity);
