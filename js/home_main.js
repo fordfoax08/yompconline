@@ -24,6 +24,13 @@ function toggleLoginOpen(){
 
 
 
+  (function(){
+    //lear action redirect
+    if(JSON.parse(localStorage.getItem('action')) !== null){
+      localStorage.removeItem('action');
+    }
+  })();
+
 
 
   /* window.addEventListener('scroll', (e) => {

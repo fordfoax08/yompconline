@@ -64,7 +64,12 @@ async function getItems(url,data){
   return res;
 }
 
-
+// IIFE
+(()=>{
+  if(localStorage.getItem('action') !== null){
+    window.location.href = 'includes/'+JSON.parse(localStorage.getItem('action')).redirect;
+  }
+})();
 
 /* Load Items AJAX */
 document.addEventListener('DOMContentLoaded', loadSellerItems);

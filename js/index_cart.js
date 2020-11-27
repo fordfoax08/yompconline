@@ -335,6 +335,7 @@ function checkoutCart(e){
 const confirmContinueCheckBox = async () =>{
   const reslove = await ui.confirm('Login before continue');
   if(reslove){
+    localStorage.setItem('action',JSON.stringify({redirect: 'check_out.inc.php'}));
     confirmCustom.classList.remove('active');
     confirmCustom.firstElementChild.innerHTML = '';
     window.location.href = 'register.php';

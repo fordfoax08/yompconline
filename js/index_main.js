@@ -31,6 +31,7 @@ async function getPageCount(category){
   return res;              
 }
 
+/* is user online */
 async function getStatus(){
   const fetched = await fetch('includes/login_status.inc.php');
   const res = await fetched.text();
@@ -67,7 +68,12 @@ function getItemData(){
   getStatus()
   .then(data => {
     isUserLoggedIn = data.online;
-  })
+  });
+  
+  //lear action redirect
+  if(JSON.parse(localStorage.getItem('action')) !== null){
+    localStorage.removeItem('action');
+  }
 })();
 
 function displayItem(item){
