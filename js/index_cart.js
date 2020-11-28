@@ -329,6 +329,8 @@ function checkoutCart(e){
   if(cartData.length <= 0) return;
   if(!isUserLoggedIn){
     confirmContinueCheckBox();
+  }else{
+    window.location.href = "includes/check_out.inc.php";
   }
 }
 /* custom confirm for checkout */
