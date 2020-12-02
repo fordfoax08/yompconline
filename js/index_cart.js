@@ -340,7 +340,7 @@ const confirmContinueCheckBox = async () =>{
     localStorage.setItem('action',JSON.stringify({redirect: 'check_out.inc.php'}));
     confirmCustom.classList.remove('active');
     confirmCustom.firstElementChild.innerHTML = '';
-    window.location.href = 'register.php';
+    window.location.href = 'login.php';
   }else{
     confirmCustom.classList.remove('active');
     confirmCustom.firstElementChild.innerHTML = '';

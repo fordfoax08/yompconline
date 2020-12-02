@@ -155,7 +155,33 @@ if(!isset($_SESSION['u_id']) && !isset($_SESSION['logged_in'])){
             <li>Net Banking</li>
           </ul>
         </div>
-        <div class="payment-b"></div>
+        <!-- Payment card Details -->
+        <div class="payment-b">
+          <div class="p-b">
+            <h5>Payment Details</h5>
+            <label for="card-name">Card holder Name</label>
+            <input type="text" name="card_name" id="card-name" placeholder="Name">
+            <label for="card-no">Card Number</label>
+            <input type="number" name="card_number" id="card-number" placeholder="X-XXX-XXX-X">
+            <div class="card-type">
+              <input type="radio" name="visa" id="visa">
+              <img src="../multimedia/image/banner/visa.png" width="35" alt="visa img">
+              <input type="radio" name="master" id="master">
+              <img src="../multimedia/image/banner/master.png" width="35" alt="visa img">
+            </div>
+            <div class="card-valid">
+              <label for="cart-validity">Valid through</label>
+              <input type="date" name="valie_to" id="valid-through"><br/>
+              <label for="cart-validity">CCV</label>
+              <input type="text" name="card_ccv" id="card-ccv">
+            </div>
+          </div>
+          <!-- for Visa Image -->
+          <div class="p-b">
+            <img src="../multimedia/image/banner/mastervisa.png" width="100" alt="visa and master image">
+            <button class="btn-submit">PAY NOW</button>
+          </div>
+        </div>
       </div>
     </section>
 

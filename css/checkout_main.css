@@ -48,6 +48,8 @@ body{
   padding: 0 16px;
   display: grid;
   grid-template-columns: 1fr;
+  background-color: rgb(236, 236, 236);
+  background-image: linear-gradient(rgb(236, 236, 236),white);
 }
 /* 
 .section1 > div{
@@ -179,7 +181,7 @@ body{
 }
 
 .payment-method-container > div{
-  height: 300px;
+  height: auto;/* 300px */
   /* border: 1px solid blue; */
 }
 .payment-a h5{
@@ -227,6 +229,83 @@ body{
 }
 
 
+/* Payment B */
+.payment-b{
+  display: grid;
+  grid-template-columns: 1fr;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.p-b:nth-of-type(1){
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 64px;
+}
+.p-b:nth-of-type(1) h5{
+  margin: 4px;
+  margin-bottom: 16px;
+  color: rgb(87, 87, 87);
+}
+.p-b:nth-of-type(1) label{
+  font-size: .9em;
+  color: gray;
+  padding-bottom: 8px;
+}
+.p-b:nth-of-type(1) input{
+  padding: 4px;
+  border: none;
+  border-bottom: 1px solid gray;
+  margin-bottom: 8px;
+}
+
+#valid-through{
+  color: gray;
+}
+
+
+/* Image maste/visa */
+.p-b:nth-of-type(2){
+  position: relative;
+  padding-top: 8px;
+}
+.p-b:nth-of-type(2) img{
+  display: none;
+  margin-left: 50%;
+  transform: translate(-50%, 0);
+  width: 50%;
+}
+.btn-submit{
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translate(-50%);
+  width: 70%;
+  padding: 16px;
+  border: none;
+  border-radius: 10px;
+  border: 1px solid gray;
+  background-color: gray;
+  background-image: linear-gradient(to bottom right,#000274,#490136,#6b0103,#120088);
+  color: white;
+  box-shadow: 1px 1px 8px 0px black;
+  cursor: pointer;
+}
+.btn-submit:hover{
+  background-image: linear-gradient(to bottom right,#6b0103,#120088,#000274,#490136);
+  color: white;
+  box-shadow: 1px 1px 8px 1px black;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -270,6 +349,19 @@ body{
 
   .payment-method-container{
     grid-template-columns: 1fr 2fr;
+  }
+
+
+  .payment-b{
+    grid-template-columns: 1fr 1.5fr;
+  }
+
+  .p-b:nth-of-type(1){
+    padding-bottom: 0;
+  }
+
+  .p-b:nth-of-type(2) img{
+    display: block;
   }
 
 }
