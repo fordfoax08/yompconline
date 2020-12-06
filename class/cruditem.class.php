@@ -338,7 +338,27 @@ class CrudItem{
       echo 'Error: '.$e->getMessage();
     }
   }
-  
+
+
+
+
+
+  /* GET USER's CART in user_cart by user_id */
+  public function getUserCart($user_id){
+    $conn = new Dsn;
+    $sql = "SELECT user_cart FROM tbl_user_info WHERE user_id = ?";
+    try{
+      $stmt = $conn->connect()->prepare($sql);
+      $stmt->execute(array($user_id));
+      if($stmt->rowCount() > 0){
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+      }else{
+        return [];
+      }
+    }catch(PDOException $e){
+      echo 'Error getting user Cart: '.$e->getMessage();
+    }
+  }
 
 
 }

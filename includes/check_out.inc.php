@@ -1,13 +1,25 @@
 <?php
+require_once '../class/cruditem.class.php';
 session_start();
 if(!isset($_SESSION['u_id']) && !isset($_SESSION['logged_in'])){
   header('Location: ../index.php');
 }
 
 
-// echo $_SESSION['u_id'];
+//GET ALL ITEM in db
+if(isset($_SESSION['u_id'])){
+  $crudItem = new CrudItem;
+  $dataJson = json_decode($crudItem->getUserCart($_SESSION['u_id'])['user_cart']);
+}
+
+displayData($dataJson);
 
 
+function displayData($arr){
+  echo '<pre>';
+  var_dump($arr);
+  echo '</pre>';
+}
 
 ?>
 <!DOCTYPE html>
@@ -31,8 +43,32 @@ if(!isset($_SESSION['u_id']) && !isset($_SESSION['logged_in'])){
       <div class="sec1-a">
         <table class="table1">
           <tbody class="tbody1">
-            
-            <tr class="tr1">
+            <?php
+              if(isset($dataJson)){
+                foreach($dataJson as $key){
+                  // displayData(json_encode($key,JSON_PRETTY_PRINT));
+                  $data = (array) $key;
+                  echo '
+                  <tr class="tr1">
+                    <td><img src="../multimedia/image/'.$data["item_path"].'/'.$data["item_image"].'" width="70" alt="item"></td>
+                    <td>
+                      <h5>'.$data["item_name"].'</h5>
+                      <p>Quantity: <span>'. $data["pcs_item"] .'</span></p>
+                      <a href="javascript:void(0);">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                        </svg>
+                      </a>
+                      <h3>Php: <span class="item-price">'. $data["item_price"] .'</span></h3>
+                    </td>
+                  </tr>
+                  ';
+                  
+                }
+              }
+            ?>
+
+           <!--  <tr class="tr1">
               <td><img src="https://picsum.photos/70/70" width="70" alt="item"></td>
               <td>
                 <h5>Black i9 Casing dragon lollipop</h5>
@@ -100,7 +136,7 @@ if(!isset($_SESSION['u_id']) && !isset($_SESSION['logged_in'])){
                 </a>
                 <h3>Php: <span class="item-price">2000.50</span></h3>
               </td>
-            </tr>
+            </tr> -->
 
 
 
