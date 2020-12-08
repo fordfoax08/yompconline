@@ -6,9 +6,6 @@ $page = $_POST['page'] ?? 1;
 
 $crudItem = new CrudItem;
 echo json_encode($crudItem->getAllItems($page,$item_category),JSON_PRETTY_PRINT);
-/* if($item_category === 0){
-
-} */
 
 
 

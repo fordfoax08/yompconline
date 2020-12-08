@@ -24,7 +24,6 @@ $item_path = itemPath($item_category);
 
 /* ITEM IMAGE */
 $filterImage = new FilterImage;
-//$file = $_FILES['item_image'];
 $file_name = 'noimage.png';
 $file_valid = false;
 if(isset($_FILES['item_image'])){
@@ -75,8 +74,7 @@ if($cruditem->insertNewItem($dataPrepared)){
     // move image if File is valid
     move_uploaded_file($file_temp,'../multimedia/image/'.$item_path.'/'.$file_name);
   }
-  // $_SESSION['done'] = 'Success';
-  // echo '<script>window.history.go(-1);</script>';
+  
 }else{
   echo 0;
 }
