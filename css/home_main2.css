@@ -209,12 +209,16 @@ header div{
 
 
 .sec2-b img{
+  opacity: 0;
   width: 150%;
-  margin-left: -200%;
+  transform: translateY(50px);
+ /*  margin-left: -200%; */
 }
 .section2.anim .sec2-b img{
-  margin-left: 0;
-  transition: 2s all ease-in-out;
+  /* margin-left: 0; */
+  opacity: 1;
+  transform: translateY(0px);
+  transition: 1s all ease-in-out;
 }
 
 
@@ -236,9 +240,13 @@ header div{
   align-items: center;
 }
 .sec3-a img{
+  opacity: 0;
+  transform: translateX(100px);
   width: 100%;
 }
 .sec3-b{
+  opacity: 0;
+  transform: translateY(100px);
   padding-top: 10px;
 }
 .sec3-b h4{
@@ -269,6 +277,22 @@ header div{
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: rgb(206, 206, 206);
 }
+/* Section3 ANIM   */
+.section3.anim .sec3-a img{
+  opacity: 1;
+  transform: translateX(0px);
+  transition: 1s all ease-in-out;
+}
+.section3.anim .sec3-b{
+  opacity: 1;
+  transform: translateY(0px);
+  transition: 1s all ease-in-out;
+}
+
+
+
+
+
 
 /* Section 4 *************/
 .section4{
@@ -308,6 +332,10 @@ header div{
   transform: scale(1.5);
   transition: 1s all ease-in-out;
 }
+.sec4-a-2{
+  opacity: 0;
+  transform: translateY(50px);
+}
 .sec4-a-2 h4{
   color: #FFFFFF;
   text-shadow: 0 -1px 4px #FFF, 0 -2px 10px #ff0, 0 -10px 20px #ff8000, 0 -18px 40px #F00;
@@ -324,7 +352,21 @@ header div{
   width: 100%;
   box-shadow: 0px 0px 8px 0px white;
   transition: 1s all ease-in-out;
+  opacity: 0;
 }
+
+.section4.anim .sec4-a-2{
+  opacity: 1;
+  transform: translateY(0px);
+  transition: 2s all ease-in-out;
+}
+
+.section4.anim .sec4-a-3 img{
+  opacity: 1;
+  transition: 1s all ease-in-out;
+}
+
+
 
 
 /* SECTION 5 ***************** */
@@ -343,6 +385,7 @@ header div{
   animation: imgAlternateHover 7s linear infinite alternate;
   transition: 1s all ease-in-out;
 }
+
 .sec5-a{
   position: absolute;
   bottom: 0;
@@ -424,7 +467,7 @@ header div{
 .service div{
   height: auto;
   padding: 10px;
- /*  border: 1px solid gray; */
+  border: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -433,8 +476,8 @@ header div{
 }
 .service div:hover{
   /* animation: rotateServices 2s 1; */
-  transform: scale(1.1);
-  border: none;
+  transform: scale(1.05);
+  border: 2px solid gray;
   transition: .4s all ease-in-out;
 }
 

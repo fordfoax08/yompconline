@@ -32,40 +32,42 @@ function toggleLoginOpen(){
   })();
 
 
-
-  /* window.addEventListener('scroll', (e) => {
-    let deviceWidth = window.innerWidth;
-    console.log(deviceWidth);
-    
-    
-    
-    let scroll = this.scrollY;
-    console.log(scroll);
-  }); */
-
   /* 
-  #content Load check device width,
-  #and change css link with new css links
+  # add new css link
   */
 window.addEventListener('DOMContentLoaded', (e) => {
   let deviceWidth = window.innerWidth;
   if(deviceWidth >= 1000){
-    let newCss = document.head.children.item(2);
-    newCss.href = 'css/home_main2.css';
-    scrollAnim();
-    console.log(newCss);
+    const headTag = document.querySelector("head");
+    /* let newCss = document.head.children.item(2);
+    newCss.href = 'css/home_main2.css'; */
+    let newCss2 = document.createElement("LINK");
+    newCss2.rel = "stylesheet";
+    newCss2.href = "css/home_main2.css";
+    headTag.appendChild(newCss2);
   }
   
 })
 
 /* Animation when Scroll, activate if screenWidth >= 1000 */
-function scrollAnim(){
-  const elementAnim = document.querySelector('.section2');
-  window.addEventListener('scroll', (e) => {
-    let scrollD = this.scrollY;
-    if(scrollD >= 510 || scrollD <= 590){
-      elementAnim.classList.add('anim');
-    }
-    console.log(scrollD);
-  })
-}
+
+window.addEventListener('scroll', () => {
+  const sec1 = document.querySelector(".section1");
+  const sec2 = document.querySelector('.section2');
+  const sec3 = document.querySelector(".section3");
+  const sec4 = document.querySelector(".section4");
+  if(sec1.getBoundingClientRect().top <= -(sec1.clientHeight / 1.5)){
+    sec2.classList.add('anim');
+  }
+
+  if(sec2.getBoundingClientRect().top <= -(sec2.clientHeight / 1.5)){
+    sec3.classList.add('anim');
+  }
+
+  if(sec3.getBoundingClientRect().top <= -(sec3.clientHeight / 2)){
+    sec4.classList.add('anim');
+  }
+  
+  // console.log(sec2.getBoundingClientRect().top);
+  // console.log(sec1.clientHeight);
+})
