@@ -105,6 +105,10 @@ body{
   color: rgb(121, 187, 146);
 }
 
+.item-qty{
+  color: red;
+}
+
 /* sec1-a nth 2 */
 .sec1-a:nth-of-type(2){
   border-top: 1px solid rgb(211, 211, 211);

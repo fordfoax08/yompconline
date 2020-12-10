@@ -12,7 +12,7 @@ if(isset($_SESSION['u_id'])){
   $dataJson = json_decode($crudItem->getUserCart($_SESSION['u_id'])['user_cart']);
 }
 
-displayData($dataJson);
+// displayData($dataJson);
 
 
 function displayData($arr){
@@ -53,13 +53,13 @@ function displayData($arr){
                     <td><img src="../multimedia/image/'.$data["item_path"].'/'.$data["item_image"].'" width="70" alt="item"></td>
                     <td>
                       <h5>'.$data["item_name"].'</h5>
-                      <p>Quantity: <span>'. $data["pcs_item"] .'</span></p>
+                      <p>Quantity: <span class="item-qty">'. $data["pcs_item"] .'</span></p>
                       <a href="javascript:void(0);">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                         </svg>
                       </a>
-                      <h3>Php: <span class="item-price">'. $data["item_price"] .'</span></h3>
+                      <h3>Php: <span class="item-price">'. intval($data["item_price"]) * intval($data["pcs_item"]) .'</span></h3>
                     </td>
                   </tr>
                   ';
@@ -150,8 +150,8 @@ function displayData($arr){
         </table>
       </div>
       
-      <div class="sec1-a">
-        <div class="item-compute-container">
+      <div class="sec1-a sec-total">
+        <!-- <div class="item-compute-container">
           <div class="total-a">
             <p>Total: </p>
             <p>P <span class="total-int">2000</span></p>
@@ -164,16 +164,12 @@ function displayData($arr){
             <p>Estimated Tax: </p>
             <p>+P <span class="total-int"> 50.50</span></p>
           </div>
-          <!-- <div class="total-a">
-            <p>Option: </p>
-            <p> <span class="total-int">Pickup</span></p>
-          </div> -->
           <div class="line-divide"></div>
           <div class="total-a total-order">
             <p>Order Total: </p>
             <p>P <span class="total-int"> 1893.50</span></p>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- End of Section1 -->
     </section>
