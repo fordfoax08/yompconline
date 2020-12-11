@@ -239,7 +239,7 @@ class CrudItem{
     }
   }
 
-  /* Adding Cart Item to user_cart */
+  /* Adding Cart Item to user_cart data should be JSON*/
   public function addToCart($data,$u_id){
     $conn = new Dsn;
     $sql = "UPDATE tbl_user_info SET user_cart = ? WHERE user_id = ?";
