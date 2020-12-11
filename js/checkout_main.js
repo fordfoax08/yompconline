@@ -56,3 +56,23 @@ function displayItem(){
 
 
 window.addEventListener('DOMContentLoaded',  displayItem);
+
+
+
+/* Remove Item from cart */
+const btnRemove = document.querySelectorAll(".remove-item");
+btnRemove.forEach(btn => {
+  btn.addEventListener("click", (e)=>{
+    let itemId = 0;
+    if(!e.target.classList.contains("remove-item")){
+      itemId = e.target.closest(".remove-item").nextElementSibling;
+      // console.log(e.target.closest(".remove-item"));
+      // return;
+    }else{
+      itemId = e.target.nextElementSibling;
+    }
+    console.log(itemId);
+  });
+});
+
+
