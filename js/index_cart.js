@@ -49,7 +49,6 @@ function updateCartDisplay(){
         </div>
       `;
       cartContainer.appendChild(newDiv);
-      // console.log(item.item_name);
     })
     /* for total Price */
     let totalPrice = cartData.reduce((acc,item) => {
@@ -86,7 +85,6 @@ function addToCart(e){
   .catch(err => console.log(err));
   
 
-  // console.log(itemId);
 }
 
 /* accepts string JSON  from DB, and set data to local storage */
@@ -128,14 +126,7 @@ function addToCartLocal(dataObj,e){
       addToCartDatabase();
       /* update Cart Display */
       updateCartDisplay();
-      // console.log(JSON.parse(localStorage.getItem('cart')));
 
-      /* animation test */
-      /* let newDiv = document.createElement('DIV');
-      newDiv.setAttribute('class','cart-added-anim');
-      newDiv.innerHTML = 'SAMPLE';
-      e.insertBefore(newDiv, e.lastElementChild); */
-      // console.log(e)
     }
   }
 
@@ -276,7 +267,6 @@ const customConfirmRemove = async (e,itemId,inputQuantity) => {
     e.target.parentNode.parentNode.parentNode.parentNode.remove();
     /* update cart display */
     updateCartDisplay();
-    // console.log(newCartData);
     /* Update DB user cart item */
     addToCartDatabase();
   }else{

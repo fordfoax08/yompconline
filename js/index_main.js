@@ -57,7 +57,6 @@ function getItemData(){
     let items = JSON.parse(data);
     section2.innerHTML = '';
     displayItem(items);
-    // console.log(data);
   })
   .catch(err => console.log(err));
 }
@@ -79,7 +78,6 @@ function getItemData(){
 function displayItem(item){
   if(item.length > 0){
     /* get localStorage list to check for cart item if include adjust cart png */
-    //let localStorageItem = JSON.parse(localStorage.getItem('cart')) === null ? JSON.parse(localStorage.getItem('cart')) : localStorage.setItem('cart','[]');
     let localStorageItem = JSON.parse(localStorage.getItem('cart'));
     item.forEach(data => {
       let itemContainer = document.createElement('DIV');
@@ -114,8 +112,6 @@ function displayItem(item){
     `;
     /* append Template */
     section2.appendChild(itemContainer);
-    // console.log(isItemExisted(localStorageItem, data));
-    // ${isItemExisted(localStorageItem, data) ? 'addtocart_done.png' : 'addtocart.png'}
     })
   }else{
     section2.innerHTML = 'NO ITEMS FOUND';
@@ -282,7 +278,6 @@ function showItemModal(e){
     itemModalExt();
     //window.history.back();
   }
-  /* console.log(thisEvent); */
 }
 function itemModalExt(e){
  
@@ -292,7 +287,6 @@ function itemModalExt(e){
       itemModalShow.classList.remove('open');
       itemModalShow.innerHTML = '';
     }, 300)
-    /* localStorage.removeItem('cartBtn'); */
   }else{
     const itemId = e.nextElementSibling.value;
     let formData = new FormData();
@@ -312,7 +306,6 @@ function itemModalExt(e){
       setTimeout(() => {
         itemModalShow.firstElementChild.classList.add('open');
       }, 100)
-      // console.log(itemId.value);
       accBtn = document.querySelectorAll('.item-acc');
       accBtn.forEach(btn => {
         btn.addEventListener('click', showAcc);
@@ -320,7 +313,6 @@ function itemModalExt(e){
     })
     .catch(err => console.log(err));
     
-    /* localStorage.setItem('cartBtn', e.outerHTML); */
   }
   
 }
@@ -477,7 +469,6 @@ function showAcc(e){
     thisAcc.nextElementSibling.classList.add('open')
   }
   
-  /* console.log(thisPlus); */
 }
 
 
@@ -570,12 +561,10 @@ const areYouSure = async () =>{
   if(resolve){
     confirmCustom.classList.remove('active');
     confirmCustom.firstElementChild.innerHTML = '';
-    // console.log('Yes');
     return true;
   }else{
     confirmCustom.classList.remove('active');
     confirmCustom.firstElementChild.innerHTML = '';
-    // console.log('No');
     return false;
   }
 
